@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-version = "1"
+version = "1.1"
 datum = "20230104"
 
 import random
@@ -136,6 +136,62 @@ emptyscoretablecompact = [
         "%sTT%s" % (Goed,ResetAll),
         2*"="
 ]
+emptyscoretableNL = [
+        15*"=",
+        "   %sF I V er%s    " % (Resultaat,ResetAll),
+        15*"-",
+        7*" "+Tekst+"1"+ResetAll+7*" ",
+        7*" "+Tekst+"2"+ResetAll+7*" ",
+        7*" "+Tekst+"3"+ResetAll+7*" ",
+        7*" "+Tekst+"4"+ResetAll+7*" ",
+        7*" "+Tekst+"5"+ResetAll+7*" ",
+        7*" "+Tekst+"6"+ResetAll+7*" ",
+        15*"-",
+        "%sSUBTOTAAL BOVEN%s" % (SubTekst,ResetAll),
+        "     %sBONUS%s     " % (Matig,ResetAll),
+        " %sTOTAAL BOVEN%s  " % (SubGoed,ResetAll),
+        15*"-",
+        "%srie %sezelfde  %s" % (Tekst+"D"+SubTekst,Tekst+"D"+SubTekst,ResetAll),
+        "%sier %sezelfde  %s" % (Tekst+"V"+SubTekst,Tekst+"D"+SubTekst,ResetAll),
+        "%sol %suis       %s" % (Tekst+"V"+SubTekst,Tekst+"H"+SubTekst,ResetAll),
+        "%sleine %straat  %s" % (Tekst+"K"+SubTekst,Tekst+"S"+SubTekst,ResetAll),
+        "%srote %straat   %s" % (Tekst+"L"+SubTekst,Tekst+"S"+SubTekst,ResetAll),
+        "   %s I %s er%s    " % (Tekst+"F"+SubTekst,Tekst+"V"+SubTekst,ResetAll),
+        "%srije %seus     %s" % (Tekst+"V"+SubTekst,Tekst+"K"+SubTekst,ResetAll),
+        15*"-",
+        " %sTOTAAL ONDER%s  " % (SubTekst,ResetAll),
+        " %sTOTAAL BOVEN%s  " % (SubGoed,ResetAll),
+        " %sTOTAAL ALLES%s  " % (Goed,ResetAll),
+        15*"="
+]
+emptyscoretablecompactNL = [
+        2*"=",
+        "%sFV%s" % (Resultaat,ResetAll),
+        2*"-",
+        " "+Tekst+"1"+ResetAll,
+        " "+Tekst+"2"+ResetAll,
+        " "+Tekst+"3"+ResetAll,
+        " "+Tekst+"4"+ResetAll,
+        " "+Tekst+"5"+ResetAll,
+        " "+Tekst+"6"+ResetAll,
+        2*"-",
+        "%sSB%s" % (SubTekst,ResetAll),
+        "%sBS%s" % (Matig,ResetAll),
+        "%sTB%s" % (SubGoed,ResetAll),
+        2*"-",
+        "%s" % (Tekst+"DD"+ResetAll),
+        "%s" % (Tekst+"VD"+ResetAll),
+        "%s" % (Tekst+"VH"+ResetAll),
+        "%s" % (Tekst+"KS"+ResetAll),
+        "%s" % (Tekst+"GS"+ResetAll),
+        "%s" % (Tekst+"FV"+ResetAll),
+        "%s" % (Tekst+"VK"+ResetAll),
+        2*"-",
+        "%sTO%s" % (SubTekst,ResetAll),
+        "%sTB%s" % (SubGoed,ResetAll),
+        "%sTA%s" % (Goed,ResetAll),
+        2*"="
+]
 pipeline = ["#","|","+","|","|","|","|","|","|","+","|","|","|","+","|","|","|","|","|","|","|","+","|","|","|","#"]
 
 def playeradd():
@@ -144,19 +200,28 @@ def playeradd():
     playerlist = []
     playertableslist = []
     while playeradd == "Y":
-        newplayer = input("Enter the name of the new player (max 10 characters) or \"S\" to Start\n  : ")[:10]
+        if taal == "EN":
+            newplayer = input("Enter the name of the new player (max 10 characters) or \"S\" to Start\n  : ")[:10]
+        else:
+            newplayer = input("Naam van de nieuwe speler (max 10 karakters) of \"S\" om te Starten\n  : ")[:10]
         if newplayer.upper() in afsluitlijst:
             exit()
         elif newplayer.upper() == "S":
             if len(playerlist) == 0:
-                newplayer = "One_Player"
+                if taal == "EN":
+                    newplayer = "One_Player"
+                else:
+                    newplayer = "Eén_Speler"
                 print(Goed+newplayer+ResetAll)
                 playertableslist = [[10*"=",newplayer,10*"-","","","","","","",10*"-",0,0,0,10*"-","","","","","","","",10*"-",0,0,0,10*"="]]
             break
         else:
             playercount += 1
             if newplayer == "":
-                newplayer = "Player_"+str(playercount)+(10-len("Player_"+str(playercount)))*" "
+                if taal == "EN":
+                    newplayer = "Player_"+str(playercount)+(10-len("Player_"+str(playercount)))*" "
+                else:
+                    newplayer = "Speler_"+str(playercount)+(10-len("Speler_"+str(playercount)))*" "
                 print(Goed+newplayer+ResetAll)
             else:
                 newplayer = newplayer+(10-len(newplayer))*" "
@@ -169,9 +234,15 @@ def playeradd():
 
 def showall():
     if len(playertableslist) > 4:
-        scoretable = emptyscoretablecompact
+        if taal == "EN":
+            scoretable = emptyscoretablecompact
+        else:
+            scoretable = emptyscoretablecompactNL
     else:
-        scoretable = emptyscoretable
+        if taal == "EN":
+            scoretable = emptyscoretable
+        else:
+            scoretable = emptyscoretableNL
     for i in range(len(scoretable)):
         for j in range(len(playertableslist)):
             if j == 0:
@@ -201,22 +272,40 @@ def suggestions():
         sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+str(A)+ResetAll)
         suggestionslist.append(sug)
     if (A == B == C == D == E):
-        sug = "%s @ %s" % (Goed+for2(50)+ResetAll,Tekst+"FV"+ResetAll)
+        if taal == "EN":
+            sug = "%s @ %s" % (Goed+for2(50)+ResetAll,Tekst+"FV"+ResetAll)
+        else:
+            sug = "%s @ %s" % (Goed+for2(50)+ResetAll,Tekst+"FV"+ResetAll)
         suggestionslist.append(sug)
     if (A == B-1 and B == C-1 and C == D-1 and D == E-1):
-        sug = "%s @ %s" % (Goed+for2(40)+ResetAll,Tekst+"LS"+ResetAll)
+        if taal == "EN":
+            sug = "%s @ %s" % (Goed+for2(40)+ResetAll,Tekst+"LS"+ResetAll)
+        else:
+            sug = "%s @ %s" % (Goed+for2(40)+ResetAll,Tekst+"GS"+ResetAll)
         suggestionslist.append(sug)
     if (B == C-1 and C == D-1 and D == E-1) or (A == C-1 and C == D-1 and D == E-1) or (A == B-1 and B == D-1 and D == E-1) or (A == B-1 and B == C-1 and C == E-1) or (A == B-1 and B == C-1 and C == D-1):
-        sug = "%s @ %s" % (Goed+for2(30)+ResetAll,Tekst+"SS"+ResetAll)
+        if taal == "EN":
+            sug = "%s @ %s" % (Goed+for2(30)+ResetAll,Tekst+"SS"+ResetAll)
+        else:
+            sug = "%s @ %s" % (Goed+for2(30)+ResetAll,Tekst+"KS"+ResetAll)
         suggestionslist.append(sug)
     if (A == B == C and D == E) or (A == B and C == D == E):
-        sug = "%s @ %s" % (Goed+for2(25)+ResetAll,Tekst+"FH"+ResetAll)
+        if taal == "EN":
+            sug = "%s @ %s" % (Goed+for2(25)+ResetAll,Tekst+"FH"+ResetAll)
+        else:
+            sug = "%s @ %s" % (Goed+for2(25)+ResetAll,Tekst+"VH"+ResetAll)
         suggestionslist.append(sug)
     if (A == B == C == D) or (B == C == D == E):
-        sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+"FK"+ResetAll)
+        if taal == "EN":
+            sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+"FK"+ResetAll)
+        else:
+            sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+"VD"+ResetAll)
         suggestionslist.append(sug)
     if (A == B == C) or (B == C == D) or (C == D == E):
-        sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+"TK"+ResetAll)
+        if taal == "EN":
+            sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+"TK"+ResetAll)
+        else:
+            sug = "%s @ %s" % (Goed+for2(A+B+C+D+E)+ResetAll,Tekst+"DD"+ResetAll)
         suggestionslist.append(sug)
     if A == B and B != C:
         sug = "%s @ %s" % (for2(A+B),str(A))
@@ -230,7 +319,10 @@ def suggestions():
     if C != D and D == E:
         sug = "%s @ %s" % (for2(D+E),str(D))
         suggestionslist.append(sug)
-    sug = "%s @ %s" % (for2(A+B+C+D+E),"FC")
+    if taal == "EN":
+        sug = "%s @ %s" % (for2(A+B+C+D+E),"FC")
+    else:
+        sug = "%s @ %s" % (for2(A+B+C+D+E),"VK")
     suggestionslist.append(sug)
     count = 1
     for i in suggestionslist:
@@ -398,7 +490,10 @@ def roll():
         D = Firstroll[3]
         E = Firstroll[4]
         Dice = visualDice()
-        print("#1 %sROLL all dice%s:" % (Tekst,ResetAll))
+        if taal == "EN":
+            print("#1 %sROLL all dice%s:" % (Tekst,ResetAll))
+        else:
+            print("#1 %sROL alle dobbelstenen%s:" % (Tekst,ResetAll))
         print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
@@ -407,7 +502,10 @@ def roll():
             if counti % 5 == 0:
                 print()
         print(Wit+"   A     B     C     D     E"+ResetAll)
-        choice = input("#2 %sCHOOSE%s which dice %sto ROLL%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if taal == "EN":
+            choice = input("#2 %sCHOOSE%s which dice %sto ROLL%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        else:
+            choice = input("#2 %sKIES%s welke stenen je wilt %sROLLEN%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
         Secondroll = Firstroll
@@ -437,7 +535,10 @@ def roll():
             if counti % 5 == 0:
                 print()
         print(Wit+"   A     B     C     D     E"+ResetAll)
-        choice = input("#3 %sCHOOSE%s which dice %sto ROLL%s or \"S\" to show all players\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if taal == "EN":
+            choice = input("#3 %sCHOOSE%s which dice %sto ROLL%s or \"S\"\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        else:
+            choice = input("#3 %sKIES%s welke stenen je wilt %sROLLEN%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
         Thirdroll = Secondroll
@@ -470,7 +571,10 @@ def roll():
         return A,B,C,D,E
 
 def calcstuff():
-    calclist = [41*"=","Techy tips %s(!= try @home)%s" % (DarkGray,ResetAll)+16*" ",41*"-","","","","","","",41*"-","","","",41*"-","","","","","","","",41*"-","","","",41*"="]
+    if taal == "EN":
+        calclist = [41*"=","Techy tips %s(!= try @home)%s" % (DarkGray,ResetAll)+16*" ",41*"-","","","","","","",41*"-","","","",41*"-","","","","","","","",41*"-","","","",41*"="]
+    else:
+        calclist = [41*"=","Techy tips %s(!= try @home)%s" % (DarkGray,ResetAll)+16*" ",41*"-","","","","","","",41*"-","","","",41*"-","","","","","","","",41*"-","","","",41*"="]
     for i in playertableslist:
         if i[1] == player:
             bonusscore = 0
@@ -480,132 +584,249 @@ def calcstuff():
             elif i[3] < 3:
                 bonussum = (3-i[3])*-1
                 bonusscore += bonussum
-                calclist[3] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                if taal == "EN":
+                    calclist[3] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                else:
+                    calclist[3] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
             elif i[3] == 3:
-                calclist[3] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    calclist[3] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    calclist[3] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             else:
                 bonussum = i[3]-3
                 bonusscore += bonussum
-                calclist[3] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                if taal == "EN":
+                    calclist[3] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                else:
+                    calclist[3] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
             if i[4] == "":
                 bonussum = 0
                 calclist[4] = "2 = sum(for if == 2)"
             elif i[4] < 6:
                 bonussum = (6-i[4])*-1
                 bonusscore += bonussum
-                calclist[4] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                if taal == "EN":
+                    calclist[4] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                else:
+                    calclist[4] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
             elif i[4] == 6:
-                calclist[4] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    calclist[4] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    calclist[4] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             else:
                 bonussum = i[4]-6
                 bonusscore += bonussum
-                calclist[4] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                if taal == "EN":
+                    calclist[4] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                else:
+                    calclist[4] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
             if i[5] == "":
                 bonussum = 0
                 calclist[5] = "3 = sum(for if == 3)"
             elif i[5] < 9:
                 bonussum = (9-i[5])*-1
                 bonusscore += bonussum
-                calclist[5] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                if taal == "EN":
+                    calclist[5] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                else:
+                    calclist[5] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
             elif i[5] == 9:
-                calclist[5] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    calclist[5] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    calclist[5] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             else:
                 bonussum = i[5]-9
                 bonusscore += bonussum
-                calclist[5] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                if taal == "EN":
+                    calclist[5] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                else:
+                    calclist[5] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
             if i[6] == "":
                 bonussum = 0
                 calclist[6] = "4 = sum(for if == 4)"
             elif i[6] < 12:
                 bonussum = (12-i[6])*-1
                 bonusscore += bonussum
-                calclist[6] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                if taal == "EN":
+                    calclist[6] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                else:
+                    calclist[6] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
             elif i[6] == 12:
-                calclist[6] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    calclist[6] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    calclist[6] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             else:
                 bonussum = i[6]-12
                 bonusscore += bonussum
-                calclist[6] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                if taal == "EN":
+                    calclist[6] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                else:
+                    calclist[6] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
             if i[7] == "":
                 bonussum = 0
                 calclist[7] = "5 = sum(for if == 5)"
             elif i[7] < 15:
                 bonussum = (15-i[7])*-1
                 bonusscore += bonussum
-                calclist[7] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                if taal == "EN":
+                    calclist[7] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                else:
+                    calclist[7] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
             elif i[7] == 15:
-                calclist[7] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    calclist[7] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    calclist[7] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             else:
                 bonussum = i[7]-15
                 bonusscore += bonussum
-                calclist[7] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                if taal == "EN":
+                    calclist[7] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                else:
+                    calclist[7] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
             if i[8] == "":
                 bonussum = 0
                 calclist[8] = "6 = sum(for if == 6)"
             elif i[8] < 18:
                 bonussum = (18-i[8])*-1
                 bonusscore += bonussum
-                calclist[8] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                if taal == "EN":
+                    calclist[8] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                else:
+                    calclist[8] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
             elif i[8] == 18:
-                calclist[8] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    calclist[8] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    calclist[8] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             else:
                 bonussum = i[8]-18
                 bonusscore += bonussum
-                calclist[8] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                if taal == "EN":
+                    calclist[8] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                else:
+                    calclist[8] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
             sumup = 0
             for j in i[3:9]:
                 if j != "":
                     sumup += j
             i[10] = sumup
-            calclist[10] = "if () in UPPER % 3: SUBTOTAL UPPER = 63"
+            if taal == "EN":
+                calclist[10] = "if () in UPPER % 3: SUBTOTAL UPPER = 63"
+            else:
+                calclist[10] = "if () in BOVEN % 3: SUBTOTAAL BOVEN = 63"
             if sumup < 63:
-                calclist[11] = "Failed, BONUS not achieved"
+                if taal == "EN":
+                    calclist[11] = "Failed, BONUS not achieved"
+                else:
+                    calclist[11] = "Mislukt, BONUS niet behaald"
                 bonus = 0
                 i[11] = bonus
             else:
-                calclist[11] = 9*" "+"Success, %s achieved" % (Matig+"BONUS"+ResetAll)+9*" "
+                if taal == "EN":
+                    calclist[11] = 9*" "+"Success, %s achieved" % (Matig+"BONUS"+ResetAll)+9*" "
+                else:
+                    calclist[11] = 10*" "+"Gelukt, %s behaald" % (Matig+"BONUS"+ResetAll)+10*" "
                 bonus = 35
                 i[11] = bonus
             if "" in i[3:9]:
-                calclist[11] = "if SUBTOTAL UPPER >= 63: BONUS = 35"
+                if taal == "EN":
+                    calclist[11] = "if SUBTOTAL UPPER >= 63: BONUS = 35"
+                else:
+                    calclist[11] = "if SUBTOTAAL BOVEN >= 63: BONUS = 35"
             subsumup = i[10]+i[11]
             i[12] = subsumup
             i[23] = subsumup
             if bonusscore > 0:
-                bonushint = "%s over BONUS target" % (Goed+forr3(bonusscore)+ResetAll)+20*" "
+                if taal == "EN":
+                    bonushint = "%s over BONUS target" % (Goed+forr3(bonusscore)+ResetAll)+20*" "
+                else:
+                    bonushint = "%s boven BONUS target" % (Goed+forr3(bonusscore)+ResetAll)+19*" "
             elif bonusscore < 0:
-                bonushint = "%s below BONUS target" % (Slecht+forr3(bonusscore)+ResetAll)+19*" "
+                if taal == "EN":
+                    bonushint = "%s below BONUS target" % (Slecht+forr3(bonusscore)+ResetAll)+19*" "
+                else:
+                    bonushint = "%s onder BONUS target" % (Slecht+forr3(bonusscore)+ResetAll)+19*" "
             else:
-                bonushint = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                if taal == "EN":
+                    bonushint = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                else:
+                    bonushint = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
             calclist[12] = bonushint
             if i[14] == "":
-                calclist[14] = "if count(=) >= 3:         TK = sum()"
+                if taal == "EN": 
+                    calclist[14] = "if count(=) >= 3:         TK = sum()"
+                else:
+                    calclist[14] = "if count(=) >= 3:         DD = sum()"
             else:
-                calclist[14] = "completed"
+                if taal == "EN":
+                    calclist[14] = "completed"
+                else:
+                    calclist[14] = "klaar"
             if i[15] == "":
-                calclist[15] = "if count(=) >= 4:         FK = sum()"
+                if taal == "EN":
+                    calclist[15] = "if count(=) >= 4:         FK = sum()"
+                else:
+                    calclist[15] = "if count(=) >= 4:         VD = sum()"
             else:
-                calclist[15] = "completed"
+                if taal == "EN":
+                    calclist[15] = "completed"
+                else:
+                    calclist[15] = "klaar"
             if i[16] == "":
-                calclist[16] = "if for count(=) in [2,3]: FH = 25"
+                if taal == "EN":
+                    calclist[16] = "if for count(=) in [2,3]: FH = 25"
+                else:
+                    calclist[16] = "if for count(=) in [2,3]: VH = 25"
             else:
-                calclist[16] = "completed"
+                if taal == "EN":
+                    calclist[16] = "completed"
+                else:
+                    calclist[16] = "klaar"
             if i[17] == "":
-                calclist[17] = "if count(+1 =) >= 4:      SS = 30"
+                if taal == "EN":
+                    calclist[17] = "if count(+1 =) >= 4:      SS = 30"
+                else:
+                    calclist[17] = "if count(+1 =) >= 4:      KS = 30"
             else:
-                calclist[17] = "completed"
+                if taal == "EN":
+                    calclist[17] = "completed"
+                else:
+                    calclist[17] = "klaar"
             if i[18] == "":
-                calclist[18] = "if count(+1 =) == 5:      LS = 40"
+                if taal == "EN":
+                    calclist[18] = "if count(+1 =) == 5:      LS = 40"
+                else:
+                    calclist[18] = "if count(+1 =) == 5:      GS = 40"
             else:
-                calclist[18] = "completed"
+                if taal == "EN":
+                    calclist[18] = "completed"
+                else:
+                    calclist[18] = "klaar"
             if i[19] == "":
-                calclist[19] = "if count(=) == 5:         FV = 50"
+                if taal == "EN":
+                    calclist[19] = "if count(=) == 5:         FV = 50"
+                else:
+                    calclist[19] = "if count(=) == 5:         FV = 50"
             else:
-                calclist[19] = "completed"
+                if taal == "EN":
+                    calclist[19] = "completed"
+                else:
+                    calclist[19] = "klaar"
             if i[20] == "":
-                calclist[20] = "                          FC = sum()"
+                if taal == "EN":
+                    calclist[20] = "                          FC = sum()"
+                else:
+                    calclist[20] = "                          VK = sum()"
             else:
-                calclist[20] = "completed"
+                if taal == "EN":
+                    calclist[20] = "completed"
+                else:
+                    calclist[20] = "klaar"
             sumlow = 0
             for j in i[14:21]:
                 if j != "":
@@ -615,7 +836,10 @@ def calcstuff():
     return calclist
 
 def showone():
-    scoretable = emptyscoretable
+    if taal == "EN":
+        scoretable = emptyscoretable
+    else:
+        scoretable = emptyscoretableNL
     for i in playertableslist:
         if i[1] == player:
             i[1] = Goed+player+ResetAll
@@ -627,10 +851,23 @@ def showone():
 print()
 print(Tabel+"+ -"+ResetAll+forcall(Resultaat+"- %s F I V er %s -" % (Reverse,ResetAll+Resultaat)+ResetAll)+Tabel+"- +"+ResetAll)
 print()
-print(DarkGray+"Confirm with \"Enter\", leave with \"Q\"-\"Enter\""+ResetAll)
+taal = input(">1: English\n 2: Nederlands\n : ")
+if taal.upper() in afsluitlijst:
+    exit()
+elif taal == "2":
+    taal = "NL"
+else:
+    taal = "EN"
+if taal == "EN":
+    print(DarkGray+"Confirm with \"Enter\", leave with \"Q\"-\"Enter\""+ResetAll)
+else:
+    print(DarkGray+"Bevestig met \"Enter\", verlaat met \"Q\"-\"Enter\""+ResetAll)
 playertableslist = playeradd()
 skiproll = "N"
-alea = input("Roll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+if taal == "EN":
+    alea = input("Roll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+else:
+    alea = input("Speel met %svirtuele%s of %sfysieke%s dobbelstenen\n >1: %svirtuele%s\n  2: %sfysieke%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if alea.upper() in afsluitlijst:
     exit()
 elif alea == "2":
@@ -655,18 +892,33 @@ while playround < 13 :
                 counttops += 1
         if counttops == 1:
             topplayer = players[scores.index(topscore)]
-            print("%s is ahead @ %s points" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
+            if taal == "EN":
+                print("%s is ahead @ %s points" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
+            else:
+                print("%s staat vóór @ %s punten" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
         elif counttops == len(playertableslist) and playround != 1:
-            print("Draw @ %s points" % (SubGoed+str(topscore)+ResetAll))
+            if taal == "EN":
+                print("Draw @ %s points" % (SubGoed+str(topscore)+ResetAll))
+            else:
+                print("Gelijkspel @ %s punten" % (SubGoed+str(topscore)+ResetAll))
         elif counttops != len(playertableslist) and playround != 1:
-            print("The players @ %s points are ahead" % (SubGoed+str(topscore)+ResetAll))
+            if taal == "EN":
+                print("The players @ %s points are ahead" % (SubGoed+str(topscore)+ResetAll))
+            else:
+                print("De spelers @ %s punten staan vóór" % (SubGoed+str(topscore)+ResetAll))
     print()
-    print("ROUND %s" % (Resultaat+str(playround)+ResetAll))
+    if taal == "EN":
+        print("ROUND #%s" % (Resultaat+str(playround)+ResetAll))
+    else:
+        print("RONDE #%s" % (Resultaat+str(playround)+ResetAll))
     for i in playertableslist:
         print()
         player = i[1]
         if len(playertableslist) > 1:
-            print("%s's turn" % (Goed+player.strip()+ResetAll))
+            if taal == "EN":
+                print("%s's turn" % (Goed+player.strip()+ResetAll))
+            else:
+                print("%s is aan de beurt" % (Goed+player.strip()+ResetAll))
         calclist = calcstuff()
         showone()
         if skiproll == "Y":
@@ -686,9 +938,15 @@ while playround < 13 :
             writeifvalid = "Y"
             while writeifvalid == "Y":
                 if skiproll == "Y":
-                    score = input("Enter your score like \"%sRESULT%s @ %sWHERE%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
+                    if taal == "EN":
+                        score = input("Enter your score like \"%sRESULT%s @ %sWHERE%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
+                    else:
+                        score = input("Voer je score in als \"%sRESULTAAT%s @ %sWAAR%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
                 else:
-                    score = input("Choose a suggestion or enter your score like \"%sRESULT%s @ %sWHERE%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
+                    if taal == "EN":
+                        score = input("Choose a suggestion or enter your score like \"%sRESULT%s @ %sWHERE%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
+                    else:
+                        score = input("Kies een suggestie of voer je score in als \"%sRESULTAAT%s @ %sWAAR%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
                 if score.upper() in afsluitlijst:
                     exit()
                 try:
@@ -700,302 +958,9 @@ while playround < 13 :
                 except(Exception) as error:
                     #print(error)
                     pass
-                if not "@" in score:
-                    if (score.upper() in ["FV","50","YAY","YES"] or score.upper() in jalijst) and i[19] == "":
-                        i[19] = 50
-                        calclist[19] = "completed"
-                        print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        chk = "Y"
-                    elif (score.upper() in ["SHIT","FUCK","BITCH","DAMN","NO"] or score.upper() in neelijst) and i[19] == "":
-                        i[19] = 0
-                        calclist[19] = "bummer"
-                        print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        chk = "Y"
-                    elif (score.upper() in ["LS","40"]) and i[18] == "":
-                        i[18] = 40
-                        calclist[18] = "completed"
-                        print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        chk = "Y"
-                    elif (score.upper() in ["SS","30"]) and i[17] == "":
-                        i[17] = 30
-                        calclist[17] = "completed"
-                        print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        chk = "Y"
-                    elif (score.upper() in ["FH","25"]) and i[16] == "":
-                        i[16] = 25
-                        calclist[16] = "completed"
-                        print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
-                        print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                        chk = "Y"
-                    elif len(score) > 1 and score[0] == "/":
-                        if score[1:] == "1" and i[3] == "":
-                            i[3] = 0
-                            bonussum = -3 * 1
-                            calclist[3] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[3]+ResetAll+emptyscoretable[3]+Tabel+pipeline[3]+ResetAll+Goed+forr10(i[3])+ResetAll+Tabel+pipeline[3]+ResetAll+forl41(calclist[3])+Tabel+pipeline[3]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[1:] == "2" and i[4] == "":
-                            i[4] = 0
-                            bonussum = -3 * 2
-                            calclist[4] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[4]+ResetAll+emptyscoretable[4]+Tabel+pipeline[4]+ResetAll+Goed+forr10(i[4])+ResetAll+Tabel+pipeline[4]+ResetAll+forl41(calclist[4])+Tabel+pipeline[4]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[1:] == "3" and i[5] == "":
-                            i[5] = 0
-                            bonussum = -3 * 3
-                            calclist[5] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[5]+ResetAll+emptyscoretable[5]+Tabel+pipeline[5]+ResetAll+Goed+forr10(i[5])+ResetAll+Tabel+pipeline[5]+ResetAll+forl41(calclist[5])+Tabel+pipeline[5]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[1:] == "4" and i[6] == "":
-                            i[6] = 0
-                            bonussum = -3 * 4
-                            calclist[6] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[6]+ResetAll+emptyscoretable[6]+Tabel+pipeline[6]+ResetAll+Goed+forr10(i[6])+ResetAll+Tabel+pipeline[6]+ResetAll+forl41(calclist[6])+Tabel+pipeline[6]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[1:] == "5" and i[7] == "":
-                            i[7] = 0
-                            bonussum = -3 * 5
-                            calclist[7] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[7]+ResetAll+emptyscoretable[7]+Tabel+pipeline[7]+ResetAll+Goed+forr10(i[7])+ResetAll+Tabel+pipeline[7]+ResetAll+forl41(calclist[7])+Tabel+pipeline[7]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[1:] == "6" and i[8] == "":
-                            i[8] = 0
-                            bonussum = -3 * 6
-                            calclist[8] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif (score.upper()[1:] in ["FV","50","YAY","YES"] or score.upper()[1:] in jalijst) and i[19] == "":
-                            i[19] = 0
-                            calclist[19] = "bummer"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score.upper()[1:] in ["LS","40"] and i[18] == "":
-                            i[18] = 0
-                            calclist[18] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score.upper()[1:] in ["SS","30"] and i[17] == "":
-                            i[17] = 30
-                            calclist[17] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score.upper()[1:] in ["FH","25"] and i[16] == "":
-                            i[16] = 25
-                            calclist[16] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score.upper()[1:] in ["FK"] and i[15] == "":
-                            i[15] = A+B+C+D+E
-                            calclist[15] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[15]+ResetAll+emptyscoretable[15]+Tabel+pipeline[15]+ResetAll+Goed+forr10(i[15])+ResetAll+Tabel+pipeline[15]+ResetAll+forl41(calclist[15])+Tabel+pipeline[15]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score.upper()[1:] in ["TK"] and i[14] == "":
-                            i[14] = A+B+C+D+E
-                            calclist[14] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[14]+ResetAll+emptyscoretable[14]+Tabel+pipeline[14]+ResetAll+Goed+forr10(i[14])+ResetAll+Tabel+pipeline[14]+ResetAll+forl41(calclist[14])+Tabel+pipeline[14]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score.upper()[1:] in ["FC"] and i[20] == "": # Stupid, but hey
-                            i[20] = A+B+C+D+E
-                            calclist[20] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[20]+ResetAll+emptyscoretable[20]+Tabel+pipeline[20]+ResetAll+Goed+forr10(i[20])+ResetAll+Tabel+pipeline[20]+ResetAll+forl41(calclist[20])+Tabel+pipeline[20]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        else:
-                            pass
-                else:
-                    try:
-                        scoreval = eval(score[:score.index("@")])
-                        if score[score.index("@")+1:] == "1" and scoreval % 1 == 0 and scoreval <= 5*1 and i[3] == "":
-                            i[3] = scoreval
-                            if i[3] < 3 * 1:
-                                bonussum = (3 * 1 -i[3]) * -1
-                                calclist[3] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            elif i[3] == 3 * 1:
-                                calclist[3] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
-                            else:
-                                bonussum = i[3] -3 * 1
-                                calclist[3] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[3]+ResetAll+emptyscoretable[3]+Tabel+pipeline[3]+ResetAll+Goed+forr10(i[3])+ResetAll+Tabel+pipeline[3]+ResetAll+forl41(calclist[3])+Tabel+pipeline[3]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:] == "2" and scoreval % 2 == 0 and scoreval <= 5*2 and i[4] == "":
-                            i[4] = scoreval
-                            if i[4] < 3 * 2:
-                                bonussum = (3 * 2 -i[4]) * -1
-                                calclist[4] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            elif i[4] == 3 * 2:
-                                calclist[4] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
-                            else:
-                                bonussum = i[4] -3 * 2
-                                calclist[4] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[4]+ResetAll+emptyscoretable[4]+Tabel+pipeline[4]+ResetAll+Goed+forr10(i[4])+ResetAll+Tabel+pipeline[4]+ResetAll+forl41(calclist[4])+Tabel+pipeline[4]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:] == "3" and scoreval % 3 == 0 and scoreval <= 5*3 and i[5] == "":
-                            i[5] = scoreval
-                            if i[5] < 3 * 3:
-                                bonussum = (3 * 3 -i[5]) * -1
-                                calclist[5] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            elif i[5] == 3 * 3:
-                                calclist[5] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
-                            else:
-                                bonussum = i[5] -3 * 3
-                                calclist[5] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[5]+ResetAll+emptyscoretable[5]+Tabel+pipeline[5]+ResetAll+Goed+forr10(i[5])+ResetAll+Tabel+pipeline[5]+ResetAll+forl41(calclist[5])+Tabel+pipeline[5]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:] == "4" and scoreval % 4 == 0 and scoreval <= 5*4 and i[6] == "":
-                            i[6] = scoreval
-                            if i[6] < 3 * 4:
-                                bonussum = (3 * 4 -i[6]) * -1
-                                calclist[6] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            elif i[6] == 3 * 4:
-                                calclist[6] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
-                            else:
-                                bonussum = i[6] -3 * 4
-                                calclist[6] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[6]+ResetAll+emptyscoretable[6]+Tabel+pipeline[6]+ResetAll+Goed+forr10(i[6])+ResetAll+Tabel+pipeline[6]+ResetAll+forl41(calclist[6])+Tabel+pipeline[6]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:] == "5" and scoreval % 5 == 0 and scoreval <= 5*5 and i[7] == "":
-                            i[7] = scoreval
-                            if i[7] < 3 * 5:
-                                bonussum = (3 * 5 -i[7]) * -1
-                                calclist[7] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            elif i[7] == 3 * 5:
-                                calclist[7] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
-                            else:
-                                bonussum = i[7] -3 * 5
-                                calclist[7] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[7]+ResetAll+emptyscoretable[7]+Tabel+pipeline[7]+ResetAll+Goed+forr10(i[7])+ResetAll+Tabel+pipeline[7]+ResetAll+forl41(calclist[7])+Tabel+pipeline[7]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:] == "6" and scoreval % 6 == 0 and scoreval <= 5*6 and i[8] == "":
-                            i[8] = scoreval
-                            if i[8] < 3 * 6:
-                                bonussum = (3 * 6 -i[8]) * -1
-                                calclist[8] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
-                            elif i[8] == 3 * 6:
-                                calclist[8] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
-                            else:
-                                bonussum = i[8] -3 * 6
-                                calclist[8] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() == "TK" and 5*1 <= scoreval <= 5*6 and i[14] == "":
-                            i[14] = scoreval
-                            calclist[14] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[14]+ResetAll+emptyscoretable[14]+Tabel+pipeline[14]+ResetAll+Goed+forr10(i[14])+ResetAll+Tabel+pipeline[14]+ResetAll+forl41(calclist[14])+Tabel+pipeline[14]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() == "FK" and 5*1 <= scoreval <= 5*6 and i[15] == "":
-                            i[15] = scoreval
-                            calclist[15] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[15]+ResetAll+emptyscoretable[15]+Tabel+pipeline[15]+ResetAll+Goed+forr10(i[15])+ResetAll+Tabel+pipeline[15]+ResetAll+forl41(calclist[15])+Tabel+pipeline[15]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() == "FC" and 5*1 <= scoreval <= 5*6 and i[20] == "":
-                            i[20] = scoreval
-                            calclist[20] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[20]+ResetAll+emptyscoretable[20]+Tabel+pipeline[20]+ResetAll+Goed+forr10(i[20])+ResetAll+Tabel+pipeline[20]+ResetAll+forl41(calclist[20])+Tabel+pipeline[20]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() in ["FH","25"] and i[16] == "":
-                            i[16] = 25
-                            calclist[16] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() in ["SS","30"] and i[17] == "":
-                            i[17] = 30
-                            calclist[17] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() in ["LS","50"] and i[18] == "":
-                            i[18] = 40
-                            calclist[18] = "completed"
-                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
-                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
-                            chk = "Y"
-                        elif score[score.index("@")+1:].upper() in ["FV","50"] and i[19] == "":
+                if taal == "EN":
+                    if not "@" in score:
+                        if (score.upper() in ["FV","50","YAY","YES"] or score.upper() in jalijst) and i[19] == "":
                             i[19] = 50
                             calclist[19] = "completed"
                             print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
@@ -1003,11 +968,614 @@ while playround < 13 :
                             print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
                             print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
                             chk = "Y"
-                        else:
+                        elif (score.upper() in ["SHIT","FUCK","BITCH","DAMN","NO"] or score.upper() in neelijst) and i[19] == "":
+                            i[19] = 0
+                            calclist[19] = "bummer"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["LS","40"]) and i[18] == "":
+                            i[18] = 40
+                            calclist[18] = "completed"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["SS","30"]) and i[17] == "":
+                            i[17] = 30
+                            calclist[17] = "completed"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["FH","25"]) and i[16] == "":
+                            i[16] = 25
+                            calclist[16] = "completed"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif len(score) > 1 and score[0] == "/":
+                            if score[1:] == "1" and i[3] == "":
+                                i[3] = 0
+                                bonussum = -3 * 1
+                                calclist[3] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[3]+ResetAll+emptyscoretable[3]+Tabel+pipeline[3]+ResetAll+Goed+forr10(i[3])+ResetAll+Tabel+pipeline[3]+ResetAll+forl41(calclist[3])+Tabel+pipeline[3]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "2" and i[4] == "":
+                                i[4] = 0
+                                bonussum = -3 * 2
+                                calclist[4] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[4]+ResetAll+emptyscoretable[4]+Tabel+pipeline[4]+ResetAll+Goed+forr10(i[4])+ResetAll+Tabel+pipeline[4]+ResetAll+forl41(calclist[4])+Tabel+pipeline[4]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "3" and i[5] == "":
+                                i[5] = 0
+                                bonussum = -3 * 3
+                                calclist[5] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[5]+ResetAll+emptyscoretable[5]+Tabel+pipeline[5]+ResetAll+Goed+forr10(i[5])+ResetAll+Tabel+pipeline[5]+ResetAll+forl41(calclist[5])+Tabel+pipeline[5]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "4" and i[6] == "":
+                                i[6] = 0
+                                bonussum = -3 * 4
+                                calclist[6] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[6]+ResetAll+emptyscoretable[6]+Tabel+pipeline[6]+ResetAll+Goed+forr10(i[6])+ResetAll+Tabel+pipeline[6]+ResetAll+forl41(calclist[6])+Tabel+pipeline[6]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "5" and i[7] == "":
+                                i[7] = 0
+                                bonussum = -3 * 5
+                                calclist[7] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[7]+ResetAll+emptyscoretable[7]+Tabel+pipeline[7]+ResetAll+Goed+forr10(i[7])+ResetAll+Tabel+pipeline[7]+ResetAll+forl41(calclist[7])+Tabel+pipeline[7]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "6" and i[8] == "":
+                                i[8] = 0
+                                bonussum = -3 * 6
+                                calclist[8] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif (score.upper()[1:] in ["FV","50","YAY","YES"] or score.upper()[1:] in jalijst) and i[19] == "":
+                                i[19] = 0
+                                calclist[19] = "bummer"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["LS","40"] and i[18] == "":
+                                i[18] = 0
+                                calclist[18] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["SS","30"] and i[17] == "":
+                                i[17] = 0
+                                calclist[17] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["FH","25"] and i[16] == "":
+                                i[16] = 0
+                                calclist[16] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["FK"] and i[15] == "":
+                                i[15] = 0
+                                calclist[15] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[15]+ResetAll+emptyscoretable[15]+Tabel+pipeline[15]+ResetAll+Goed+forr10(i[15])+ResetAll+Tabel+pipeline[15]+ResetAll+forl41(calclist[15])+Tabel+pipeline[15]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["TK"] and i[14] == "":
+                                i[14] = 0
+                                calclist[14] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[14]+ResetAll+emptyscoretable[14]+Tabel+pipeline[14]+ResetAll+Goed+forr10(i[14])+ResetAll+Tabel+pipeline[14]+ResetAll+forl41(calclist[14])+Tabel+pipeline[14]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["FC"] and i[20] == "": # Stupid, but hey
+                                i[20] = 0
+                                calclist[20] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[20]+ResetAll+emptyscoretable[20]+Tabel+pipeline[20]+ResetAll+Goed+forr10(i[20])+ResetAll+Tabel+pipeline[20]+ResetAll+forl41(calclist[20])+Tabel+pipeline[20]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            else:
+                                pass
+                    else:
+                        try:
+                            scoreval = eval(score[:score.index("@")])
+                            if score[score.index("@")+1:] == "1" and scoreval % 1 == 0 and scoreval <= 5*1 and i[3] == "":
+                                i[3] = scoreval
+                                if i[3] < 3 * 1:
+                                    bonussum = (3 * 1 -i[3]) * -1
+                                    calclist[3] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                elif i[3] == 3 * 1:
+                                    calclist[3] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                                else:
+                                    bonussum = i[3] -3 * 1
+                                    calclist[3] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[3]+ResetAll+emptyscoretable[3]+Tabel+pipeline[3]+ResetAll+Goed+forr10(i[3])+ResetAll+Tabel+pipeline[3]+ResetAll+forl41(calclist[3])+Tabel+pipeline[3]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "2" and scoreval % 2 == 0 and scoreval <= 5*2 and i[4] == "":
+                                i[4] = scoreval
+                                if i[4] < 3 * 2:
+                                    bonussum = (3 * 2 -i[4]) * -1
+                                    calclist[4] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                elif i[4] == 3 * 2:
+                                    calclist[4] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                                else:
+                                    bonussum = i[4] -3 * 2
+                                    calclist[4] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[4]+ResetAll+emptyscoretable[4]+Tabel+pipeline[4]+ResetAll+Goed+forr10(i[4])+ResetAll+Tabel+pipeline[4]+ResetAll+forl41(calclist[4])+Tabel+pipeline[4]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "3" and scoreval % 3 == 0 and scoreval <= 5*3 and i[5] == "":
+                                i[5] = scoreval
+                                if i[5] < 3 * 3:
+                                    bonussum = (3 * 3 -i[5]) * -1
+                                    calclist[5] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                elif i[5] == 3 * 3:
+                                    calclist[5] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                                else:
+                                    bonussum = i[5] -3 * 3
+                                    calclist[5] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[5]+ResetAll+emptyscoretable[5]+Tabel+pipeline[5]+ResetAll+Goed+forr10(i[5])+ResetAll+Tabel+pipeline[5]+ResetAll+forl41(calclist[5])+Tabel+pipeline[5]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "4" and scoreval % 4 == 0 and scoreval <= 5*4 and i[6] == "":
+                                i[6] = scoreval
+                                if i[6] < 3 * 4:
+                                    bonussum = (3 * 4 -i[6]) * -1
+                                    calclist[6] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                elif i[6] == 3 * 4:
+                                    calclist[6] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                                else:
+                                    bonussum = i[6] -3 * 4
+                                    calclist[6] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[6]+ResetAll+emptyscoretable[6]+Tabel+pipeline[6]+ResetAll+Goed+forr10(i[6])+ResetAll+Tabel+pipeline[6]+ResetAll+forl41(calclist[6])+Tabel+pipeline[6]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "5" and scoreval % 5 == 0 and scoreval <= 5*5 and i[7] == "":
+                                i[7] = scoreval
+                                if i[7] < 3 * 5:
+                                    bonussum = (3 * 5 -i[7]) * -1
+                                    calclist[7] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                elif i[7] == 3 * 5:
+                                    calclist[7] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                                else:
+                                    bonussum = i[7] -3 * 5
+                                    calclist[7] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[7]+ResetAll+emptyscoretable[7]+Tabel+pipeline[7]+ResetAll+Goed+forr10(i[7])+ResetAll+Tabel+pipeline[7]+ResetAll+forl41(calclist[7])+Tabel+pipeline[7]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "6" and scoreval % 6 == 0 and scoreval <= 5*6 and i[8] == "":
+                                i[8] = scoreval
+                                if i[8] < 3 * 6:
+                                    bonussum = (3 * 6 -i[8]) * -1
+                                    calclist[8] = Slecht+forr3(bonussum)+ResetAll+" below BONUS target"+19*" "
+                                elif i[8] == 3 * 6:
+                                    calclist[8] = Wit+"  ="+ResetAll+" on BONUS target"+22*" "
+                                else:
+                                    bonussum = i[8] -3 * 6
+                                    calclist[8] = Goed+forr3(bonussum)+ResetAll+" over BONUS target"+20*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() == "TK" and 5*1 <= scoreval <= 5*6 and i[14] == "":
+                                i[14] = scoreval
+                                calclist[14] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[14]+ResetAll+emptyscoretable[14]+Tabel+pipeline[14]+ResetAll+Goed+forr10(i[14])+ResetAll+Tabel+pipeline[14]+ResetAll+forl41(calclist[14])+Tabel+pipeline[14]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() == "FK" and 5*1 <= scoreval <= 5*6 and i[15] == "":
+                                i[15] = scoreval
+                                calclist[15] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[15]+ResetAll+emptyscoretable[15]+Tabel+pipeline[15]+ResetAll+Goed+forr10(i[15])+ResetAll+Tabel+pipeline[15]+ResetAll+forl41(calclist[15])+Tabel+pipeline[15]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() == "FC" and 5*1 <= scoreval <= 5*6 and i[20] == "":
+                                i[20] = scoreval
+                                calclist[20] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[20]+ResetAll+emptyscoretable[20]+Tabel+pipeline[20]+ResetAll+Goed+forr10(i[20])+ResetAll+Tabel+pipeline[20]+ResetAll+forl41(calclist[20])+Tabel+pipeline[20]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["FH","25"] and i[16] == "":
+                                i[16] = 25
+                                calclist[16] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["SS","30"] and i[17] == "":
+                                i[17] = 30
+                                calclist[17] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["LS","40"] and i[18] == "":
+                                i[18] = 40
+                                calclist[18] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["FV","50"] and i[19] == "":
+                                i[19] = 50
+                                calclist[19] = "completed"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            else:
+                                pass
+                        except(Exception) as error:
+                            #print(error)
                             pass
-                    except(Exception) as error:
-                        #print(error)
-                        pass
+                else:
+                    if not "@" in score:
+                        if (score.upper() in ["FV","50","OK","JA","YES"] or score.upper() in jalijst) and i[19] == "":
+                            i[19] = 50
+                            calclist[19] = "klaar"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["SHIT","FUCK","KUT","NEE"] or score.upper() in neelijst) and i[19] == "":
+                            i[19] = 0
+                            calclist[19] = "jammer"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["GS","40"]) and i[18] == "":
+                            i[18] = 40
+                            calclist[18] = "klaar"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["KS","30"]) and i[17] == "":
+                            i[17] = 30
+                            calclist[17] = "klaar"
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif (score.upper() in ["VH","25"]) and i[16] == "":
+                            i[16] = 25
+                            calclist[16] = ""
+                            print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
+                            print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                            chk = "Y"
+                        elif len(score) > 1 and score[0] == "/":
+                            if score[1:] == "1" and i[3] == "":
+                                i[3] = 0
+                                bonussum = -3 * 1
+                                calclist[3] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[3]+ResetAll+emptyscoretable[3]+Tabel+pipeline[3]+ResetAll+Goed+forr10(i[3])+ResetAll+Tabel+pipeline[3]+ResetAll+forl41(calclist[3])+Tabel+pipeline[3]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "2" and i[4] == "":
+                                i[4] = 0
+                                bonussum = -3 * 2
+                                calclist[4] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[4]+ResetAll+emptyscoretable[4]+Tabel+pipeline[4]+ResetAll+Goed+forr10(i[4])+ResetAll+Tabel+pipeline[4]+ResetAll+forl41(calclist[4])+Tabel+pipeline[4]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "3" and i[5] == "":
+                                i[5] = 0
+                                bonussum = -3 * 3
+                                calclist[5] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[5]+ResetAll+emptyscoretable[5]+Tabel+pipeline[5]+ResetAll+Goed+forr10(i[5])+ResetAll+Tabel+pipeline[5]+ResetAll+forl41(calclist[5])+Tabel+pipeline[5]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "4" and i[6] == "":
+                                i[6] = 0
+                                bonussum = -3 * 4
+                                calclist[6] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[6]+ResetAll+emptyscoretable[6]+Tabel+pipeline[6]+ResetAll+Goed+forr10(i[6])+ResetAll+Tabel+pipeline[6]+ResetAll+forl41(calclist[6])+Tabel+pipeline[6]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "5" and i[7] == "":
+                                i[7] = 0
+                                bonussum = -3 * 5
+                                calclist[7] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[7]+ResetAll+emptyscoretable[7]+Tabel+pipeline[7]+ResetAll+Goed+forr10(i[7])+ResetAll+Tabel+pipeline[7]+ResetAll+forl41(calclist[7])+Tabel+pipeline[7]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[1:] == "6" and i[8] == "":
+                                i[8] = 0
+                                bonussum = -3 * 6
+                                calclist[8] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif (score.upper()[1:] in ["FV","50","OK","JA","YES"] or score.upper()[1:] in jalijst) and i[19] == "":
+                                i[19] = 0
+                                calclist[19] = "jammer"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["GS","40"] and i[18] == "":
+                                i[18] = 0
+                                calclist[18] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["KS","30"] and i[17] == "":
+                                i[17] = 0
+                                calclist[17] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["VH","25"] and i[16] == "":
+                                i[16] = 0
+                                calclist[16] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["VD"] and i[15] == "":
+                                i[15] = 0
+                                calclist[15] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[15]+ResetAll+emptyscoretable[15]+Tabel+pipeline[15]+ResetAll+Goed+forr10(i[15])+ResetAll+Tabel+pipeline[15]+ResetAll+forl41(calclist[15])+Tabel+pipeline[15]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["DD"] and i[14] == "":
+                                i[14] = 0
+                                calclist[14] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[14]+ResetAll+emptyscoretable[14]+Tabel+pipeline[14]+ResetAll+Goed+forr10(i[14])+ResetAll+Tabel+pipeline[14]+ResetAll+forl41(calclist[14])+Tabel+pipeline[14]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score.upper()[1:] in ["VK"] and i[20] == "": # Stupid, but hey
+                                i[20] = 0
+                                calclist[20] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" klaar:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[20]+ResetAll+emptyscoretable[20]+Tabel+pipeline[20]+ResetAll+Goed+forr10(i[20])+ResetAll+Tabel+pipeline[20]+ResetAll+forl41(calclist[20])+Tabel+pipeline[20]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            else:
+                                pass
+                    else:
+                        try:
+                            scoreval = eval(score[:score.index("@")])
+                            if score[score.index("@")+1:] == "1" and scoreval % 1 == 0 and scoreval <= 5*1 and i[3] == "":
+                                i[3] = scoreval
+                                if i[3] < 3 * 1:
+                                    bonussum = (3 * 1 -i[3]) * -1
+                                    calclist[3] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                elif i[3] == 3 * 1:
+                                    calclist[3] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
+                                else:
+                                    bonussum = i[3] -3 * 1
+                                    calclist[3] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[3]+ResetAll+emptyscoretable[3]+Tabel+pipeline[3]+ResetAll+Goed+forr10(i[3])+ResetAll+Tabel+pipeline[3]+ResetAll+forl41(calclist[3])+Tabel+pipeline[3]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "2" and scoreval % 2 == 0 and scoreval <= 5*2 and i[4] == "":
+                                i[4] = scoreval
+                                if i[4] < 3 * 2:
+                                    bonussum = (3 * 2 -i[4]) * -1
+                                    calclist[4] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                elif i[4] == 3 * 2:
+                                    calclist[4] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
+                                else:
+                                    bonussum = i[4] -3 * 2
+                                    calclist[4] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[4]+ResetAll+emptyscoretable[4]+Tabel+pipeline[4]+ResetAll+Goed+forr10(i[4])+ResetAll+Tabel+pipeline[4]+ResetAll+forl41(calclist[4])+Tabel+pipeline[4]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "3" and scoreval % 3 == 0 and scoreval <= 5*3 and i[5] == "":
+                                i[5] = scoreval
+                                if i[5] < 3 * 3:
+                                    bonussum = (3 * 3 -i[5]) * -1
+                                    calclist[5] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                elif i[5] == 3 * 3:
+                                    calclist[5] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
+                                else:
+                                    bonussum = i[5] -3 * 3
+                                    calclist[5] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[5]+ResetAll+emptyscoretable[5]+Tabel+pipeline[5]+ResetAll+Goed+forr10(i[5])+ResetAll+Tabel+pipeline[5]+ResetAll+forl41(calclist[5])+Tabel+pipeline[5]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "4" and scoreval % 4 == 0 and scoreval <= 5*4 and i[6] == "":
+                                i[6] = scoreval
+                                if i[6] < 3 * 4:
+                                    bonussum = (3 * 4 -i[6]) * -1
+                                    calclist[6] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                elif i[6] == 3 * 4:
+                                    calclist[6] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
+                                else:
+                                    bonussum = i[6] -3 * 4
+                                    calclist[6] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[6]+ResetAll+emptyscoretable[6]+Tabel+pipeline[6]+ResetAll+Goed+forr10(i[6])+ResetAll+Tabel+pipeline[6]+ResetAll+forl41(calclist[6])+Tabel+pipeline[6]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "5" and scoreval % 5 == 0 and scoreval <= 5*5 and i[7] == "":
+                                i[7] = scoreval
+                                if i[7] < 3 * 5:
+                                    bonussum = (3 * 5 -i[7]) * -1
+                                    calclist[7] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                elif i[7] == 3 * 5:
+                                    calclist[7] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
+                                else:
+                                    bonussum = i[7] -3 * 5
+                                    calclist[7] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[7]+ResetAll+emptyscoretable[7]+Tabel+pipeline[7]+ResetAll+Goed+forr10(i[7])+ResetAll+Tabel+pipeline[7]+ResetAll+forl41(calclist[7])+Tabel+pipeline[7]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:] == "6" and scoreval % 6 == 0 and scoreval <= 5*6 and i[8] == "":
+                                i[8] = scoreval
+                                if i[8] < 3 * 6:
+                                    bonussum = (3 * 6 -i[8]) * -1
+                                    calclist[8] = Slecht+forr3(bonussum)+ResetAll+" onder BONUS target"+19*" "
+                                elif i[8] == 3 * 6:
+                                    calclist[8] = Wit+"  ="+ResetAll+" op BONUS target"+22*" "
+                                else:
+                                    bonussum = i[8] -3 * 6
+                                    calclist[8] = Goed+forr3(bonussum)+ResetAll+" boven BONUS target"+19*" "
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() == "DD" and 5*1 <= scoreval <= 5*6 and i[14] == "":
+                                i[14] = scoreval
+                                calclist[14] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[14]+ResetAll+emptyscoretable[14]+Tabel+pipeline[14]+ResetAll+Goed+forr10(i[14])+ResetAll+Tabel+pipeline[14]+ResetAll+forl41(calclist[14])+Tabel+pipeline[14]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() == "VD" and 5*1 <= scoreval <= 5*6 and i[15] == "":
+                                i[15] = scoreval
+                                calclist[15] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[15]+ResetAll+emptyscoretable[15]+Tabel+pipeline[15]+ResetAll+Goed+forr10(i[15])+ResetAll+Tabel+pipeline[15]+ResetAll+forl41(calclist[15])+Tabel+pipeline[15]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() == "VK" and 5*1 <= scoreval <= 5*6 and i[20] == "":
+                                i[20] = scoreval
+                                calclist[20] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[20]+ResetAll+emptyscoretable[20]+Tabel+pipeline[20]+ResetAll+Goed+forr10(i[20])+ResetAll+Tabel+pipeline[20]+ResetAll+forl41(calclist[20])+Tabel+pipeline[20]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["VH","25"] and i[16] == "":
+                                i[16] = 25
+                                calclist[16] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[16]+ResetAll+emptyscoretable[16]+Tabel+pipeline[16]+ResetAll+Goed+forr10(i[16])+ResetAll+Tabel+pipeline[16]+ResetAll+forl41(calclist[16])+Tabel+pipeline[16]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["KS","30"] and i[17] == "":
+                                i[17] = 30
+                                calclist[17] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[17]+ResetAll+emptyscoretable[17]+Tabel+pipeline[17]+ResetAll+Goed+forr10(i[17])+ResetAll+Tabel+pipeline[17]+ResetAll+forl41(calclist[17])+Tabel+pipeline[17]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["GS","40"] and i[18] == "":
+                                i[18] = 40
+                                calclist[18] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            elif score[score.index("@")+1:].upper() in ["FV","50"] and i[19] == "":
+                                i[19] = 50
+                                calclist[19] = "klaar"
+                                print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                print(Tabel+pipeline[19]+ResetAll+emptyscoretable[19]+Tabel+pipeline[19]+ResetAll+Goed+forr10(i[19])+ResetAll+Tabel+pipeline[19]+ResetAll+forl41(calclist[19])+Tabel+pipeline[19]+ResetAll)
+                                print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                                chk = "Y"
+                            else:
+                                pass
+                        except(Exception) as error:
+                            #print(error)
+                            pass
                 if chk == "Y":
                     subup = 0
                     for j in i[3:9]:
@@ -1045,14 +1613,26 @@ while playround < 13 :
                     counttops += 1
             if counttops == 1:
                 topplayer = players[scores.index(topscore)]
-                print("%s wins @ %s points" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
+                if taal == "EN":
+                    print("%s wins @ %s points" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
+                else:
+                    print("%s wint @ %s punten" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
             elif counttops == len(playertableslist) and playround != 1:
-                print("Draw @ %s points" % (SubGoed+str(topscore)+ResetAll))
+                if taal == "EN":
+                    print("Draw @ %s points" % (SubGoed+str(topscore)+ResetAll))
+                else:
+                    print("Gelijkspel @ %s punten" % (SubGoed+str(topscore)+ResetAll))
             elif counttops != len(playertableslist) and playround != 1:
-                print("The players @ %s won" % (SubGoed+str(topscore)+ResetAll))
+                if taal == "EN":
+                    print("The players @ %s won" % (SubGoed+str(topscore)+ResetAll))
+                else:
+                    print("De spelers @ %s hebben gewonnen" % (SubGoed+str(topscore)+ResetAll))
         else:
             topplayer = players[0]
-            print("%s's score is %s points" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
+            if taal == "EN":
+                print("%s's score is %s points" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
+            else:
+                print("%s's score is %s punten" % (Goed+topplayer.strip()+ResetAll,Goed+str(topscore)+ResetAll))
         print()
         print("+"+68*"-"+"+")
         print()
