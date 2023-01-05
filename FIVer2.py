@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-version = "1.11"
+version = "1.12"
 datum = "20230105"
 
 import random
@@ -76,6 +76,9 @@ forr15 =  "{:>15}".format
 forl41 =  "{:<41}".format
 forc41 =  "{:^41}".format
 forr41 =  "{:>41}".format
+forl83 =  "{:<83}".format
+forc83 =  "{:^83}".format
+forr83 =  "{:>83}".format
 forcall = "{:^86}".format
 jalijst = ["Y","J","S"]
 neelijst = ["N"]
@@ -719,25 +722,22 @@ def calcstuff():
                 calclist[10] = "if () in UPPER % 3: SUBTOTAL UPPER = 63"
             else:
                 calclist[10] = "if () in BOVEN % 3: SUBTOTAAL BOVEN = 63"
-            if sumup < 63:
-                if taal == "EN":
-                    calclist[11] = "Failed, BONUS not achieved"
-                else:
-                    calclist[11] = "Mislukt, BONUS niet behaald"
-                bonus = 0
-                i[11] = bonus
-            else:
-                if taal == "EN":
-                    calclist[11] = 9*" "+"Success, %s achieved" % (Matig+"BONUS"+ResetAll)+9*" "
-                else:
-                    calclist[11] = 10*" "+"Gelukt, %s behaald" % (Matig+"BONUS"+ResetAll)+10*" "
-                bonus = 35
-                i[11] = bonus
-            if "" in i[3:9]:
+            if "" in i[3:9] and sumup < 63:
                 if taal == "EN":
                     calclist[11] = "if SUBTOTAL UPPER >= 63: BONUS = 35"
                 else:
                     calclist[11] = "if SUBTOTAAL BOVEN >= 63: BONUS = 35"
+            elif sumup < 63 and "" not in i[3:9]:
+                if taal == "EN":
+                    calclist[11] = "Failed, BONUS not achieved"
+                else:
+                    calclist[11] = "Mislukt, BONUS niet behaald"
+            else:
+                i[11] = 35
+                if taal == "EN":
+                    calclist[11] = 9*" "+"Success, %s achieved" % (Matig+"BONUS"+ResetAll)+9*" "
+                else:
+                    calclist[11] = 10*" "+"Gelukt, %s behaald" % (Matig+"BONUS"+ResetAll)+10*" "
             subsumup = i[10]+i[11]
             i[12] = subsumup
             i[23] = subsumup
@@ -870,17 +870,17 @@ else:
 playertableslist = playeradd()
 skiproll = "N"
 if taal == "EN":
-    alea = input("And last: roll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("%sAnd last%s\nRoll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 else:
-    alea = input("En als laatste: speel met %svirtuele%s of %sfysieke%s dobbelstenen\n >1: %svirtuele%s\n  2: %sfysieke%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("%sEn als laatste%s\nSpeel met %svirtuele%s of %sfysieke%s dobbelstenen\n >1: %svirtuele%s\n  2: %sfysieke%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if alea.upper() in afsluitlijst:
     exit()
 elif alea == "2":
     skiproll = "Y"
 if taal == "EN":
-    print("%sHave fun%s" % (Tekst,ResetAll))
+    print(forc83("%s Have fun %s" % (Reverse+Tekst,ResetAll)))
 else:
-    print("%sVeel plezier%s" % (Tekst,ResetAll))
+    print(forc83("%s Veel plezier %s" % (Reverse+Tekst,ResetAll)))
 
 playround = 0
 while playround < 13 :
