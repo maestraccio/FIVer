@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-version = "1.1"
-datum = "20230104"
+version = "1.11"
+datum = "20230105"
 
 import random
 
@@ -155,7 +155,7 @@ emptyscoretableNL = [
         "%sier %sezelfde  %s" % (Tekst+"V"+SubTekst,Tekst+"D"+SubTekst,ResetAll),
         "%sol %suis       %s" % (Tekst+"V"+SubTekst,Tekst+"H"+SubTekst,ResetAll),
         "%sleine %straat  %s" % (Tekst+"K"+SubTekst,Tekst+"S"+SubTekst,ResetAll),
-        "%srote %straat   %s" % (Tekst+"L"+SubTekst,Tekst+"S"+SubTekst,ResetAll),
+        "%srote %straat   %s" % (Tekst+"G"+SubTekst,Tekst+"S"+SubTekst,ResetAll),
         "   %s I %s er%s    " % (Tekst+"F"+SubTekst,Tekst+"V"+SubTekst,ResetAll),
         "%srije %seus     %s" % (Tekst+"V"+SubTekst,Tekst+"K"+SubTekst,ResetAll),
         15*"-",
@@ -201,9 +201,9 @@ def playeradd():
     playertableslist = []
     while playeradd == "Y":
         if taal == "EN":
-            newplayer = input("Enter the name of the new player (max 10 characters) or \"S\" to Start\n  : ")[:10]
+            newplayer = input("Enter the name of the new player (max 10 characters) or \"%sS%s\" to Start\n  : " % (Tekst,ResetAll))[:10]
         else:
-            newplayer = input("Naam van de nieuwe speler (max 10 karakters) of \"S\" om te Starten\n  : ")[:10]
+            newplayer = input("Naam van de nieuwe speler (max 10 karakters) of \"%sS%s\" om te Starten\n  : " % (Tekst,ResetAll))[:10]
         if newplayer.upper() in afsluitlijst:
             exit()
         elif newplayer.upper() == "S":
@@ -814,9 +814,9 @@ def calcstuff():
                     calclist[19] = "if count(=) == 5:         FV = 50"
             else:
                 if taal == "EN":
-                    calclist[19] = "completed"
+                    calclist[19] = "bummer"
                 else:
-                    calclist[19] = "klaar"
+                    calclist[19] = "jammer"
             if i[20] == "":
                 if taal == "EN":
                     calclist[20] = "                          FC = sum()"
@@ -851,7 +851,8 @@ def showone():
 print()
 print(Tabel+"+ -"+ResetAll+forcall(Resultaat+"- %s F I V er %s -" % (Reverse,ResetAll+Resultaat)+ResetAll)+Tabel+"- +"+ResetAll)
 print()
-taal = input(">1: English\n 2: Nederlands\n : ")
+
+taal = input("%sFirst select your language%s | %sKies eerst je taal%s\n>1: %sEnglish%s\n 2: %sNederlands%s\n : " % (Tekst,ResetAll,Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if taal.upper() in afsluitlijst:
     exit()
 elif taal == "2":
@@ -862,16 +863,24 @@ if taal == "EN":
     print(DarkGray+"Confirm with \"Enter\", leave with \"Q\"-\"Enter\""+ResetAll)
 else:
     print(DarkGray+"Bevestig met \"Enter\", verlaat met \"Q\"-\"Enter\""+ResetAll)
+if taal == "EN":
+    print("%sThen add one ore more players%s" % (Tekst,ResetAll))
+else:
+    print("%sVoeg dan één of meer spelers toe%s" % (Tekst,ResetAll))
 playertableslist = playeradd()
 skiproll = "N"
 if taal == "EN":
-    alea = input("Roll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("And last: roll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 else:
-    alea = input("Speel met %svirtuele%s of %sfysieke%s dobbelstenen\n >1: %svirtuele%s\n  2: %sfysieke%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("En als laatste: speel met %svirtuele%s of %sfysieke%s dobbelstenen\n >1: %svirtuele%s\n  2: %sfysieke%s\n  : " % (Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if alea.upper() in afsluitlijst:
     exit()
 elif alea == "2":
     skiproll = "Y"
+if taal == "EN":
+    print("%sHave fun%s" % (Tekst,ResetAll))
+else:
+    print("%sVeel plezier%s" % (Tekst,ResetAll))
 
 playround = 0
 while playround < 13 :
@@ -960,7 +969,7 @@ while playround < 13 :
                     pass
                 if taal == "EN":
                     if not "@" in score:
-                        if (score.upper() in ["FV","50","YAY","YES"] or score.upper() in jalijst) and i[19] == "":
+                        if (score.upper() in ["FV","50","YAY","OK","YES"] or score.upper() in jalijst) and i[19] == "":
                             i[19] = 50
                             calclist[19] = "completed"
                             print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
@@ -1055,7 +1064,7 @@ while playround < 13 :
                                 print(Tabel+pipeline[8]+ResetAll+emptyscoretable[8]+Tabel+pipeline[8]+ResetAll+Goed+forr10(i[8])+ResetAll+Tabel+pipeline[8]+ResetAll+forl41(calclist[8])+Tabel+pipeline[8]+ResetAll)
                                 print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
                                 chk = "Y"
-                            elif (score.upper()[1:] in ["FV","50","YAY","YES"] or score.upper()[1:] in jalijst) and i[19] == "":
+                            elif (score.upper()[1:] in ["FV","50","YAY","OK","YES"] or score.upper()[1:] in jalijst) and i[19] == "":
                                 i[19] = 0
                                 calclist[19] = "bummer"
                                 print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
@@ -1254,7 +1263,7 @@ while playround < 13 :
                                 print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
                                 print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
                                 chk = "Y"
-                            elif score[score.index("@")+1:].upper() in ["FV","50"] and i[19] == "":
+                            elif score[score.index("@")+1:].upper() in ["FV","50","YAY","OK","YES"] and i[19] == "":
                                 i[19] = 50
                                 calclist[19] = "completed"
                                 print(Bevestiging+forc15(i[1].strip()+ResetAll+" played:"))
@@ -1563,7 +1572,7 @@ while playround < 13 :
                                 print(Tabel+pipeline[18]+ResetAll+emptyscoretable[18]+Tabel+pipeline[18]+ResetAll+Goed+forr10(i[18])+ResetAll+Tabel+pipeline[18]+ResetAll+forl41(calclist[18])+Tabel+pipeline[18]+ResetAll)
                                 print(Tabel+pipeline[0]+ResetAll+emptyscoretable[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
                                 chk = "Y"
-                            elif score[score.index("@")+1:].upper() in ["FV","50"] and i[19] == "":
+                            elif score[score.index("@")+1:].upper() in ["FV","50","OK","JA","YES"] and i[19] == "":
                                 i[19] = 50
                                 calclist[19] = "klaar"
                                 print(Bevestiging+forc15(i[1].strip()+ResetAll+" speelde:"))
