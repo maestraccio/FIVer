@@ -992,7 +992,9 @@ while playround < 13 :
                         intscore = int(endederror)
                 except(Exception) as error:
                     #print(error)
-                    if disman == "2":
+                    if disman == "2" and len(score) > 1 and score[0] == "/":
+                        pass
+                    elif disman == "2":
                         break
                     else:
                         pass
