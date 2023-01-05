@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-version = "1.12"
+version = "1.2"
 datum = "20230105"
 
 import random
@@ -852,31 +852,51 @@ print()
 print(Tabel+"+ -"+ResetAll+forcall(Resultaat+"- %s F I V er %s -" % (Reverse,ResetAll+Resultaat)+ResetAll)+Tabel+"- +"+ResetAll)
 print()
 
-taal = input("%sFirst select your language%s | %sKies eerst je taal%s\n>1: %sEnglish%s\n 2: %sNederlands%s\n : " % (Tekst,ResetAll,Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+taal = input("%sFirst select your language%s | %sKies eerst je taal%s\n>1: %sEnglish%s\n 2: %sNederlands%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if taal.upper() in afsluitlijst:
     exit()
 elif taal == "2":
     taal = "NL"
+    print("%sNederlands%s" % (Goed,ResetAll))
 else:
     taal = "EN"
-if taal == "EN":
-    print(DarkGray+"Confirm with \"Enter\", leave with \"Q\"-\"Enter\""+ResetAll)
-else:
-    print(DarkGray+"Bevestig met \"Enter\", verlaat met \"Q\"-\"Enter\""+ResetAll)
+    print("%sEnglish%s" % (Goed,ResetAll))
 if taal == "EN":
     print("%sThen add one ore more players%s" % (Tekst,ResetAll))
 else:
     print("%sVoeg dan één of meer spelers toe%s" % (Tekst,ResetAll))
 playertableslist = playeradd()
+disman = "0"
 skiproll = "N"
 if taal == "EN":
-    alea = input("%sAnd last%s\nRoll %svirtual%s or %sphysical%s dice\n >1: %svirtual%s\n  2: %sphysical%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("%sAnd last%s\nRoll %svirtual%s or %sphysical%s dice\n>1: %svirtual%s\n 2: %sphysical%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 else:
-    alea = input("%sEn als laatste%s\nSpeel met %svirtuele%s of %sfysieke%s dobbelstenen\n >1: %svirtuele%s\n  2: %sfysieke%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("%sEn als laatste%s\nSpeel met %svirtuele%s of %sfysieke%s dobbelstenen\n>1: %svirtuele%s\n 2: %sfysieke%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if alea.upper() in afsluitlijst:
     exit()
 elif alea == "2":
     skiproll = "Y"
+    if taal == "EN":
+        print("%sphysical%s" % (Goed,ResetAll))
+    else:
+        print("%sfysieke%s" % (Goed,ResetAll))
+else:
+    if taal == "EN":
+        print("%sVirtual dice%s" % (Goed,ResetAll))
+        disman = input("%sOk, one more question%s\n>1: %smanual entry allowed%s\n 2: %sonly suggested%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        if disman.upper() in afsluitlijst:
+            exit()
+        elif disman == "2":
+            print("%sonly suggested%s" % (Goed,ResetAll))
+        else:
+            disman = "1"
+    else:
+        print("%sVirtuele dobbelstenen%s" % (Goed,ResetAll))
+        disman = input("%sOk, één vraag dan nog%s\n>1: %stoestaan handmatige invoer%s\n 2: %salleen suggesties%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        if disman.upper() in afsluitlijst:
+            exit()
+        elif disman == "2":
+            print("%salleen suggesties%s" % (Goed,ResetAll))
 if taal == "EN":
     print(forc83("%s Have fun %s" % (Reverse+Tekst,ResetAll)))
 else:
@@ -953,9 +973,15 @@ while playround < 13 :
                         score = input("Voer je score in als \"%sRESULTAAT%s @ %sWAAR%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
                 else:
                     if taal == "EN":
-                        score = input("Choose a suggestion or enter your score like \"%sRESULT%s @ %sWHERE%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
+                        if disman == "2":
+                            score = input("Choose a suggestion\n  : ").replace(" ","")
+                        else:
+                            score = input("Choose a suggestion or enter your score like \"%sRESULT%s @ %sWHERE%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
                     else:
-                        score = input("Kies een suggestie of voer je score in als \"%sRESULTAAT%s @ %sWAAR%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
+                        if disman == "2":
+                            score = input("Kies een suggestie\n  : ").replace(" ","")
+                        else:
+                            score = input("Kies een suggestie of voer je score in als \"%sRESULTAAT%s @ %sWAAR%s\"\n  : " % (Goed,ResetAll,Tekst,ResetAll)).replace(" ","")
                 if score.upper() in afsluitlijst:
                     exit()
                 try:
@@ -966,7 +992,10 @@ while playround < 13 :
                         intscore = int(endederror)
                 except(Exception) as error:
                     #print(error)
-                    pass
+                    if disman == "2":
+                        break
+                    else:
+                        pass
                 if taal == "EN":
                     if not "@" in score:
                         if (score.upper() in ["FV","50","YAY","OK","YES"] or score.upper() in jalijst) and i[19] == "":
