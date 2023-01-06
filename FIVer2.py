@@ -842,7 +842,6 @@ def showone():
 
 print()
 print(Tabel+"+ -"+ResetAll+forcall(Resultaat+"- %s F I V er %s -" % (Reverse,ResetAll+Resultaat)+ResetAll)+Tabel+"- +"+ResetAll)
-print()
 print(forr79("%sQ = exit()%s" % (DarkGray,ResetAll)))
 taal = input("%sFirst select your language%s | %sKies eerst je taal%s\n>1: %sEnglish%s\n 2: %sNederlands%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if taal.upper() in afsluitlijst:
