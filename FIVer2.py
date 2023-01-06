@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-version = "1.21"
+version = "1.22"
 datum = "20230106"
 
 import random
@@ -64,21 +64,13 @@ SubTabel               = Blue
 Terug                  = DarkGray
 Wit                    = White
 for2 = "{:>2}".format
-forc3 = "{:^3}".format
-forl3 = "{:<3}".format
 forr3 = "{:>3}".format
-forl10 =  "{:<10}".format
-forc10 =  "{:^10}".format
 forr10 =  "{:>10}".format
-forl15 =  "{:<15}".format
 forc15 =  "{:^15}".format
 forr15 =  "{:>15}".format
 forl41 =  "{:<41}".format
-forc41 =  "{:^41}".format
-forr41 =  "{:>41}".format
-forl83 =  "{:<83}".format
 forc83 =  "{:^83}".format
-forr83 =  "{:>83}".format
+forr79 =  "{:>79}".format
 forcall = "{:^86}".format
 jalijst = ["Y","J","S"]
 neelijst = ["N"]
@@ -851,7 +843,7 @@ def showone():
 print()
 print(Tabel+"+ -"+ResetAll+forcall(Resultaat+"- %s F I V er %s -" % (Reverse,ResetAll+Resultaat)+ResetAll)+Tabel+"- +"+ResetAll)
 print()
-
+print(forr79("%sQ = exit()%s" % (DarkGray,ResetAll)))
 taal = input("%sFirst select your language%s | %sKies eerst je taal%s\n>1: %sEnglish%s\n 2: %sNederlands%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if taal.upper() in afsluitlijst:
     exit()
@@ -861,17 +853,12 @@ elif taal == "2":
 else:
     taal = "EN"
     print("%sEnglish%s" % (Goed,ResetAll))
-if taal == "EN":
-    print("%sThen add one ore more players%s" % (Tekst,ResetAll))
-else:
-    print("%sVoeg dan één of meer spelers toe%s" % (Tekst,ResetAll))
-playertableslist = playeradd()
 disman = "0"
 skiproll = "N"
 if taal == "EN":
-    alea = input("%sAnd last%s\nRoll %svirtual%s or %sphysical%s dice\n>1: %svirtual%s\n 2: %sphysical%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("%sRoll virtual or physical dice%s\n>1: %sVirtual%s\n 2: %sPhysical%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 else:
-    alea = input("%sEn als laatste%s\nSpeel met %svirtuele%s of %sfysieke%s dobbelstenen\n>1: %svirtuele%s\n 2: %sfysieke%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+    alea = input("%sSpeel met virtuele of fysieke dobbelstenen%s\n>1: %sVirtuele%s\n 2: %sFysieke%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
 if alea.upper() in afsluitlijst:
     exit()
 elif alea == "2":
@@ -883,20 +870,29 @@ elif alea == "2":
 else:
     if taal == "EN":
         print("%sVirtual dice%s" % (Goed,ResetAll))
-        disman = input("%sOk, one more question%s\n>1: %smanual entry allowed%s\n 2: %sonly suggested%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        disman = input("%sFreedom of entry or only suggestions and scratch%s %s(\"/..\" = 0@..)%s\n>1: %sFreedom of entry incl. suggestions and /..%s\n 2: %sOnly suggestions and /..%s\n  : " % (Tekst,ResetAll,DarkGray,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
         if disman.upper() in afsluitlijst:
             exit()
         elif disman == "2":
-            print("%sonly suggested%s" % (Goed,ResetAll))
+            print("%sOnly suggestions and /..%s" % (Goed,ResetAll))
         else:
             disman = "1"
+            print("%sFreedom of entry, suggestions and /..%s" % (Goed,ResetAll))
     else:
         print("%sVirtuele dobbelstenen%s" % (Goed,ResetAll))
-        disman = input("%sOk, één vraag dan nog%s\n>1: %stoestaan handmatige invoer%s\n 2: %salleen suggesties%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        disman = input("%sVrijheid van invoer of alleen suggesties en schrap%s %s(\"/..\" = 0@..)%s\n>1: %sVrijheid van invoer incl. suggesties en /..%s\n 2: %sAlleen suggesties en /..%s\n  : " % (Tekst,ResetAll,DarkGray,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
         if disman.upper() in afsluitlijst:
             exit()
         elif disman == "2":
-            print("%salleen suggesties%s" % (Goed,ResetAll))
+            print("%sAlleen suggesties en /..%s" % (Goed,ResetAll))
+        else:
+            disman = "1"
+            print("%sVrijheid van invoer, suggesties en /..%s" % (Goed,ResetAll))
+if taal == "EN":
+    print("%sLast: add one ore more players%s" % (Tekst,ResetAll))
+else:
+    print("%sAls laatste: voeg dan één of meer spelers toe%s" % (Tekst,ResetAll))
+playertableslist = playeradd()
 if taal == "EN":
     print(forc83("%s Have fun %s" % (Reverse+Tekst,ResetAll)))
 else:
