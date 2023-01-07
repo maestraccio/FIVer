@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-version = "1.22"
-datum = "20230106"
+version = "1.23"
+datum = "20230107"
 
 import random
 
