@@ -999,6 +999,11 @@ while playround < 13 :
                     else:
                         pass
                 if taal == "EN":
+                    if "/.." in score:
+                        where = input("Short code to scratch (0 points)\n   : ")
+                        score = "/"+where.upper()
+                    if "/@" in score:
+                        score = score.replace("@","")
                     if not "@" in score:
                         if (score.upper() in ["FV","50","YAY","OK","YES"] or score.upper() in jalijst) and i[19] == "":
                             i[19] = 50
@@ -1309,6 +1314,11 @@ while playround < 13 :
                             #print(error)
                             pass
                 else:
+                    if "/.." in score:
+                        where = input("Afkorting om te schrappen (0 punten)\n   : ")
+                        score = "/"+where.upper()
+                    if "/@" in score:
+                        score = score.replace("@","")
                     if not "@" in score:
                         if (score.upper() in ["FV","50","OK","JA","YES"] or score.upper() in jalijst) and i[19] == "":
                             i[19] = 50
