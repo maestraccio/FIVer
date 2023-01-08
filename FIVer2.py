@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-version = "1.24"
+version = "1.25"
 datum = "20230108"
 
 import random
+from time import sleep
 
 ResetAll               = "\033[0m"
 Bold                   = "\033[1m"
@@ -320,9 +321,9 @@ def suggestions():
         sug = "%s @ %s" % (for2(A+B+C+D+E),"VK")
     suggestionslist.append(sug)
     if taal == "EN":
-        sug = "%s/..%s for %s0%s @ %s..%s, where %s..%s is a free short code in the score table" % (LightGray,ResetAll,Goed,ResetAll,Tekst,ResetAll,Tekst,ResetAll)
+        sug = "%s/#%s for %s0%s @ %s#%s, where %s#%s is a free %sWHERE%s in the score table" % (LightGray,ResetAll,Goed,ResetAll,Tekst,ResetAll,Tekst,ResetAll,Tekst,ResetAll)
     else:
-        sug = "%s/..%s voor %s0%s @ %s..%s, waar %s..%s een vrije afkorting in de scoretabel is" % (LightGray,ResetAll,Goed,ResetAll,Tekst,ResetAll,Tekst,ResetAll)
+        sug = "%s/#%s voor %s0%s @ %s#%s, waar %s#%s een vrije %sWAAR%s in de scoretabel is" % (LightGray,ResetAll,Goed,ResetAll,Tekst,ResetAll,Tekst,ResetAll,Tekst,ResetAll)
     suggestionslist.append(sug)
     count = 1
     for i in suggestionslist:
@@ -494,6 +495,15 @@ def roll():
             print("#1 %sROLL all dice%s:" % (Tekst,ResetAll))
         else:
             print("#1 %sROL alle dobbelstenen%s:" % (Tekst,ResetAll))
+        print("   ", end = "")
+        for i in ["A ... ","B ... ","C ... ","D ... ","E ... "]:
+            print(i, end = "", flush = True)
+            sleep(0.5)
+        if taal == "EN":
+            print("Sorting ... ")
+        else:
+            print("Sorteren ... ")
+        sleep(1)
         print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
@@ -509,17 +519,23 @@ def roll():
         if choice.upper() in afsluitlijst:
             exit()
         Secondroll = Firstroll
+        visualroll = ["..... ","..... ","..... ","..... ","..... "]
         for i in choice:
             if i == "A":
                 Secondroll[0] = random.choice(range(1,7))
+                visualroll[0] = ("A ... ")
             if i == "B":
                 Secondroll[1] = random.choice(range(1,7))
+                visualroll[1] = ("B ... ")
             if i == "C":
                 Secondroll[2] = random.choice(range(1,7))
+                visualroll[2] = ("C ... ")
             if i == "D":
                 Secondroll[3] = random.choice(range(1,7))
+                visualroll[3] = ("D ... ")
             if i == "E":
                 Secondroll[4] = random.choice(range(1,7))
+                visualroll[4] = ("E ... ")
         Secondroll = sorted(Secondroll)
         A = Secondroll[0]
         B = Secondroll[1]
@@ -527,6 +543,16 @@ def roll():
         D = Secondroll[3]
         E = Secondroll[4]
         Dice = visualDice()
+        if choice != "":
+            print("   ", end = "")
+            for i in visualroll:
+                print(i, end = "", flush = True)
+                sleep(0.5)
+            if taal == "EN":
+                print("Sorting ... ")
+            else:
+                print("Sorteren ... ")
+            sleep(1)
         print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
@@ -542,17 +568,23 @@ def roll():
         if choice.upper() in afsluitlijst:
             exit()
         Thirdroll = Secondroll
+        visualroll = ["..... ","..... ","..... ","..... ","..... "]
         for i in choice:
             if i == "A":
                 Thirdroll[0] = random.choice(range(1,7))
+                visualroll[0] = ("A ... ")
             if i == "B":
                 Thirdroll[1] = random.choice(range(1,7))
+                visualroll[1] = ("B ... ")
             if i == "C":
                 Thirdroll[2] = random.choice(range(1,7))
+                visualroll[2] = ("C ... ")
             if i == "D":
                 Thirdroll[3] = random.choice(range(1,7))
+                visualroll[3] = ("D ... ")
             if i == "E":
                 Thirdroll[4] = random.choice(range(1,7))
+                visualroll[4] = ("E ... ")
         Thirdroll = sorted(Thirdroll)
         A = Thirdroll[0]
         B = Thirdroll[1]
@@ -560,6 +592,16 @@ def roll():
         D = Thirdroll[3]
         E = Thirdroll[4]
         Dice = visualDice()
+        if choice != "":
+            print("   ", end = "")
+            for i in visualroll:
+                print(i, end = "", flush = True)
+                sleep(0.5)
+            if taal == "EN":
+                print("Sorting ... ")
+            else:
+                print("Sorteren ... ")
+            sleep(1)
         print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
@@ -999,7 +1041,7 @@ while playround < 13 :
                     else:
                         pass
                 if taal == "EN":
-                    if "/.." in score:
+                    if "/#" in score:
                         where = input("Short code to scratch (0 points)\n   : ")
                         score = "/"+where.upper()
                     if "/@" in score:
@@ -1314,7 +1356,7 @@ while playround < 13 :
                             #print(error)
                             pass
                 else:
-                    if "/.." in score:
+                    if "/#" in score:
                         where = input("Afkorting om te schrappen (0 punten)\n   : ")
                         score = "/"+where.upper()
                     if "/@" in score:
