@@ -249,7 +249,7 @@ def showall():
 
 def suggestions():
     suggestionslist = []
-    if A == B == C and C != D:
+    if A == B == C and C != D: 
         sug = "%s @ %s" % (Goed+for2(A+B+C)+ResetAll,Tekst+str(A)+ResetAll)
         suggestionslist.append(sug)
     if B == C == D and A != B and D != E:
@@ -562,7 +562,7 @@ def roll():
                 print()
         print(Wit+"   A     B     C     D     E"+ResetAll)
         if taal == "EN":
-            choice = input("#3 %sCHOOSE%s which dice %sto ROLL%s or \"S\"\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+            choice = input("#3 %sCHOOSE%s which dice %sto ROLL%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         else:
             choice = input("#3 %sKIES%s welke stenen je wilt %sROLLEN%s\n  : " % (Tekst,ResetAll,Tekst,ResetAll)).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
