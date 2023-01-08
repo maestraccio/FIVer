@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-version = "1.23"
-datum = "20230107"
+version = "1.24"
+datum = "20230108"
 
 import random
 
@@ -318,6 +318,11 @@ def suggestions():
         sug = "%s @ %s" % (for2(A+B+C+D+E),"FC")
     else:
         sug = "%s @ %s" % (for2(A+B+C+D+E),"VK")
+    suggestionslist.append(sug)
+    if taal == "EN":
+        sug = "%s/..%s for %s0%s @ %s..%s, where %s..%s is a free short code in the score table" % (LightGray,ResetAll,Goed,ResetAll,Tekst,ResetAll,Tekst,ResetAll)
+    else:
+        sug = "%s/..%s voor %s0%s @ %s..%s, waar %s..%s een vrije afkorting in de scoretabel is" % (LightGray,ResetAll,Goed,ResetAll,Tekst,ResetAll,Tekst,ResetAll)
     suggestionslist.append(sug)
     count = 1
     for i in suggestionslist:
@@ -869,24 +874,24 @@ elif alea == "2":
 else:
     if taal == "EN":
         print("%sVirtual dice%s" % (Goed,ResetAll))
-        disman = input("%sFreedom of entry or only suggestions and scratch%s %s(\"/..\" = 0@..)%s\n>1: %sFreedom of entry incl. suggestions and /..%s\n 2: %sOnly suggestions and /..%s\n  : " % (Tekst,ResetAll,DarkGray,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        disman = input("%sFreedom of entry or only suggestions and scratch as /..%s\n>1: %sFreedom of entry incl. suggestions and scratch%s\n 2: %sOnly suggestions and scratch%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
         if disman.upper() in afsluitlijst:
             exit()
         elif disman == "2":
-            print("%sOnly suggestions and /..%s" % (Goed,ResetAll))
+            print("%sOnly suggestions and scratch%s" % (Goed,ResetAll))
         else:
             disman = "1"
-            print("%sFreedom of entry, suggestions and /..%s" % (Goed,ResetAll))
+            print("%sFreedom of entry, suggestions and scratch%s" % (Goed,ResetAll))
     else:
         print("%sVirtuele dobbelstenen%s" % (Goed,ResetAll))
-        disman = input("%sVrijheid van invoer of alleen suggesties en schrap%s %s(\"/..\" = 0@..)%s\n>1: %sVrijheid van invoer incl. suggesties en /..%s\n 2: %sAlleen suggesties en /..%s\n  : " % (Tekst,ResetAll,DarkGray,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        disman = input("%sVrijheid van invoer of alleen suggesties en schrap als /..%s\n>1: %sVrijheid van invoer incl. suggesties en schrap%s\n 2: %sAlleen suggesties en schrap%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
         if disman.upper() in afsluitlijst:
             exit()
         elif disman == "2":
-            print("%sAlleen suggesties en /..%s" % (Goed,ResetAll))
+            print("%sAlleen suggesties en schrap%s" % (Goed,ResetAll))
         else:
             disman = "1"
-            print("%sVrijheid van invoer, suggesties en /..%s" % (Goed,ResetAll))
+            print("%sVrijheid van invoer, suggesties en schrap%s" % (Goed,ResetAll))
 if taal == "EN":
     print("%sLast: add one ore more players%s" % (Tekst,ResetAll))
 else:
@@ -1149,6 +1154,7 @@ while playround < 13 :
                             else:
                                 pass
                     else:
+                        score = score.replace("/","0")
                         try:
                             scoreval = eval(score[:score.index("@")])
                             if score[score.index("@")+1:] == "1" and scoreval % 1 == 0 and scoreval <= 5*1 and i[3] == "":
