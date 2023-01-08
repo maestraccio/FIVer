@@ -874,24 +874,24 @@ elif alea == "2":
 else:
     if taal == "EN":
         print("%sVirtual dice%s" % (Goed,ResetAll))
-        disman = input("%sFreedom of entry or only suggestions and scratch as /..%s\n>1: %sFreedom of entry incl. suggestions and scratch%s\n 2: %sOnly suggestions and scratch%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        disman = input("%sFreedom of entry or only suggestions%s\n>1: %sFreedom of entry incl. suggestions%s\n 2: %sOnly suggestions%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
         if disman.upper() in afsluitlijst:
             exit()
         elif disman == "2":
-            print("%sOnly suggestions and scratch%s" % (Goed,ResetAll))
+            print("%sOnly suggestions%s" % (Goed,ResetAll))
         else:
             disman = "1"
-            print("%sFreedom of entry, suggestions and scratch%s" % (Goed,ResetAll))
+            print("%sFreedom of entry and suggestions%s" % (Goed,ResetAll))
     else:
         print("%sVirtuele dobbelstenen%s" % (Goed,ResetAll))
-        disman = input("%sVrijheid van invoer of alleen suggesties en schrap als /..%s\n>1: %sVrijheid van invoer incl. suggesties en schrap%s\n 2: %sAlleen suggesties en schrap%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
+        disman = input("%sVrijheid van invoer of alleen suggesties%s\n>1: %sVrijheid van invoer incl. suggesties%s\n 2: %sAlleen suggesties%s\n  : " % (Tekst,ResetAll,Wit,ResetAll,Resultaat,ResetAll))
         if disman.upper() in afsluitlijst:
             exit()
         elif disman == "2":
-            print("%sAlleen suggesties en schrap%s" % (Goed,ResetAll))
+            print("%sAlleen suggesties%s" % (Goed,ResetAll))
         else:
             disman = "1"
-            print("%sVrijheid van invoer, suggesties en schrap%s" % (Goed,ResetAll))
+            print("%sVrijheid van invoer en suggesties%s" % (Goed,ResetAll))
 if taal == "EN":
     print("%sLast: add one ore more players%s" % (Tekst,ResetAll))
 else:
