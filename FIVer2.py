@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-version = "1.25"
-datum = "20230108"
+version = "1.26"
+datum = "20230109"
 
 import random
 from time import sleep
@@ -761,6 +761,8 @@ def calcstuff():
                 calclist[10] = "if () in UPPER % 3: SUBTOTAL UPPER = 63"
             else:
                 calclist[10] = "if () in BOVEN % 3: SUBTOTAAL BOVEN = 63"
+            if i[11] == "0":
+                bonus = 0
             if "" in i[3:9] and sumup < 63:
                 if taal == "EN":
                     calclist[11] = "if SUBTOTAL UPPER >= 63: BONUS = 35"
@@ -772,11 +774,19 @@ def calcstuff():
                 else:
                     calclist[11] = "Mislukt, BONUS niet behaald"
             else:
+                if i[11] == 0:
+                    bonus = 0
+                else:
+                    bonus = 35
                 i[11] = 35
                 if taal == "EN":
                     calclist[11] = 9*" "+"Success, %s achieved" % (Matig+"BONUS"+ResetAll)+9*" "
                 else:
                     calclist[11] = 10*" "+"Gelukt, %s behaald" % (Matig+"BONUS"+ResetAll)+10*" "
+                if bonus == 0:
+                    print(Tabel+pipeline[0]+ResetAll+emptyscoretableEN[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
+                    print(Tabel+pipeline[11]+ResetAll+emptyscoretableEN[11]+Tabel+pipeline[11]+ResetAll+Goed+forr10(i[11])+ResetAll+Tabel+pipeline[11]+ResetAll+forl41(calclist[11])+Tabel+pipeline[11]+ResetAll)
+                    print(Tabel+pipeline[0]+ResetAll+emptyscoretableEN[2]+Tabel+pipeline[0]+ResetAll+forr10(i[2])+Tabel+pipeline[0]+ResetAll+forl41(calclist[2])+Tabel+pipeline[0]+ResetAll)
             subsumup = i[10]+i[11]
             i[12] = subsumup
             i[23] = subsumup
