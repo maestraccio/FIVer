@@ -851,6 +851,11 @@ def calcstuff():
                     calclist[19] = "if count(=) == 5:         FV = 50"
                 else:
                     calclist[19] = "if count(=) == 5:         FV = 50"
+            elif i[19] == 50:
+                if taal == "EN":
+                    calclist[19] = "completed"
+                else:
+                    calclist[19] = "klaar"
             else:
                 if taal == "EN":
                     calclist[19] = "bummer"
