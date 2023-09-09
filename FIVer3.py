@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.11"
+versie = "2.12"
 datum = "20230909"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -139,12 +139,12 @@ def nicklijst(init):
     return nick
 
 print()
-langsel = input("Choose your langauge | Scegli la tua lingua | Kies uw taal\n >1 : English\n  2 : Italiano\n  3 : Nederlands\n%s" % inputindent)
+langsel = input(" >1 : Play in English\n  2 : Gioca in Italiano\n  3 : Speel in het Nederlands\n%s" % inputindent)
 if langsel.upper() in afsluitlijst:
     exit()
 elif langsel == "2":
     lang = "IT"
-    print(Terug+"Uscita con \"Q\""+ResetAll)
+    print(Terug+"Ritorno o Uscita con \"Q\""+ResetAll)
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House","Piccola Scala","Grande Scala","F I V er","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
@@ -166,7 +166,7 @@ elif langsel == "2":
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
 elif langsel == "3":
     lang = "NL"
-    print(Terug+"Verlaten met \"Q\""+ResetAll)
+    print(Terug+"Terug of Verlaten met \"Q\""+ResetAll)
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House","Kleine Straat","Grote Straat","F I V er","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
     allespelers = "Alle Spelers"
     nog = "Voortgang"
@@ -188,7 +188,7 @@ elif langsel == "3":
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
 else:
     lang = "EN"
-    print(Terug+"Quit with \"Q\""+ResetAll)
+    print(Terug+"Back or Quit with \"Q\""+ResetAll)
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House","Small Straight","Large Straight","F I V er","Free Choice","Total Upper","Total Lower","TOTAL"]
     allespelers = "All Players"
     nog = "Progress"
@@ -702,7 +702,7 @@ def roll():
         E = Firstroll[4]
         Dice = visualDice()
         print(rolalledobbelstenen1)
-        for i in [" ","_"," ","A"," ","_"," ","_"," ","B"," ","_"," ","_"," ","C"," ","_"," ","_"," ","D"," ","_"," ","_"," ","E"," ","_"," "]:
+        for i in [" ","_",Reverse+" ","A"," "+ResetAll,"_"," ","_",Reverse+" ","B"," "+ResetAll,"_"," ","_",Reverse+" ","C"," "+ResetAll,"_"," ","_",Reverse+" ","D"," "+ResetAll,"_"," ","_",Reverse+" ","E"," "+ResetAll,"_"," "]:
             print(i, end = "", flush = True)
             sleep(0.05)
         print(sorteren)
@@ -718,34 +718,36 @@ def roll():
         choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
+        if choice == "*":
+            choice = "ABCDE"
         Secondroll = Firstroll
         visualroll = [" ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," "]
         for i in choice:
             if i == "A":
                 Secondroll[0] = random.choice(range(1,7))
-                visualroll[2] = (" ")
+                visualroll[2] = (Reverse+" ")
                 visualroll[3] = ("A")
-                visualroll[4] = (" ")
+                visualroll[4] = (" "+ResetAll)
             if i == "B":
                 Secondroll[1] = random.choice(range(1,7))
-                visualroll[8] = (" ")
+                visualroll[8] = (Reverse+" ")
                 visualroll[9] = ("B")
-                visualroll[10] = (" ")
+                visualroll[10] = (" "+ResetAll)
             if i == "C":
                 Secondroll[2] = random.choice(range(1,7))
-                visualroll[14] = (" ")
+                visualroll[14] = (Reverse+" ")
                 visualroll[15] = ("C")
-                visualroll[16] = (" ")
+                visualroll[16] = (" "+ResetAll)
             if i == "D":
                 Secondroll[3] = random.choice(range(1,7))
-                visualroll[20] = (" ")
+                visualroll[20] = (Reverse+" ")
                 visualroll[21] = ("D")
-                visualroll[22] = (" ")
+                visualroll[22] = (" "+ResetAll)
             if i == "E":
                 Secondroll[4] = random.choice(range(1,7))
-                visualroll[26] = (" ")
+                visualroll[26] = (Reverse+" ")
                 visualroll[27] = ("E")
-                visualroll[28] = (" ")
+                visualroll[28] = (" "+ResetAll)
         Secondroll = sorted(Secondroll)
         A = Secondroll[0]
         B = Secondroll[1]
@@ -770,34 +772,36 @@ def roll():
         choice = input(kieswelke3).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
+        if choice == "*":
+            choice = "ABCDE"
         Thirdroll = Secondroll
         visualroll = [" ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," "]
         for i in choice:
             if i == "A":
                 Secondroll[0] = random.choice(range(1,7))
-                visualroll[2] = (" ")
+                visualroll[2] = (Reverse+" ")
                 visualroll[3] = ("A")
-                visualroll[4] = (" ")
+                visualroll[4] = (" "+ResetAll)
             if i == "B":
                 Secondroll[1] = random.choice(range(1,7))
-                visualroll[8] = (" ")
+                visualroll[8] = (Reverse+" ")
                 visualroll[9] = ("B")
-                visualroll[10] = (" ")
+                visualroll[10] = (" "+ResetAll)
             if i == "C":
                 Secondroll[2] = random.choice(range(1,7))
-                visualroll[14] = (" ")
+                visualroll[14] = (Reverse+" ")
                 visualroll[15] = ("C")
-                visualroll[16] = (" ")
+                visualroll[16] = (" "+ResetAll)
             if i == "D":
                 Secondroll[3] = random.choice(range(1,7))
-                visualroll[20] = (" ")
+                visualroll[20] = (Reverse+" ")
                 visualroll[21] = ("D")
-                visualroll[22] = (" ")
+                visualroll[22] = (" "+ResetAll)
             if i == "E":
                 Secondroll[4] = random.choice(range(1,7))
-                visualroll[26] = (" ")
+                visualroll[26] = (Reverse+" ")
                 visualroll[27] = ("E")
-                visualroll[28] = (" ")
+                visualroll[28] = (" "+ResetAll)
         Thirdroll = sorted(Thirdroll)
         A = Thirdroll[0]
         B = Thirdroll[1]
@@ -847,6 +851,14 @@ while spel <= 13:
                 exit()
             if veld == "/":
                 veld = input(welkschrap)
+                if veld in veldlijst:
+                    waarde = "0"
+                    scoretabel[i-1][int(veld)-1] = 0
+                    score = True
+                else:
+                    print(veldongeldig)
+            elif len(veld) > 1 and veld[0] == "/":
+                veld = veld[1:]
                 if veld in veldlijst:
                     waarde = "0"
                     scoretabel[i-1][int(veld)-1] = 0
