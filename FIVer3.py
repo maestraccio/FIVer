@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-import os, pathlib
 import random
-from datetime import *
-from os.path import expanduser
 from time import sleep
 
 #   Written by Maestraccio
@@ -14,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.00"
+versie = "2.10"
 datum = "20230909"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -160,6 +157,11 @@ elif langsel == "2":
     tekort = "Da recuperare: "
     over = "Margine di manovra: "
     totbonus = "Fino al Bonus: "
+    virtuelestenen = "Vuoi giocare con dadi virtuali?\n  1 : Sì\n >2 : No\n%s" % inputindent
+    sorteren = "Ordinare..."
+    rolalledobbelstenen1 = ""
+    kieswelke2 = "#2 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
+    kieswelke3 = "#3 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
 elif langsel == "3":
     lang = "NL"
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House","Kleine Straat","Grote Straat","F I V er","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
@@ -175,6 +177,11 @@ elif langsel == "3":
     tekort = "In te halen: "
     over = "Speelruimte: "
     totbonus = "Tot aan de Bonus: "
+    virtuelestenen = "Wil je met virtuele dobbelstenen spelen?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
+    sorteren = "Sorteren..."
+    rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
+    kieswelke2 = "#2 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
+    kieswelke3 = "#3 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
 else:
     lang = "EN"
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House","Small Straight","Large Straight","F I V er","Free Choice","Total Upper","Total Lower","TOTAL"]
@@ -190,6 +197,11 @@ else:
     tekort = "Short: "
     over = "Leeway: "
     totbonus = "Until the Bonus: "
+    virtuelestenen = "Do you want to play with virtual dice?\n  1 : Yes\n >2 : No\n%s" % inputindent
+    sorteren = "Sorting..."
+    rolalledobbelstenen1 = "#1 Roll all dice"
+    kieswelke2 = "#2 Choose which dice to roll again:\n%s" % inputindent
+    kieswelke3 = "#3 Choose which dice to roll again:\n%s" % inputindent
 
 maxlinkol = len(max(scorelijst, key = len))
 forlinkol = ("{:^%s}" % maxlinkol).format
@@ -535,6 +547,287 @@ def spelertabel(speler):
         print("|")
     print(pluslijn)
     
+def roll():
+    def visualDice():
+        Dicetop = " "+Reverse+Wit+"     "+ResetAll
+        Dicebottom = Dicetop
+        One1 =  " "+Reverse+Wit+"     "+ResetAll
+        One2 = " "+Reverse+Wit+"  "+ResetAll+Wit+"_"+Reverse+Wit+"  "+ResetAll
+        One3 = Dicetop
+        Two1 = " "+Reverse+Wit+" "+ResetAll+Wit+"_"+Reverse+Wit+"   "+ResetAll
+        Two2 = Dicetop
+        Two3 = " "+Reverse+Wit+"   "+ResetAll+Wit+"_"+Reverse+Wit+" "+ResetAll
+        Three1 = Two3
+        Three2 = One2
+        Three3 = Two1
+        Four1 = " "+Reverse+Wit+" "+ResetAll+Wit+"_"+Reverse+Wit+" "+ResetAll+Wit+"_"+Reverse+Wit+" "+ResetAll
+        Four2 = Dicetop
+        Four3 = Four1
+        Five1 = Four1
+        Five2 = One2
+        Five3 = Four1
+        Six1 = Four1
+        Six2 = Four1 
+        Six3 = Four1 
+        Dice = [Dicetop,Dicetop,Dicetop,Dicetop,Dicetop,"","","","","","","","","","","","","","","",Dicebottom,Dicebottom,Dicebottom,Dicebottom,Dicebottom]
+        if A == 1:
+            Dice[5] = One1
+            Dice[10] = One2
+            Dice[15] = One3
+        elif A == 2: 
+            Dice[5] = Two1
+            Dice[10] = Two2
+            Dice[15] = Two3
+        elif A == 3:
+            Dice[5] = Three1
+            Dice[10] = Three2
+            Dice[15] = Three3
+        elif A == 4:
+            Dice[5] = Four1
+            Dice[10] = Four2
+            Dice[15] = Four3
+        elif A == 5:
+            Dice[5] = Five1
+            Dice[10] = Five2
+            Dice[15] = Five3
+        elif A == 6:
+            Dice[5] = Six1
+            Dice[10] = Six2
+            Dice[15] = Six3
+        if B == 1:
+            Dice[6] = One1
+            Dice[11] = One2
+            Dice[16] = One3
+        elif B == 2:
+            Dice[6] = Two1
+            Dice[11] = Two2
+            Dice[16] = Two3
+        elif B == 3:
+            Dice[6] = Three1
+            Dice[11] = Three2
+            Dice[16] = Three3
+        elif B == 4:
+            Dice[6] = Four1
+            Dice[11] = Four2
+            Dice[16] = Four3
+        elif B == 5:
+            Dice[6] = Five1
+            Dice[11] = Five2
+            Dice[16] = Five3
+        elif B == 6:
+            Dice[6] = Six1
+            Dice[11] = Six2
+            Dice[16] = Six3
+        if C == 1:
+            Dice[7] = One1
+            Dice[12] = One2
+            Dice[17] = One3
+        elif C == 2:
+            Dice[7] = Two1
+            Dice[12] = Two2
+            Dice[17] = Two3
+        elif C == 3:
+            Dice[7] = Three1
+            Dice[12] = Three2
+            Dice[17] = Three3
+        elif C == 4:
+            Dice[7] = Four1
+            Dice[12] = Four2
+            Dice[17] = Four3
+        elif C == 5:
+            Dice[7] = Five1
+            Dice[12] = Five2
+            Dice[17] = Five3
+        elif C == 6:
+            Dice[7] = Six1
+            Dice[12] = Six2
+            Dice[17] = Six3
+        if D == 1:
+            Dice[8] = One1
+            Dice[13] = One2
+            Dice[18] = One3
+        elif D == 2:
+            Dice[8] = Two1
+            Dice[13] = Two2
+            Dice[18] = Two3
+        elif D == 3:
+            Dice[8] = Three1
+            Dice[13] = Three2
+            Dice[18] = Three3
+        elif D == 4:
+            Dice[8] = Four1
+            Dice[13] = Four2
+            Dice[18] = Four3
+        elif D == 5:
+            Dice[8] = Five1
+            Dice[13] = Five2
+            Dice[18] = Five3
+        elif D == 6:
+            Dice[8] = Six1
+            Dice[13] = Six2
+            Dice[18] = Six3
+        if E == 1:
+            Dice[9] = One1
+            Dice[14] = One2
+            Dice[19] = One3
+        elif E == 2:
+            Dice[9] = Two1
+            Dice[14] = Two2
+            Dice[19] = Two3
+        elif E == 3:
+            Dice[9] = Three1
+            Dice[14] = Three2
+            Dice[19] = Three3
+        elif E == 4:
+            Dice[9] = Four1
+            Dice[14] = Four2
+            Dice[19] = Four3
+        elif E == 5:
+            Dice[9] = Five1
+            Dice[14] = Five2
+            Dice[19] = Five3
+        elif E == 6:
+            Dice[9] = Six1
+            Dice[14] = Six2
+            Dice[19] = Six3
+        return Dice
+
+    roll = "Y"
+    while roll == "Y":
+        #start = input()
+        #if start.upper() in afsluitlijst:
+        #    exit()
+        firstroll = []
+        for i in range(5):
+            firstroll.append(random.choice(range(1,7)))
+        Firstroll = sorted(firstroll)
+        A = Firstroll[0]
+        B = Firstroll[1]
+        C = Firstroll[2]
+        D = Firstroll[3]
+        E = Firstroll[4]
+        Dice = visualDice()
+        print(rolalledobbelstenen1)
+        for i in [" ","_"," ","A"," ","_"," ","_"," ","B"," ","_"," ","_"," ","C"," ","_"," ","_"," ","D"," ","_"," ","_"," ","E"," ","_"," "]:
+            print(i, end = "", flush = True)
+            sleep(0.05)
+        print(sorteren)
+        sleep(1)
+        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
+        counti = 0
+        for i in Dice:
+            print(i, end = "")
+            counti += 1
+            if counti % 5 == 0:
+                print()
+        print(Wit+"   A     B     C     D     E"+ResetAll)
+        choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.upper() in afsluitlijst:
+            exit()
+        Secondroll = Firstroll
+        visualroll = [" ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," "]
+        for i in choice:
+            if i == "A":
+                Secondroll[0] = random.choice(range(1,7))
+                visualroll[2] = (" ")
+                visualroll[3] = ("A")
+                visualroll[4] = (" ")
+            if i == "B":
+                Secondroll[1] = random.choice(range(1,7))
+                visualroll[8] = (" ")
+                visualroll[9] = ("B")
+                visualroll[10] = (" ")
+            if i == "C":
+                Secondroll[2] = random.choice(range(1,7))
+                visualroll[14] = (" ")
+                visualroll[15] = ("C")
+                visualroll[16] = (" ")
+            if i == "D":
+                Secondroll[3] = random.choice(range(1,7))
+                visualroll[20] = (" ")
+                visualroll[21] = ("D")
+                visualroll[22] = (" ")
+            if i == "E":
+                Secondroll[4] = random.choice(range(1,7))
+                visualroll[26] = (" ")
+                visualroll[27] = ("E")
+                visualroll[28] = (" ")
+        Secondroll = sorted(Secondroll)
+        A = Secondroll[0]
+        B = Secondroll[1]
+        C = Secondroll[2]
+        D = Secondroll[3]
+        E = Secondroll[4]
+        Dice = visualDice()
+        if choice != "":
+            for i in visualroll:
+                print(i, end = "", flush = True)
+                sleep(0.05)
+            print(sorteren)
+            sleep(1)
+        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
+        counti = 0
+        for i in Dice:
+            print(i, end = "")
+            counti += 1
+            if counti % 5 == 0:
+                print()
+        print(Wit+"   A     B     C     D     E"+ResetAll)
+        choice = input(kieswelke3).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.upper() in afsluitlijst:
+            exit()
+        Thirdroll = Secondroll
+        visualroll = [" ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," "]
+        for i in choice:
+            if i == "A":
+                Secondroll[0] = random.choice(range(1,7))
+                visualroll[2] = (" ")
+                visualroll[3] = ("A")
+                visualroll[4] = (" ")
+            if i == "B":
+                Secondroll[1] = random.choice(range(1,7))
+                visualroll[8] = (" ")
+                visualroll[9] = ("B")
+                visualroll[10] = (" ")
+            if i == "C":
+                Secondroll[2] = random.choice(range(1,7))
+                visualroll[14] = (" ")
+                visualroll[15] = ("C")
+                visualroll[16] = (" ")
+            if i == "D":
+                Secondroll[3] = random.choice(range(1,7))
+                visualroll[20] = (" ")
+                visualroll[21] = ("D")
+                visualroll[22] = (" ")
+            if i == "E":
+                Secondroll[4] = random.choice(range(1,7))
+                visualroll[26] = (" ")
+                visualroll[27] = ("E")
+                visualroll[28] = (" ")
+        Thirdroll = sorted(Thirdroll)
+        A = Thirdroll[0]
+        B = Thirdroll[1]
+        C = Thirdroll[2]
+        D = Thirdroll[3]
+        E = Thirdroll[4]
+        Dice = visualDice()
+        if choice != "":
+            for i in visualroll:
+                print(i, end = "", flush = True)
+                sleep(0.05)
+            print(sorteren)
+            sleep(1)
+        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
+        counti = 0
+        for i in Dice:
+            print(i, end = "")
+            counti += 1
+            if counti % 5 == 0:
+                print()
+        print(Wit+"   A     B     C     D     E"+ResetAll)
+        return A,B,C,D,E
+
+virtu = input(virtuelestenen)
 
 spel = 1
 while spel <= 13:
@@ -543,6 +836,8 @@ while spel <= 13:
         speler = spelerslijst[i]
         print(speelt+Ronde+spelerslijst[i]+ResetAll)
         spelertabel(speler)
+        if virtu == "1":
+            roll()
         for j in range(len(scorelijst)):
             if j not in [6,7,8,16,17,18]:
                 print(Kies+forr2(j+1)+ResetAll+": "+forllinkol(scorelijst[j]),end = "")
@@ -561,7 +856,9 @@ while spel <= 13:
                 print(veldongeldig)
                 veld = "veldongeldig"
             if veld != "veldongeldig":
-                waarde = input(welkewaarde)
+                waarde = ""
+                if veld not in ["12","13","14","15"]:
+                    waarde = input(welkewaarde)
                 if waarde.upper() in afsluitlijst:
                     exit()
                 if veld == "1":
