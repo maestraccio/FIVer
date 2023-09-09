@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.10"
+versie = "2.11"
 datum = "20230909"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -78,7 +78,7 @@ forr2 = "{:>2}".format
 forc3 = "{:^3}".format
 inputindent = "  : "
 afsluitlijst=["X","Q"]
-
+veldlijst = ["1","2","3","4","5","6","10","11","12","13","14","15","16"]
 
 def nicklijst(init):
     if init == "A":
@@ -144,6 +144,7 @@ if langsel.upper() in afsluitlijst:
     exit()
 elif langsel == "2":
     lang = "IT"
+    print(Terug+"Uscita con \"Q\""+ResetAll)
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House","Piccola Scala","Grande Scala","F I V er","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
@@ -162,8 +163,10 @@ elif langsel == "2":
     rolalledobbelstenen1 = ""
     kieswelke2 = "#2 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
     kieswelke3 = "#3 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
+    welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
 elif langsel == "3":
     lang = "NL"
+    print(Terug+"Verlaten met \"Q\""+ResetAll)
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House","Kleine Straat","Grote Straat","F I V er","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
     allespelers = "Alle Spelers"
     nog = "Voortgang"
@@ -182,8 +185,10 @@ elif langsel == "3":
     rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
     kieswelke2 = "#2 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
     kieswelke3 = "#3 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
+    welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
 else:
     lang = "EN"
+    print(Terug+"Quit with \"Q\""+ResetAll)
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House","Small Straight","Large Straight","F I V er","Free Choice","Total Upper","Total Lower","TOTAL"]
     allespelers = "All Players"
     nog = "Progress"
@@ -202,6 +207,7 @@ else:
     rolalledobbelstenen1 = "#1 Roll all dice"
     kieswelke2 = "#2 Choose which dice to roll again:\n%s" % inputindent
     kieswelke3 = "#3 Choose which dice to roll again:\n%s" % inputindent
+    welkschrap = "Which field do you want to cancel?\n%s" % inputindent
 
 maxlinkol = len(max(scorelijst, key = len))
 forlinkol = ("{:^%s}" % maxlinkol).format
@@ -224,8 +230,9 @@ def verzamelspelers():
             geefnaam = "Enter the name of %s:\n%s" % (speler,inputindent)
         spelersnaam = input(geefnaam)
         if spelersnaam.upper() in afsluitlijst:
-            spelersnaam = speler
-            spelerslijst.append(spelersnaam)
+            if len(spelerslijst) == 0:
+                spelersnaam = speler
+                spelerslijst.append(spelersnaam)
             break
         elif spelersnaam == "":
             spelersnaam = speler
@@ -254,13 +261,17 @@ def maakscoretabel():
     return scoretabel
 scoretabel = maakscoretabel()
 
-def bouwtabel():
+maxscorelijst = []
+for i in spelerslijst:
+    maxscorelijst.append(0)
+def bouwtabel(maxscorelijst):
+    maxscore = max(maxscorelijst)
     print(Tabel, end = "")
     pluslijn = "+"+"-"*maxlinkol+("+"+"-"*maxspeler)*len(spelerslijst)+"+"
     print(pluslijn)
     print("|"+forlinkol(allespelers),end = "")
     for i in spelerslijst:
-            print("|"+forspeler(i), end = "")
+        print("|"+forspeler(i), end = "")
     print("|")
     print(pluslijn)
     print("|"+forlinkol(scorelijst[0]), end = "")
@@ -340,11 +351,15 @@ def bouwtabel():
     print("|")
     print("|"+forrlinkol(scorelijst[18]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][18]),end = "")
+        if max(maxscorelijst) == scoretabel[i-1][18]:
+            col = Resultaat
+        else:
+            col = Tabel
+        print("|"+col+forspeler(scoretabel[i-1][18])+Tabel,end = "")
     print("|")
     print(pluslijn)
     print(ResetAll, end = "")
-bouwtabel()
+bouwtabel(maxscorelijst)
 
 def spelertabel(speler):
     pluslijn = "+"+"-"*maxlinkol+"+"+"-"*maxspeler+"+"
@@ -360,138 +375,120 @@ def spelertabel(speler):
         print("|"+forlinkol(scorelijst[0]), end = "")
         print("|"+Slecht+forspeler("-"+str((3*1)-scoretabel[spelerslijst.index(speler)-1][0]))+ResetAll,end = "")
         print("|")
-        #print("1 = %s%s%s" % (Slecht,"-"+str((3*1)-scoretabel[spelerslijst.index(speler)-1][0]),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][0] != "" and scoretabel[spelerslijst.index(speler)-1][0] > 3*1:
         verschil += scoretabel[spelerslijst.index(speler)-1][0]-(3*1)
         doel -= scoretabel[spelerslijst.index(speler)-1][0]
         print("|"+forlinkol(scorelijst[0]), end = "")
         print("|"+Goed+forspeler("+"+str(scoretabel[spelerslijst.index(speler)-1][0]-(3*1)))+ResetAll,end = "")
         print("|")
-        #print("1 = %s%s%s" % (Goed,"+"+str(scoretabel[spelerslijst.index(speler)-1][0]-(3*1)),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][0] != "" and scoretabel[spelerslijst.index(speler)-1][0] == 3*1:
         verschil += 0
         doel -= scoretabel[spelerslijst.index(speler)-1][0]
         print("|"+forlinkol(scorelijst[0]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-        #print("1 = OK")
     if scoretabel[spelerslijst.index(speler)-1][1] != "" and scoretabel[spelerslijst.index(speler)-1][1] < 3*2:
         verschil += scoretabel[spelerslijst.index(speler)-1][1]-(3*2)
         doel -= scoretabel[spelerslijst.index(speler)-1][1]
         print("|"+forlinkol(scorelijst[1]), end = "")
         print("|"+Slecht+forspeler("-"+str((3*2)-scoretabel[spelerslijst.index(speler)-1][1]))+ResetAll,end = "")
         print("|")
-        #print("2 = %s%s%s" % (Slecht,"-"+str((3*2)-scoretabel[spelerslijst.index(speler)-1][1]),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][1] != "" and scoretabel[spelerslijst.index(speler)-1][1] > 3*2:
         verschil += scoretabel[spelerslijst.index(speler)-1][1]-(3*2)
         doel -= scoretabel[spelerslijst.index(speler)-1][1]
         print("|"+forlinkol(scorelijst[1]), end = "")
         print("|"+Goed+forspeler("+"+str(scoretabel[spelerslijst.index(speler)-1][1]-(3*2)))+ResetAll,end = "")
         print("|")
-        #print("2 = %s%s%s" % (Goed,"+"+str(scoretabel[spelerslijst.index(speler)-1][1]-(3*2)),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][1] != "" and scoretabel[spelerslijst.index(speler)-1][1] == 3*2:
         verschil += 0
         doel -= scoretabel[spelerslijst.index(speler)-1][1]
         print("|"+forlinkol(scorelijst[1]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-        #print("2 = OK")
     if scoretabel[spelerslijst.index(speler)-1][2] != "" and scoretabel[spelerslijst.index(speler)-1][2] < 3*3:
         verschil += scoretabel[spelerslijst.index(speler)-1][2]-(3*3)
         doel -= scoretabel[spelerslijst.index(speler)-1][2]
         print("|"+forlinkol(scorelijst[2]), end = "")
         print("|"+Slecht+forspeler("-"+str((3*3)-scoretabel[spelerslijst.index(speler)-1][2]))+ResetAll,end = "")
         print("|")
-        #print("3 = %s%s%s" % (Slecht,"-"+str((3*3)-scoretabel[spelerslijst.index(speler)-1][2]),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][2] != "" and scoretabel[spelerslijst.index(speler)-1][2] > 3*3:
         verschil += scoretabel[spelerslijst.index(speler)-1][2]-(3*3)
         doel -= scoretabel[spelerslijst.index(speler)-1][2]
         print("|"+forlinkol(scorelijst[2]), end = "")
         print("|"+Goed+forspeler("+"+str(scoretabel[spelerslijst.index(speler)-1][2]-(3*3)))+ResetAll,end = "")
         print("|")
-        #print("3 = %s%s%s" % (Goed,"+"+str(scoretabel[spelerslijst.index(speler)-1][2]-(3*3)),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][2] != "" and scoretabel[spelerslijst.index(speler)-1][2] == 3*3:
         verschil += 0
         doel -= scoretabel[spelerslijst.index(speler)-1][2]
         print("|"+forlinkol(scorelijst[2]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-        #print("3 = OK")
     if scoretabel[spelerslijst.index(speler)-1][3] != "" and scoretabel[spelerslijst.index(speler)-1][3] < 3*4:
         verschil += scoretabel[spelerslijst.index(speler)-1][3]-(3*4)
         doel -= scoretabel[spelerslijst.index(speler)-1][3]
         print("|"+forlinkol(scorelijst[3]), end = "")
         print("|"+Slecht+forspeler("-"+str((3*4)-scoretabel[spelerslijst.index(speler)-1][3]))+ResetAll,end = "")
         print("|")
-        #print("4 = %s%s%s" % (Slecht,"-"+str((3*4)-scoretabel[spelerslijst.index(speler)-1][3]),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][3] != "" and scoretabel[spelerslijst.index(speler)-1][3] > 3*4:
         verschil += scoretabel[spelerslijst.index(speler)-1][3]-(3*4)
         doel -= scoretabel[spelerslijst.index(speler)-1][3]
         print("|"+forlinkol(scorelijst[3]), end = "")
         print("|"+Goed+forspeler("+"+str(scoretabel[spelerslijst.index(speler)-1][3]-(3*4)))+ResetAll,end = "")
         print("|")
-        #print("4 = %s%s%s" % (Goed,"+"+str(scoretabel[spelerslijst.index(speler)-1][3]-(3*4)),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][3] != "" and scoretabel[spelerslijst.index(speler)-1][3] == 3*4:
         verschil += 0
         doel -= scoretabel[spelerslijst.index(speler)-1][3]
         print("|"+forlinkol(scorelijst[3]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-        #print("4 = OK")
     if scoretabel[spelerslijst.index(speler)-1][4] != "" and scoretabel[spelerslijst.index(speler)-1][4] < 3*5:
         verschil += scoretabel[spelerslijst.index(speler)-1][4]-(3*5)
         doel -= scoretabel[spelerslijst.index(speler)-1][4]
         print("|"+forlinkol(scorelijst[4]), end = "")
         print("|"+Slecht+forspeler("-"+str((3*5)-scoretabel[spelerslijst.index(speler)-1][4]))+ResetAll,end = "")
         print("|")
-        #print("5 = %s%s%s" % (Slecht,"-"+str((3*5)-scoretabel[spelerslijst.index(speler)-1][4]),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][4] != "" and scoretabel[spelerslijst.index(speler)-1][4] > 3*5:
         verschil += scoretabel[spelerslijst.index(speler)-1][4]-(3*5)
         doel -= scoretabel[spelerslijst.index(speler)-1][4]
         print("|"+forlinkol(scorelijst[4]), end = "")
         print("|"+Goed+forspeler("+"+str(scoretabel[spelerslijst.index(speler)-1][4]-(3*5)))+ResetAll,end = "")
         print("|")
-        #print("5 = %s%s%s" % (Goed,"+"+str(scoretabel[spelerslijst.index(speler)-1][4]-(3*5)),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][4] != "" and scoretabel[spelerslijst.index(speler)-1][4] == 3*5:
         verschil += 0
         doel -= scoretabel[spelerslijst.index(speler)-1][4]
         print("|"+forlinkol(scorelijst[4]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-        #print("5 = OK")
     if scoretabel[spelerslijst.index(speler)-1][5] != "" and scoretabel[spelerslijst.index(speler)-1][5] < 3*6:
         verschil += scoretabel[spelerslijst.index(speler)-1][5]-(3*6)
         doel -= scoretabel[spelerslijst.index(speler)-1][5]
         print("|"+forlinkol(scorelijst[5]), end = "")
         print("|"+Slecht+forspeler("-"+str((3*6)-scoretabel[spelerslijst.index(speler)-1][5]))+ResetAll,end = "")
         print("|")
-        #print("6 = %s%s%s" % (Slecht,"-"+str((3*6)-scoretabel[spelerslijst.index(speler)-1][5]),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][5] != "" and scoretabel[spelerslijst.index(speler)-1][5] > 3*6:
         verschil += scoretabel[spelerslijst.index(speler)-1][5]-(3*6)
         doel -= scoretabel[spelerslijst.index(speler)-1][5]
         print("|"+forlinkol(scorelijst[5]), end = "")
         print("|"+Goed+forspeler("+"+str(scoretabel[spelerslijst.index(speler)-1][5]-(3*6)))+ResetAll,end = "")
         print("|")
-        #print("6 = %s%s%s" % (Goed,"+"+str(scoretabel[spelerslijst.index(speler)-1][5]-(3*6)),ResetAll))
     if scoretabel[spelerslijst.index(speler)-1][5] != "" and scoretabel[spelerslijst.index(speler)-1][5] == 3*6:
         verschil += 0
         doel -= scoretabel[spelerslijst.index(speler)-1][5]
         print("|"+forlinkol(scorelijst[5]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-        #print("6 = OK")
-    if verschil < 0:
-        print("|"+Slecht+forlinkol(tekort)+ResetAll, end = "")
-        print("|"+Slecht+forspeler(verschil)+ResetAll,end = "")
-        print("|")
-    else:
-        print("|"+Goed+forlinkol(over)+ResetAll, end = "")
-        print("|"+Goed+forspeler(verschil)+ResetAll,end = "")
-        print("|")
     if doel > 0:
-        print("|"+forlinkol(totbonus), end = "")
-        print("|"+forspeler(doel),end = "")
-        print("|")
+        print("-"+forlinkol(totbonus), end = "")
+        print("-"+forspeler(doel),end = "")
+        print("-")
+    if verschil < 0:
+        print("-"+Slecht+forlinkol(tekort)+ResetAll, end = "")
+        print("-"+Slecht+forspeler(verschil)+ResetAll,end = "")
+        print("-")
+    else:
+        print("-"+Goed+forlinkol(over)+ResetAll, end = "")
+        print("-"+Goed+forspeler(verschil)+ResetAll,end = "")
+        print("-")
     if scoretabel[spelerslijst.index(speler)-1][0] == "":
         print("|"+forlinkol(scorelijst[0]), end = "")
         print("|"+forspeler(scoretabel[spelerslijst.index(speler)-1][0]),end = "")
@@ -694,9 +691,6 @@ def roll():
 
     roll = "Y"
     while roll == "Y":
-        #start = input()
-        #if start.upper() in afsluitlijst:
-        #    exit()
         firstroll = []
         for i in range(5):
             firstroll.append(random.choice(range(1,7)))
@@ -846,186 +840,245 @@ while spel <= 13:
         print()
         score = False
         while score == False:
+            waarde = ""
             veld = input(welkveld+Kies)
             print(ResetAll,end = "")
             if veld.upper() in afsluitlijst:
                 exit()
-            try:
-                print(inputindent+Kies+veld+ResetAll+": "+scorelijst[int(veld)-1])
-            except:
-                print(veldongeldig)
-                veld = "veldongeldig"
-            if veld != "veldongeldig":
-                waarde = ""
-                if veld not in ["12","13","14","15"]:
-                    waarde = input(welkewaarde)
-                if waarde.upper() in afsluitlijst:
-                    exit()
-                if veld == "1":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if waarde % 1 == 0 and waarde <= 5 * 1:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "2":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if waarde % 2 == 0 and waarde <= 5 * 2:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "3":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if waarde % 3 == 0 and waarde <= 5 * 3:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "4":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if waarde % 4 == 0 and waarde <= 5 * 4:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "5":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if waarde % 5 == 0 and waarde <= 5 * 5:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "6":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if waarde % 6 == 0 and waarde <= 5 * 6:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "10":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if 5 <= waarde <= 5 * 6:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "11":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if 5 <= waarde <= 5 * 6:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-                if veld == "12":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        waarde = 25
-                        scoretabel[i-1][int(veld)-1] = waarde
-                        score = True
-                    else:
-                        print(veldbezet)
-                if veld == "13":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        waarde = 30
-                        scoretabel[i-1][int(veld)-1] = waarde
-                        score = True
-                    else:
-                        print(veldbezet)
-                if veld == "14":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        waarde = 40
-                        scoretabel[i-1][int(veld)-1] = waarde
-                        score = True
-                    else:
-                        print(veldbezet)
-                if veld == "15":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        waarde = 50
-                        scoretabel[i-1][int(veld)-1] = waarde
-                        score = True
-                    else:
-                        print(veldbezet)
-                if veld == "16":
-                    if scoretabel[i-1][int(veld)-1] == "":
-                        try:
-                            waarde = eval(waarde)
-                            if 5 <= waarde <= 5 * 6:
-                                scoretabel[i-1][int(veld)-1] = waarde
-                                score = True
-                            else:
-                                print(waardeongeldig)
-                        except(Exception) as f:
-                            print(waardeongeldig)
-                    else:
-                        print(veldbezet)
-
-                subtotboven = 0
-                for j in scoretabel[i-1][:6]:
-                    if j == "":
-                        j = 0
-                    subtotboven += j
-                scoretabel[i-1][6] = subtotboven
-                if scoretabel[i-1][6] >= 63:
-                    scoretabel[i-1][7] = 35
-                    scoretabel[i-1][8] = subtotboven+35
-                    scoretabel[i-1][16] = subtotboven+35
+            if veld == "/":
+                veld = input(welkschrap)
+                if veld in veldlijst:
+                    waarde = "0"
+                    scoretabel[i-1][int(veld)-1] = 0
+                    score = True
                 else:
-                    scoretabel[i-1][8] = subtotboven+0
-                    scoretabel[i-1][16] = subtotboven+0
-                subtotonder = 0
-                for j in scoretabel[i-1][9:16]:
-                    if j == "":
-                        j = 0
-                    subtotonder += j
-                scoretabel[i-1][17] = subtotonder
-                scoretabel[i-1][18] = scoretabel[i-1][16]+scoretabel[i-1][17]
-        bouwtabel()
+                    print(veldongeldig)
+            else:
+                try:
+                    print(inputindent+Kies+veld+ResetAll+": "+scorelijst[int(veld)-1])
+                except:
+                    print(veldongeldig)
+                    veld = "veldongeldig"
+                if veld != "veldongeldig":
+                    if waarde != "0":
+                        if veld not in ["12","13","14","15"]:
+                            waarde = input(welkewaarde+Resultaat)
+                            print(ResetAll, end = "")
+                        if waarde.upper() in afsluitlijst:
+                            exit()
+                        if veld == "1":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if waarde % 1 == 0 and waarde <= 5 * 1:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    try:
+                                        waarde = eval(veld+waarde)
+                                        if waarde % 1 == 0 and waarde <= 5 * 1:
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
+                                    except:
+                                        print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "2":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if waarde % 2 == 0 and waarde <= 5 * 2:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    try:
+                                        waarde = eval(veld+waarde)
+                                        if waarde % 2 == 0 and waarde <= 5 * 2:
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
+                                    except:
+                                        print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "3":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if waarde % 3 == 0 and waarde <= 5 * 3:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    try:
+                                        waarde = eval(veld+waarde)
+                                        if waarde % 3 == 0 and waarde <= 5 * 3:
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
+                                    except:
+                                        print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "4":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if waarde % 4 == 0 and waarde <= 5 * 4:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    try:
+                                        waarde = eval(veld+waarde)
+                                        if waarde % 4 == 0 and waarde <= 5 * 4:
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
+                                    except:
+                                        print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "5":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if waarde % 5 == 0 and waarde <= 5 * 5:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    try:
+                                        waarde = eval(veld+waarde)
+                                        if waarde % 5 == 0 and waarde <= 5 * 5:
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
+                                    except:
+                                        print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "6":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if waarde % 6 == 0 and waarde <= 5 * 6:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    try:
+                                        waarde = eval(veld+waarde)
+                                        if waarde % 6 == 0 and waarde <= 5 * 6:
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
+                                    except:
+                                        print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "10":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if 5 <= waarde <= 5 * 6:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "11":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if 5 <= waarde <= 5 * 6:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+                        if veld == "12":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                waarde = 25
+                                scoretabel[i-1][int(veld)-1] = waarde
+                                score = True
+                            else:
+                                print(veldbezet)
+                        if veld == "13":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                waarde = 30
+                                scoretabel[i-1][int(veld)-1] = waarde
+                                score = True
+                            else:
+                                print(veldbezet)
+                        if veld == "14":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                waarde = 40
+                                scoretabel[i-1][int(veld)-1] = waarde
+                                score = True
+                            else:
+                                print(veldbezet)
+                        if veld == "15":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                waarde = 50
+                                scoretabel[i-1][int(veld)-1] = waarde
+                                score = True
+                            else:
+                                print(veldbezet)
+                        if veld == "16":
+                            if scoretabel[i-1][int(veld)-1] == "":
+                                try:
+                                    waarde = eval(waarde)
+                                    if 5 <= waarde <= 5 * 6:
+                                        scoretabel[i-1][int(veld)-1] = waarde
+                                        score = True
+                                    else:
+                                        print(waardeongeldig)
+                                except:
+                                    print(waardeongeldig)
+                            else:
+                                print(veldbezet)
+            subtotboven = 0
+            for j in scoretabel[i-1][:6]:
+                if j == "":
+                    j = 0
+                subtotboven += j
+            scoretabel[i-1][6] = subtotboven
+            if scoretabel[i-1][6] >= 63:
+                scoretabel[i-1][7] = 35
+                scoretabel[i-1][8] = subtotboven+35
+                scoretabel[i-1][16] = subtotboven+35
+            else:
+                scoretabel[i-1][8] = subtotboven+0
+                scoretabel[i-1][16] = subtotboven+0
+            subtotonder = 0
+            for j in scoretabel[i-1][9:16]:
+                if j == "":
+                    j = 0
+                subtotonder += j
+            scoretabel[i-1][17] = subtotonder
+            scoretabel[i-1][18] = scoretabel[i-1][16]+scoretabel[i-1][17]
+        maxscorelijst[spelerslijst.index(speler)] = scoretabel[i-1][18]
+        bouwtabel(maxscorelijst)
     spel += 1 
