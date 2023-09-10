@@ -755,6 +755,27 @@ def roll():
                 visualroll[27] = ("E")
                 visualroll[28] = (" "+ResetAll)
         Secondroll = sorted(Secondroll)
+        if "A" not in choice:
+            visualroll[2] = (" ")
+            visualroll[3] = ("A")
+            visualroll[4] = (" ")
+        if "B" not in choice:
+            visualroll[8] = (" ")
+            visualroll[9] = ("B")
+            visualroll[10] = (" ")
+        if "C" not in choice:
+            visualroll[14] = (" ")
+            visualroll[15] = ("C")
+            visualroll[16] = (" ")
+        if "D" not in choice:
+            visualroll[20] = (" ")
+            visualroll[21] = ("D")
+            visualroll[22] = (" ")
+        if "E" not in choice:
+            visualroll[26] = (" ")
+            visualroll[27] = ("E")
+            visualroll[28] = (" ")
+
         A = Secondroll[0]
         B = Secondroll[1]
         C = Secondroll[2]
@@ -808,6 +829,26 @@ def roll():
                 visualroll[27] = ("E")
                 visualroll[28] = (" "+ResetAll)
         Thirdroll = sorted(Thirdroll)
+        if "A" not in choice:
+            visualroll[2] = (" ")
+            visualroll[3] = ("A")
+            visualroll[4] = (" ")
+        if "B" not in choice:
+            visualroll[8] = (" ")
+            visualroll[9] = ("B")
+            visualroll[10] = (" ")
+        if "C" not in choice:
+            visualroll[14] = (" ")
+            visualroll[15] = ("C")
+            visualroll[16] = (" ")
+        if "D" not in choice:
+            visualroll[20] = (" ")
+            visualroll[21] = ("D")
+            visualroll[22] = (" ")
+        if "E" not in choice:
+            visualroll[26] = (" ")
+            visualroll[27] = ("E")
+            visualroll[28] = (" ")
         A = Thirdroll[0]
         B = Thirdroll[1]
         C = Thirdroll[2]
