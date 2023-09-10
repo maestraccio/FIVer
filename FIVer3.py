@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import random
+import random,textwrap
 from time import sleep
 
 #   Written by Maestraccio
@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.13"
+versie = "2.14"
 datum = "20230910"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -80,64 +80,6 @@ inputindent = "  : "
 afsluitlijst=["X","Q"]
 veldlijst = ["1","2","3","4","5","6","10","11","12","13","14","15","16"]
 
-def nicklijst(init):
-    if init == "A":
-        nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator"]
-    elif init == "B":
-        nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer"]
-    elif init == "C":
-        nicks = [" the Cool", " the Competent", " the Capable", " the Crusher"]
-    elif init == "D":
-        nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom"]
-    elif init == "E":
-        nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil"]
-    elif init == "F":
-        nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared"]
-    elif init == "G":
-        nicks = [" the Good", " the Gifted", " the Great", " the Grinder"]
-    elif init == "H":
-        nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard"]
-    elif init == "I":
-        nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible"]
-    elif init == "J":
-        nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed"]
-    elif init == "K":
-        nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker"]
-    elif init == "L":
-        nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser"]
-    elif init == "M":
-        nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster"]
-    elif init == "N":
-        nicks = [" the Noble", " the Neat", " the Natural", " the Notorious"]
-    elif init == "O":
-        nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate"]
-    elif init == "P":
-        nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha"]
-    elif init == "Q":
-        nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint"]
-    elif init == "R":
-        nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing"]
-    elif init == "S":
-        nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking"]
-    elif init == "T":
-        nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer"]
-    elif init == "U":
-        nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable"]
-    elif init == "V":
-        nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious"]
-    elif init == "W":
-        nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker"]
-    elif init == "X":
-        nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder"]
-    elif init == "Y":
-        nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee"]
-    elif init == "Z":
-        nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper"]
-    else:
-        nicks = [""]
-    nick = random.choice(nicks)
-    return nick
-
 print()
 langsel = input(" >1 : Play in English\n  2 : Gioca in Italiano\n  3 : Speel in het Nederlands\n%s" % inputindent)
 if langsel.upper() in afsluitlijst:
@@ -149,7 +91,7 @@ elif langsel == "2":
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
     speelt = "È l'opportunità di "
-    ronde = "Turno "
+    ronde = "Giro "
     welkveld = "In %squale campo%s desideri registrare il tuo punteggio?\n%s" % (Kies,ResetAll,inputindent)
     welkewaarde = "Punteggio:\n%s" % (inputindent)
     waardeongeldig = "%sPunteggio invalido%s" % (Slecht,ResetAll)
@@ -217,6 +159,65 @@ forlinkol = ("{:^%s}" % maxlinkol).format
 forllinkol = ("{:<%s}" % maxlinkol).format
 forrlinkol = ("{:>%s}" % maxlinkol).format
 
+
+def nicklijst(init):
+    if init == "A":
+        nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator"]
+    elif init == "B":
+        nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer"]
+    elif init == "C":
+        nicks = [" the Cool", " the Competent", " the Capable", " the Crusher"]
+    elif init == "D":
+        nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom"]
+    elif init == "E":
+        nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil"]
+    elif init == "F":
+        nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared"]
+    elif init == "G":
+        nicks = [" the Good", " the Gifted", " the Great", " the Grinder"]
+    elif init == "H":
+        nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard"]
+    elif init == "I":
+        nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible"]
+    elif init == "J":
+        nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed"]
+    elif init == "K":
+        nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker"]
+    elif init == "L":
+        nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser"]
+    elif init == "M":
+        nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster"]
+    elif init == "N":
+        nicks = [" the Noble", " the Neat", " the Natural", " the Notorious"]
+    elif init == "O":
+        nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate"]
+    elif init == "P":
+        nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha"]
+    elif init == "Q":
+        nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint"]
+    elif init == "R":
+        nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing"]
+    elif init == "S":
+        nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking"]
+    elif init == "T":
+        nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer"]
+    elif init == "U":
+        nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable"]
+    elif init == "V":
+        nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious"]
+    elif init == "W":
+        nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker"]
+    elif init == "X":
+        nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder"]
+    elif init == "Y":
+        nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee"]
+    elif init == "Z":
+        nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper"]
+    else:
+        nicks = [""]
+    nick = random.choice(nicks)
+    return nick
+
 def verzamelspelers():
     spelerslijst = []
     spelertel = 1
@@ -253,6 +254,33 @@ maxspeler = len(max(spelerslijst, key = len))
 if maxspeler < 3:
     maxspeler = 3
 forspeler = ("{:^%s}" % maxspeler).format
+
+def hellup():
+    if lang == "IT":
+        help1 = textwrap.wrap("\"FIVer\" è una variante del famoso gioco dei dadi Yahtzee. Puoi giocarlo con dei veri dadi fisici o utilizzando la funzione di dadi virtuali integrata. Il punteggio viene registrato per ogni giocatore in tabelle chiare. Puoi inserire il punteggio in diversi modi:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help2 = "Nei campi da 1 a 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
+        help3 = "Nei campi 10, 11 e 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
+        help4 = "Nei campi da 12 a 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
+        help5 = textwrap.wrap("Scegli \"H\" per questo aiuto o \"Q\" per uscire", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    elif lang == "NL":
+        help1 = textwrap.wrap("\"FIVer\" is een variant op het bekende Yahtzee-dobbelspel. Je kunt het spelen met echte, fysieke dobbelstenen, of met de ingebouwde virtuele dobbelfuctie. De score wordt per speler bijgehouden in overzichtelijke tabellen. Je kunt die score op verschillende manieren invoeren:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help2 = "In de velden 1 t/m 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
+        help3 = "In de velden 10, 11 en 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
+        help4 = "In de velden 12 t/m 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
+        help5 = textwrap.wrap("Kies \"H\" voor deze help of \"Q\" om te verlaten", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    else:
+        help1 = textwrap.wrap("\"FIVer\" is a variant of the well-known Yahtzee dice game. You can play it with real, physical dice or with the built-in virtual dice function. The score is kept for each player in clear tables. You can enter that score in different ways:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help2 = "In the fields 1 through 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
+        help3 = "In the fields 10, 11 and 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
+        help4 = "In the fields 12 through 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
+        help5 = textwrap.wrap("Choose \"H\" for this help or \"Q\" to Quit", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    for i in help1:
+        print(i)
+    print(help2)
+    print(help3)
+    print(help4)
+    for i in help5:
+        print(i)
 
 def maakscoretabel():
     scoretabel = []
@@ -714,6 +742,7 @@ def roll():
             sleep(0.05)
         print(sorteren)
         sleep(1)
+        print()
         counti = 0
         for i in Dice:
             print(i, end = "")
@@ -722,12 +751,15 @@ def roll():
                 print()
         print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.upper() == "H":
+            hellup()
+            choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
         if choice == "*":
             choice = "ABCDE"
         Secondroll = Firstroll
-        visualroll = [" ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," "]
+        visualroll = [" ","_","_","A","_","_"," ","_","_","B","_","_"," ","_","_","C","_","_"," ","_","_","D","_","_"," ","_","_","E","_","_"," "]
         for i in choice:
             if i == "A":
                 Secondroll[0] = random.choice(range(1,7))
@@ -755,27 +787,6 @@ def roll():
                 visualroll[27] = ("E")
                 visualroll[28] = (" "+ResetAll)
         Secondroll = sorted(Secondroll)
-        if "A" not in choice:
-            visualroll[2] = (" ")
-            visualroll[3] = ("A")
-            visualroll[4] = (" ")
-        if "B" not in choice:
-            visualroll[8] = (" ")
-            visualroll[9] = ("B")
-            visualroll[10] = (" ")
-        if "C" not in choice:
-            visualroll[14] = (" ")
-            visualroll[15] = ("C")
-            visualroll[16] = (" ")
-        if "D" not in choice:
-            visualroll[20] = (" ")
-            visualroll[21] = ("D")
-            visualroll[22] = (" ")
-        if "E" not in choice:
-            visualroll[26] = (" ")
-            visualroll[27] = ("E")
-            visualroll[28] = (" ")
-
         A = Secondroll[0]
         B = Secondroll[1]
         C = Secondroll[2]
@@ -788,6 +799,7 @@ def roll():
                 sleep(0.05)
             print(sorteren)
             sleep(1)
+        print()
         counti = 0
         for i in Dice:
             print(i, end = "")
@@ -796,12 +808,15 @@ def roll():
                 print()
         print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke3).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.upper() == "H":
+            hellup()
+            choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
         if choice == "*":
             choice = "ABCDE"
         Thirdroll = Secondroll
-        visualroll = [" ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," ","_","_","_","_","_"," "]
+        visualroll = [" ","_","_","A","_","_"," ","_","_","B","_","_"," ","_","_","C","_","_"," ","_","_","D","_","_"," ","_","_","E","_","_"," "]
         for i in choice:
             if i == "A":
                 Secondroll[0] = random.choice(range(1,7))
@@ -829,26 +844,6 @@ def roll():
                 visualroll[27] = ("E")
                 visualroll[28] = (" "+ResetAll)
         Thirdroll = sorted(Thirdroll)
-        if "A" not in choice:
-            visualroll[2] = (" ")
-            visualroll[3] = ("A")
-            visualroll[4] = (" ")
-        if "B" not in choice:
-            visualroll[8] = (" ")
-            visualroll[9] = ("B")
-            visualroll[10] = (" ")
-        if "C" not in choice:
-            visualroll[14] = (" ")
-            visualroll[15] = ("C")
-            visualroll[16] = (" ")
-        if "D" not in choice:
-            visualroll[20] = (" ")
-            visualroll[21] = ("D")
-            visualroll[22] = (" ")
-        if "E" not in choice:
-            visualroll[26] = (" ")
-            visualroll[27] = ("E")
-            visualroll[28] = (" ")
         A = Thirdroll[0]
         B = Thirdroll[1]
         C = Thirdroll[2]
@@ -861,6 +856,7 @@ def roll():
                 sleep(0.05)
             print(sorteren)
             sleep(1)
+        print()
         counti = 0
         for i in Dice:
             print(i, end = "")
@@ -871,6 +867,9 @@ def roll():
         return A,B,C,D,E
 
 virtu = input(virtuelestenen)
+if virtu.upper() == "H":
+    hellup()
+    virtu = input(virtuelestenen)
 
 spel = 1
 while spel <= len(veldlijst):
@@ -884,21 +883,53 @@ while spel <= len(veldlijst):
         spelertabel(speler)
         if virtu == "1":
             roll()
+        print()
+        allijst = []
+        breed = 0
         for j in range(len(scorelijst)):
-            if j not in [6,7,8,16,17,18]:
+            if j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)][j] == "":
                 print(Kies+forr2(j+1)+ResetAll+": "+forllinkol(scorelijst[j]),end = "")
-            if j in [2,5,11,14]:
+                breed += 1
+            elif j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)][j] != "":
+                print(Terug+forr2(j+1)+": "+forllinkol(scorelijst[j])+ResetAll,end = "")
+                allijst.append(j)
+                breed += 1
+            if breed == 3 or j == 5:
                 print()
+                breed = 0
+        print()
         print()
         score = False
         while score == False:
             waarde = ""
             veld = input(welkveld+Kies)
+            if veld.upper() == "H":
+                hellup()
+                veld = input(welkveld+Kies)
+            if veld == "25":
+                veld = "12"
+            elif veld == "30":
+                veld = "13"
+            elif veld == "40":
+                veld = "14"
+            elif veld == "50":
+                veld = "15"
+            elif veld == "/25":
+                veld = "/12"
+            elif veld == "/30":
+                veld = "/13"
+            elif veld == "/40":
+                veld = "/14"
+            elif veld == "/50":
+                veld = "/15"
             print(ResetAll,end = "")
             if veld.upper() in afsluitlijst:
                 exit()
             if veld == "/":
                 veld = input(welkschrap)
+                if veld.upper() == "H":
+                    hellup()
+                    veld = input(welkschrap)
                 if veld in veldlijst:
                     waarde = "0"
                     scoretabel[i-1][int(veld)-1] = 0
@@ -921,12 +952,15 @@ while spel <= len(veldlijst):
                     veld = "veldongeldig"
                 if veld != "veldongeldig":
                     if waarde != "0":
-                        if veld not in ["12","13","14","15"]:
+                        if veld not in ["12","13","14","15"] and int(veld)-1 not in allijst:
                             waarde = input(welkewaarde+Resultaat).replace(" ","")
+                            if waarde.upper() == "H":
+                                hellup()
+                                waarde = input(welkewaarde+Resultaat).replace(" ","")
                             print(ResetAll, end = "")
                         if waarde.upper() in afsluitlijst:
                             exit()
-                        if veld == "1":
+                        elif veld == "1":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -957,7 +991,7 @@ while spel <= len(veldlijst):
                                         print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "2":
+                        elif veld == "2":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -988,7 +1022,7 @@ while spel <= len(veldlijst):
                                         print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "3":
+                        elif veld == "3":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -1019,7 +1053,7 @@ while spel <= len(veldlijst):
                                         print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "4":
+                        elif veld == "4":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -1050,7 +1084,7 @@ while spel <= len(veldlijst):
                                         print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "5":
+                        elif veld == "5":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -1081,7 +1115,7 @@ while spel <= len(veldlijst):
                                         print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "6":
+                        elif veld == "6":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -1110,7 +1144,7 @@ while spel <= len(veldlijst):
                                         print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "10":
+                        elif veld == "10":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -1133,7 +1167,7 @@ while spel <= len(veldlijst):
                                     print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "11":
+                        elif veld == "11":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
@@ -1156,35 +1190,35 @@ while spel <= len(veldlijst):
                                     print(waardeongeldig)
                             else:
                                 print(veldbezet)
-                        if veld == "12":
+                        elif veld == "12":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 waarde = 25
                                 scoretabel[i-1][int(veld)-1] = waarde
                                 score = True
                             else:
                                 print(veldbezet)
-                        if veld == "13":
+                        elif veld == "13":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 waarde = 30
                                 scoretabel[i-1][int(veld)-1] = waarde
                                 score = True
                             else:
                                 print(veldbezet)
-                        if veld == "14":
+                        elif veld == "14":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 waarde = 40
                                 scoretabel[i-1][int(veld)-1] = waarde
                                 score = True
                             else:
                                 print(veldbezet)
-                        if veld == "15":
+                        elif veld == "15":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 waarde = 50
                                 scoretabel[i-1][int(veld)-1] = waarde
                                 score = True
                             else:
                                 print(veldbezet)
-                        if veld == "16":
+                        elif veld == "16":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
                                     waarde = eval(waarde)
