@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.12"
-datum = "20230909"
+versie = "2.13"
+datum = "20230910"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -84,7 +84,7 @@ def nicklijst(init):
     if init == "A":
         nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator"]
     elif init == "B":
-        nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer", " "]
+        nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer"]
     elif init == "C":
         nicks = [" the Cool", " the Competent", " the Capable", " the Crusher"]
     elif init == "D":
@@ -149,7 +149,7 @@ elif langsel == "2":
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
     speelt = "È l'opportunità di "
-    ronde = "Turno"
+    ronde = "Turno "
     welkveld = "In %squale campo%s desideri registrare il tuo punteggio?\n%s" % (Kies,ResetAll,inputindent)
     welkewaarde = "Punteggio:\n%s" % (inputindent)
     waardeongeldig = "%sPunteggio invalido%s" % (Slecht,ResetAll)
@@ -164,6 +164,7 @@ elif langsel == "2":
     kieswelke2 = "#2 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
     kieswelke3 = "#3 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
+    wint = "Vince %s con un punteggio di %s"
 elif langsel == "3":
     lang = "NL"
     print(Terug+"Terug of Verlaten met \"Q\""+ResetAll)
@@ -171,7 +172,7 @@ elif langsel == "3":
     allespelers = "Alle Spelers"
     nog = "Voortgang"
     speelt = "De beurt is aan "
-    ronde = "Ronde"
+    ronde = "Ronde "
     welkveld = "In %swelk veld%s wil je je score registreren?\n%s" % (Kies,ResetAll,inputindent)
     welkewaarde = "Score:\n%s" % (inputindent)
     waardeongeldig = "%sOngeldige score%s" % (Slecht,ResetAll)
@@ -186,6 +187,7 @@ elif langsel == "3":
     kieswelke2 = "#2 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
     kieswelke3 = "#3 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
+    wint = "%s wint met een score van %s"
 else:
     lang = "EN"
     print(Terug+"Back or Quit with \"Q\""+ResetAll)
@@ -193,7 +195,7 @@ else:
     allespelers = "All Players"
     nog = "Progress"
     speelt = "It's the turn of "
-    ronde = "Round"
+    ronde = "Round "
     welkveld = "In %swhich field%s do you want to record your score?\n%s" % (Kies,ResetAll,inputindent)
     welkewaarde = "Score:\n%s" % (inputindent)
     waardeongeldig = "%sInvalid score%s" % (Slecht,ResetAll)
@@ -208,6 +210,7 @@ else:
     kieswelke2 = "#2 Choose which dice to roll again:\n%s" % inputindent
     kieswelke3 = "#3 Choose which dice to roll again:\n%s" % inputindent
     welkschrap = "Which field do you want to cancel?\n%s" % inputindent
+    wint = "%s wins with a score of %s"
 
 maxlinkol = len(max(scorelijst, key = len))
 forlinkol = ("{:^%s}" % maxlinkol).format
@@ -264,14 +267,19 @@ scoretabel = maakscoretabel()
 maxscorelijst = []
 for i in spelerslijst:
     maxscorelijst.append(0)
-def bouwtabel(maxscorelijst):
+
+def bouwtabel(maxscorelijst,speler):
     maxscore = max(maxscorelijst)
     print(Tabel, end = "")
     pluslijn = "+"+"-"*maxlinkol+("+"+"-"*maxspeler)*len(spelerslijst)+"+"
     print(pluslijn)
     print("|"+forlinkol(allespelers),end = "")
     for i in spelerslijst:
-        print("|"+forspeler(i), end = "")
+        if i == speler:
+            col = Ronde
+        else:
+            col = Tabel
+        print("|"+col+forspeler(i)+Tabel, end = "")
     print("|")
     print(pluslijn)
     print("|"+forlinkol(scorelijst[0]), end = "")
@@ -359,14 +367,13 @@ def bouwtabel(maxscorelijst):
     print("|")
     print(pluslijn)
     print(ResetAll, end = "")
-bouwtabel(maxscorelijst)
 
 def spelertabel(speler):
     pluslijn = "+"+"-"*maxlinkol+"+"+"-"*maxspeler+"+"
     doel = 63
     verschil = 0
     print(pluslijn)
-    print("|"+forlinkol(nog)+"|"+forspeler(speler),end = "")
+    print("|"+forlinkol(nog)+"|"+Ronde+forspeler(speler)+ResetAll,end = "")
     print("|")
     print(pluslijn)
     if scoretabel[spelerslijst.index(speler)-1][0] != "" and scoretabel[spelerslijst.index(speler)-1][0] < 3*1:
@@ -707,14 +714,13 @@ def roll():
             sleep(0.05)
         print(sorteren)
         sleep(1)
-        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
             print(i, end = "")
             counti += 1
             if counti % 5 == 0:
                 print()
-        print(Wit+"   A     B     C     D     E"+ResetAll)
+        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
@@ -761,14 +767,13 @@ def roll():
                 sleep(0.05)
             print(sorteren)
             sleep(1)
-        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
             print(i, end = "")
             counti += 1
             if counti % 5 == 0:
                 print()
-        print(Wit+"   A     B     C     D     E"+ResetAll)
+        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke3).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
             exit()
@@ -815,24 +820,26 @@ def roll():
                 sleep(0.05)
             print(sorteren)
             sleep(1)
-        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         counti = 0
         for i in Dice:
             print(i, end = "")
             counti += 1
             if counti % 5 == 0:
                 print()
-        print(Wit+"   A     B     C     D     E"+ResetAll)
+        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
         return A,B,C,D,E
 
 virtu = input(virtuelestenen)
 
 spel = 1
-while spel <= 13:
-    print(Ronde+ronde+ResetAll,spel)
+while spel <= len(veldlijst):
+    rondelijn = "+"+"-"*maxlinkol+("-"+("-"*maxspeler))*len(spelerslijst)+"+"
+    forrondelijn = ("{:^%s}" % (len(rondelijn)-2)).format
     for i in range(len(spelerslijst)):
+        print(Tabel+rondelijn+ResetAll)
+        print(Tabel+"|"+ResetAll+Ronde+forrondelijn(ronde+str(spel))+ResetAll+Tabel+"|"+ResetAll)
         speler = spelerslijst[i]
-        print(speelt+Ronde+spelerslijst[i]+ResetAll)
+        bouwtabel(maxscorelijst,speler)
         spelertabel(speler)
         if virtu == "1":
             roll()
@@ -874,7 +881,7 @@ while spel <= 13:
                 if veld != "veldongeldig":
                     if waarde != "0":
                         if veld not in ["12","13","14","15"]:
-                            waarde = input(welkewaarde+Resultaat)
+                            waarde = input(welkewaarde+Resultaat).replace(" ","")
                             print(ResetAll, end = "")
                         if waarde.upper() in afsluitlijst:
                             exit()
@@ -885,6 +892,16 @@ while spel <= 13:
                                     if waarde % 1 == 0 and waarde <= 5 * 1:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 1:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard % 1 == 0 and waard <= 5 * 1:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -906,6 +923,16 @@ while spel <= 13:
                                     if waarde % 2 == 0 and waarde <= 5 * 2:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 2:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard % 2 == 0 and waard <= 5 * 2:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -927,6 +954,16 @@ while spel <= 13:
                                     if waarde % 3 == 0 and waarde <= 5 * 3:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 3:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard % 3 == 0 and waard <= 5 * 3:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -948,6 +985,16 @@ while spel <= 13:
                                     if waarde % 4 == 0 and waarde <= 5 * 4:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 4:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard % 4 == 0 and waard <= 5 * 4:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -969,6 +1016,16 @@ while spel <= 13:
                                     if waarde % 5 == 0 and waarde <= 5 * 5:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 5:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard % 5 == 0 and waard <= 5 * 5:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -990,6 +1047,14 @@ while spel <= 13:
                                     if waarde % 6 == 0 and waarde <= 5 * 6:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 6:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard % 6 == 0 and waard <= 5 * 6:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -1011,6 +1076,16 @@ while spel <= 13:
                                     if 5 <= waarde <= 5 * 6:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 6:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard <= 5 * 6:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -1024,6 +1099,16 @@ while spel <= 13:
                                     if 5 <= waarde <= 5 * 6:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 6:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard <= 5 * 6:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -1065,6 +1150,16 @@ while spel <= 13:
                                     if 5 <= waarde <= 5 * 6:
                                         scoretabel[i-1][int(veld)-1] = waarde
                                         score = True
+                                    elif waarde > 5 * 6:
+                                        waard = 0
+                                        for j in str(waarde):
+                                            waard += int(j)
+                                        if waard <= 5 * 6:
+                                            waarde = waard
+                                            scoretabel[i-1][int(veld)-1] = waarde
+                                            score = True
+                                        else:
+                                            print(waardeongeldig)
                                     else:
                                         print(waardeongeldig)
                                 except:
@@ -1092,5 +1187,8 @@ while spel <= 13:
             scoretabel[i-1][17] = subtotonder
             scoretabel[i-1][18] = scoretabel[i-1][16]+scoretabel[i-1][17]
         maxscorelijst[spelerslijst.index(speler)] = scoretabel[i-1][18]
-        bouwtabel(maxscorelijst)
     spel += 1 
+bouwtabel(maxscorelijst,speler)
+winnaar = spelerslijst[maxscorelijst.index(max(maxscorelijst))]
+print(wint % (Goed+winnaar+ResetAll,Resultaat+str(max(maxscorelijst))+ResetAll))
+print()
