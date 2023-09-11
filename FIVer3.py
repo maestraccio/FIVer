@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.14"
-datum = "20230910"
+versie = "2.15"
+datum = "20230911"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -86,7 +86,7 @@ if langsel.upper() in afsluitlijst:
     exit()
 elif langsel == "2":
     lang = "IT"
-    print(Terug+"Ritorno o Uscita con \"Q\""+ResetAll)
+    print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = In dietro o Uscita\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House","Piccola Scala","Grande Scala","F I V er","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
@@ -101,15 +101,15 @@ elif langsel == "2":
     over = "Margine di manovra: "
     totbonus = "Fino al Bonus: "
     virtuelestenen = "Vuoi giocare con dadi virtuali?\n  1 : Sì\n >2 : No\n%s" % inputindent
-    sorteren = "Ordinare..."
-    rolalledobbelstenen1 = ""
-    kieswelke2 = "#2 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
-    kieswelke3 = "#3 Scegli quali dadi vuoi rilanciare:\n%s" % inputindent
+    sorteren = "Ordinare"
+    rolalledobbelstenen1 = "#1 Lancia tutti i dadi"
+    kieswelke2 = "#2 Quali dadi vuoi rilanciare?\n%s" % inputindent
+    kieswelke3 = "#3 Quali dadi vuoi rilanciare?\n%s" % inputindent
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
     wint = "Vince %s con un punteggio di %s"
 elif langsel == "3":
     lang = "NL"
-    print(Terug+"Terug of Verlaten met \"Q\""+ResetAll)
+    print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House","Kleine Straat","Grote Straat","F I V er","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
     allespelers = "Alle Spelers"
     nog = "Voortgang"
@@ -124,15 +124,15 @@ elif langsel == "3":
     over = "Speelruimte: "
     totbonus = "Tot aan de Bonus: "
     virtuelestenen = "Wil je met virtuele dobbelstenen spelen?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
-    sorteren = "Sorteren..."
+    sorteren = "Sorteren"
     rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
-    kieswelke2 = "#2 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
-    kieswelke3 = "#3 Kies welke dobbelstenen je opnieuw wilt rollen:\n%s" % inputindent
+    kieswelke2 = "#2 Welke wil je opnieuw rollen?\n%s" % inputindent
+    kieswelke3 = "#3 Welke wil je opnieuw rollen?\n%s" % inputindent
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
     wint = "%s wint met een score van %s"
 else:
     lang = "EN"
-    print(Terug+"Back or Quit with \"Q\""+ResetAll)
+    print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House","Small Straight","Large Straight","F I V er","Free Choice","Total Upper","Total Lower","TOTAL"]
     allespelers = "All Players"
     nog = "Progress"
@@ -147,10 +147,10 @@ else:
     over = "Leeway: "
     totbonus = "Until the Bonus: "
     virtuelestenen = "Do you want to play with virtual dice?\n  1 : Yes\n >2 : No\n%s" % inputindent
-    sorteren = "Sorting..."
+    sorteren = "Sorting"
     rolalledobbelstenen1 = "#1 Roll all dice"
-    kieswelke2 = "#2 Choose which dice to roll again:\n%s" % inputindent
-    kieswelke3 = "#3 Choose which dice to roll again:\n%s" % inputindent
+    kieswelke2 = "#2 Choose which to roll again:\n%s" % inputindent
+    kieswelke3 = "#3 Choose which to roll again:\n%s" % inputindent
     welkschrap = "Which field do you want to cancel?\n%s" % inputindent
     wint = "%s wins with a score of %s"
 
@@ -257,29 +257,35 @@ forspeler = ("{:^%s}" % maxspeler).format
 
 def hellup():
     if lang == "IT":
-        help1 = textwrap.wrap("\"FIVer\" è una variante del famoso gioco dei dadi Yahtzee. Puoi giocarlo con dei veri dadi fisici o utilizzando la funzione di dadi virtuali integrata. Il punteggio viene registrato per ogni giocatore in tabelle chiare. Puoi inserire il punteggio in diversi modi:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help1 = textwrap.wrap("\"FIVer\" è una variante del famoso gioco dei dadi Yahtzee. Puoi giocarlo con dei veri dadi fisici o utilizzando la funzione di dadi virtuali integrata. Il punteggio ed il progresso vengono registrati per ogni giocatore in tabelle chiare. Puoi inserire il punteggio in diversi modi:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help2 = "Nei campi da 1 a 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help3 = "Nei campi 10, 11 e 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "Nei campi da 12 a 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("Scegli \"H\" per questo aiuto o \"Q\" per uscire", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("TIP: Inizia il nome del giocatore su schermi stretti con un numero: 1Io, 2Tu, e così via.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     elif lang == "NL":
-        help1 = textwrap.wrap("\"FIVer\" is een variant op het bekende Yahtzee-dobbelspel. Je kunt het spelen met echte, fysieke dobbelstenen, of met de ingebouwde virtuele dobbelfuctie. De score wordt per speler bijgehouden in overzichtelijke tabellen. Je kunt die score op verschillende manieren invoeren:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help1 = textwrap.wrap("\"FIVer\" is een variant op het bekende Yahtzee-dobbelspel. Je kunt het spelen met echte, fysieke dobbelstenen, of met de ingebouwde virtuele dobbelfuctie. De score en de voortgang worden per speler bijgehouden in overzichtelijke tabellen. Je kunt die score op verschillende manieren invoeren:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help2 = "In de velden 1 t/m 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help3 = "In de velden 10, 11 en 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In de velden 12 t/m 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("Kies \"H\" voor deze help of \"Q\" om te verlaten", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("TIP: begin de spelersnaam op smalle schermen met een cijfer: 1Ik, 2Jij, enzovoorts", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     else:
-        help1 = textwrap.wrap("\"FIVer\" is a variant of the well-known Yahtzee dice game. You can play it with real, physical dice or with the built-in virtual dice function. The score is kept for each player in clear tables. You can enter that score in different ways:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help1 = textwrap.wrap("\"FIVer\" is a variant of the well-known Yahtzee dice game. You can play it with real, physical dice or with the built-in virtual dice function. The score and progress are kept for each player in clear tables. You can enter that score in different ways:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help2 = "In the fields 1 through 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help3 = "In the fields 10, 11 and 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In the fields 12 through 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("Choose \"H\" for this help or \"Q\" to Quit", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("TIP: On small screens, start the player name with a number: 1Me, 2You, and so on.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    print(ResetAll, end = "")
     for i in help1:
         print(i)
     print(help2)
     print(help3)
     print(help4)
     for i in help5:
+        print(i)
+    for i in help6:
         print(i)
 
 def maakscoretabel():
@@ -740,8 +746,13 @@ def roll():
         for i in [" ","_",Reverse+" ","A"," "+ResetAll,"_"," ","_",Reverse+" ","B"," "+ResetAll,"_"," ","_",Reverse+" ","C"," "+ResetAll,"_"," ","_",Reverse+" ","D"," "+ResetAll,"_"," ","_",Reverse+" ","E"," "+ResetAll,"_"," "]:
             print(i, end = "", flush = True)
             sleep(0.05)
-        print(sorteren)
-        sleep(1)
+        sleep(0.05)
+        print()
+        print("{:^31}".format(sorteren))
+        print(" "*14, end = "")
+        for i in "...":
+            print(i, end = "", flush = True)
+            sleep(0.5)
         print()
         counti = 0
         for i in Dice:
@@ -749,7 +760,7 @@ def roll():
             counti += 1
             if counti % 5 == 0:
                 print()
-        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
+        print(DarkGray+"  A=%s   B=%s   C=%s   D=%s   E=%s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() == "H":
             hellup()
@@ -797,8 +808,13 @@ def roll():
             for i in visualroll:
                 print(i, end = "", flush = True)
                 sleep(0.05)
-            print(sorteren)
-            sleep(1)
+            sleep(0.05)
+            print()
+            print("{:^31}".format(sorteren))
+            print(" "*14, end = "")
+            for i in "...":
+                print(i, end = "", flush = True)
+                sleep(0.5)
         print()
         counti = 0
         for i in Dice:
@@ -806,7 +822,7 @@ def roll():
             counti += 1
             if counti % 5 == 0:
                 print()
-        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
+        print(DarkGray+"  A=%s   B=%s   C=%s   D=%s   E=%s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke3).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() == "H":
             hellup()
@@ -854,8 +870,13 @@ def roll():
             for i in visualroll:
                 print(i, end = "", flush = True)
                 sleep(0.05)
-            print(sorteren)
-            sleep(1)
+            sleep(0.05)
+            print()
+            print("{:^31}".format(sorteren))
+            print(" "*14, end = "")
+            for i in "...":
+                print(i, end = "", flush = True)
+                sleep(0.5)
         print()
         counti = 0
         for i in Dice:
@@ -863,13 +884,15 @@ def roll():
             counti += 1
             if counti % 5 == 0:
                 print()
-        print(DarkGray+"   %s     %s     %s     %s     %s" % (A,B,C,D,E)+ResetAll)
+        print(DarkGray+"  A=%s   B=%s   C=%s   D=%s   E=%s" % (A,B,C,D,E)+ResetAll)
         return A,B,C,D,E
 
 virtu = input(virtuelestenen)
 if virtu.upper() == "H":
     hellup()
     virtu = input(virtuelestenen)
+if virtu.upper() in afsluitlijst:
+    exit()
 
 spel = 1
 while spel <= len(veldlijst):
@@ -885,6 +908,12 @@ while spel <= len(veldlijst):
             roll()
         print()
         allijst = []
+        if 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*1:
+            maxbreed = 1
+        elif 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*2:
+            maxbreed = 2
+        else:
+            maxbreed = 3
         breed = 0
         for j in range(len(scorelijst)):
             if j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)][j] == "":
@@ -894,7 +923,7 @@ while spel <= len(veldlijst):
                 print(Terug+forr2(j+1)+": "+forllinkol(scorelijst[j])+ResetAll,end = "")
                 allijst.append(j)
                 breed += 1
-            if breed == 3 or j == 5:
+            if breed == maxbreed or j == 5:
                 print()
                 breed = 0
         print()
