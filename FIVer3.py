@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.16"
+versie = "2.17"
 datum = "20230911"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -107,6 +107,7 @@ elif langsel == "2":
     rolalledobbelstenen1 = "#1 Lancia tutti i dadi"
     kieswelke2 = "#2 Quali dadi vuoi rilanciare?\n%s" % inputindent
     kieswelke3 = "#3 Quali dadi vuoi rilanciare?\n%s" % inputindent
+    suggesties = "Suggerimenti:"
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
     wint = "Vince %s con un punteggio di %s"
 elif langsel == "3":
@@ -132,6 +133,7 @@ elif langsel == "3":
     rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
     kieswelke2 = "#2 Welke wil je opnieuw rollen?\n%s" % inputindent
     kieswelke3 = "#3 Welke wil je opnieuw rollen?\n%s" % inputindent
+    suggesties = "Suggesties:"
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
     wint = "%s wint met een score van %s"
 else:
@@ -157,6 +159,7 @@ else:
     rolalledobbelstenen1 = "#1 Roll all dice"
     kieswelke2 = "#2 Choose which to roll again:\n%s" % inputindent
     kieswelke3 = "#3 Choose which to roll again:\n%s" % inputindent
+    suggesties = "Suggestions:"
     welkschrap = "Which field do you want to cancel?\n%s" % inputindent
     wint = "%s wins with a score of %s"
 
@@ -907,6 +910,63 @@ def roll():
         print(DarkGray+"  A=%s   B=%s   C=%s   D=%s   E=%s" % (A,B,C,D,E)+ResetAll)
         return A,B,C,D,E
 
+def suggestions():
+    suggestionslist = []
+    if A == B == C and C != D: 
+        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C)+ResetAll)
+        suggestionslist.append(sug)
+    if B == C == D and A != B and D != E:
+        sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D)+ResetAll)
+        suggestionslist.append(sug)
+    if C == D == E and B != C:
+        sug = "%s: %s" % (Kies+forr2(C)+ResetAll,Goed+forr2(C+D+E)+ResetAll)
+        suggestionslist.append(sug)
+    if A == B == C == D and D != E:
+        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D)+ResetAll)
+        suggestionslist.append(sug)
+    if B == C == D == E and A != B:
+        sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D+E)+ResetAll)
+        suggestionslist.append(sug)
+    if (A == B == C == D == E):
+        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
+        suggestionslist.append(sug)
+    if (A == B == C == D == E):
+        sug = "%s: %s" % (Kies+forr2(15)+ResetAll,Goed+forr2(50)+ResetAll)
+        suggestionslist.append(sug)
+    if (A == B-1 and B == C-1 and C == D-1 and D == E-1):
+        sug = "%s: %s" % (Kies+forr2(14)+ResetAll,Goed+forr2(40)+ResetAll)
+        suggestionslist.append(sug)
+    if (B == C-1 and C == D-1 and D == E-1) or (A == C-1 and C == D-1 and D == E-1) or (A == B-1 and B == D-1 and D == E-1) or (A == B-1 and B == C-1 and C == E-1) or (A == B-1 and B == C-1 and C == D-1):
+        sug = "%s: %s" % (Kies+forr2(13)+ResetAll,Goed+forr2(30)+ResetAll)
+        suggestionslist.append(sug)
+    if (A == B == C and D == E) or (A == B and C == D == E):
+        sug = "%s: %s" % (Kies+forr2(12)+ResetAll,Goed+forr2(25)+ResetAll)
+        suggestionslist.append(sug)
+    if (A == B == C == D) or (B == C == D == E):
+        sug = "%s: %s" % (Kies+forr2(11)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
+        suggestionslist.append(sug)
+    if (A == B == C) or (B == C == D) or (C == D == E):
+        sug = "%s: %s" % (Kies+forr2(10)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
+        suggestionslist.append(sug)
+    if A == B and B != C:
+        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,forr2(A+B))
+        suggestionslist.append(sug)
+    if A != B and B == C and C != D:
+        sug = "%s: %s" % (Kies+forr2(B)+ResetAll,forr2(B+C))
+        suggestionslist.append(sug)
+    if B != C and C == D and D != E:
+        sug = "%s: %s" % (Kies+forr2(C)+ResetAll,forr2(C+D))
+        suggestionslist.append(sug)
+    if C != D and D == E:
+        sug = "%s: %s" % (Kies+forr2(D)+ResetAll,forr2(D+E))
+        suggestionslist.append(sug)
+    sug = "%s: %s" % (Kies+forr2(16)+ResetAll,forr2(A+B+C+D+E))
+    suggestionslist.append(sug)
+    print(suggesties)
+    for i in suggestionslist:
+        print(i)
+    return suggestionslist
+
 virtu = input(virtuelestenen)
 if virtu.upper() == "H":
     hellup()
@@ -925,7 +985,13 @@ while spel <= len(veldlijst):
         bouwtabel(maxscorelijst,speler)
         spelertabel(speler)
         if virtu == "1":
-            roll()
+            rolls = roll()
+            A = rolls[0]
+            B = rolls[1]
+            C = rolls[2]
+            D = rolls[3]
+            E = rolls[4]
+            suggestionslist = suggestions()
         print()
         allijst = []
         if 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*1:
