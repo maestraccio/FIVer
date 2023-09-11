@@ -916,10 +916,10 @@ while spel <= len(veldlijst):
             maxbreed = 3
         breed = 0
         for j in range(len(scorelijst)):
-            if j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)][j] == "":
+            if j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)-1][j] == "":
                 print(Kies+forr2(j+1)+ResetAll+": "+forllinkol(scorelijst[j]),end = "")
                 breed += 1
-            elif j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)][j] != "":
+            elif j not in [6,7,8,16,17,18] and scoretabel[spelerslijst.index(speler)-1][j] != "":
                 print(Terug+forr2(j+1)+": "+forllinkol(scorelijst[j])+ResetAll,end = "")
                 allijst.append(j)
                 breed += 1
