@@ -525,6 +525,7 @@ def spelertabel(speler):
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
     klaarboven = 0
+    bonusbehaald = False
     for j in scoretabel[spelerslijst.index(speler)-1][:6]:
         if j != "":
             klaarboven += 1
@@ -540,9 +541,14 @@ def spelertabel(speler):
         print("-"+Goed+forlinkol(albonus)+ResetAll, end = "")
         print("-"+Goed+forspeler(":-)")+ResetAll,end = "")
         print("-")
+        bonusbehaald = True
     if verschil < 0 and klaarboven < 6:
         print("-"+Slecht+forlinkol(tekort)+ResetAll, end = "")
         print("-"+Slecht+forspeler(verschil)+ResetAll,end = "")
+        print("-")
+    elif verschil >= 0 and klaarboven < 6 and bonusbehaald == False:
+        print("-"+Goed+forlinkol(over)+ResetAll, end = "")
+        print("-"+Goed+forspeler(verschil)+ResetAll,end = "")
         print("-")
     if scoretabel[spelerslijst.index(speler)-1][0] == "":
         print("|"+forlinkol(scorelijst[0]), end = "")
