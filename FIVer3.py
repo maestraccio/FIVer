@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.15"
+versie = "2.16"
 datum = "20230911"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -100,6 +100,8 @@ elif langsel == "2":
     tekort = "Da recuperare: "
     over = "Margine di manovra: "
     totbonus = "Fino al Bonus: "
+    albonus = "Bonus raggiunto"
+    nobonus = "Bonus non raggiunto"
     virtuelestenen = "Vuoi giocare con dadi virtuali?\n  1 : Sì\n >2 : No\n%s" % inputindent
     sorteren = "Ordinare"
     rolalledobbelstenen1 = "#1 Lancia tutti i dadi"
@@ -123,6 +125,8 @@ elif langsel == "3":
     tekort = "In te halen: "
     over = "Speelruimte: "
     totbonus = "Tot aan de Bonus: "
+    albonus = "Bonus behaald"
+    nobonus = "Bonus niet behaald"
     virtuelestenen = "Wil je met virtuele dobbelstenen spelen?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
     sorteren = "Sorteren"
     rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
@@ -146,6 +150,8 @@ else:
     tekort = "Short: "
     over = "Leeway: "
     totbonus = "Until the Bonus: "
+    albonus = "Bonus achieved"
+    nobonus = "Bonus not achieved"
     virtuelestenen = "Do you want to play with virtual dice?\n  1 : Yes\n >2 : No\n%s" % inputindent
     sorteren = "Sorting"
     rolalledobbelstenen1 = "#1 Roll all dice"
@@ -518,17 +524,25 @@ def spelertabel(speler):
         print("|"+forlinkol(scorelijst[5]), end = "")
         print("|"+Goed+forspeler(0)+ResetAll,end = "")
         print("|")
-    if doel > 0:
+    klaarboven = 0
+    for j in scoretabel[spelerslijst.index(speler)-1][:6]:
+        if j != "":
+            klaarboven += 1
+    if doel > 0 and klaarboven < 6:
         print("-"+forlinkol(totbonus), end = "")
         print("-"+forspeler(doel),end = "")
         print("-")
-    if verschil < 0:
-        print("-"+Slecht+forlinkol(tekort)+ResetAll, end = "")
-        print("-"+Slecht+forspeler(verschil)+ResetAll,end = "")
+    elif doel > 0 and klaarboven == 6:
+        print("-"+Slecht+forlinkol(nobonus)+ResetAll, end = "")
+        print("-"+Slecht+forspeler(":-(")+ResetAll,end = "")
         print("-")
     else:
-        print("-"+Goed+forlinkol(over)+ResetAll, end = "")
-        print("-"+Goed+forspeler(verschil)+ResetAll,end = "")
+        print("-"+Goed+forlinkol(albonus)+ResetAll, end = "")
+        print("-"+Goed+forspeler(":-)")+ResetAll,end = "")
+        print("-")
+    if verschil < 0 and klaarboven < 6:
+        print("-"+Slecht+forlinkol(tekort)+ResetAll, end = "")
+        print("-"+Slecht+forspeler(verschil)+ResetAll,end = "")
         print("-")
     if scoretabel[spelerslijst.index(speler)-1][0] == "":
         print("|"+forlinkol(scorelijst[0]), end = "")
