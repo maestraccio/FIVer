@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.17"
-datum = "20230911"
+versie = "2.18"
+datum = "20230912"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -912,58 +912,77 @@ def roll():
 
 def suggestions():
     suggestionslist = []
+    alnietsug = []
     if A == B == C and C != D: 
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if B == C == D and A != B and D != E:
         sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
+            suggestionslist.append(sug)
     if C == D == E and B != C:
         sug = "%s: %s" % (Kies+forr2(C)+ResetAll,Goed+forr2(C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(C))] == "":
+            suggestionslist.append(sug)
     if A == B == C == D and D != E:
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if B == C == D == E and A != B:
         sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
+            suggestionslist.append(sug)
     if (A == B == C == D == E):
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if (A == B == C == D == E):
         sug = "%s: %s" % (Kies+forr2(15)+ResetAll,Goed+forr2(50)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][15-1] == "":
+            suggestionslist.append(sug)
     if (A == B-1 and B == C-1 and C == D-1 and D == E-1):
         sug = "%s: %s" % (Kies+forr2(14)+ResetAll,Goed+forr2(40)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][14-1] == "":
+            suggestionslist.append(sug)
     if (B == C-1 and C == D-1 and D == E-1) or (A == C-1 and C == D-1 and D == E-1) or (A == B-1 and B == D-1 and D == E-1) or (A == B-1 and B == C-1 and C == E-1) or (A == B-1 and B == C-1 and C == D-1):
         sug = "%s: %s" % (Kies+forr2(13)+ResetAll,Goed+forr2(30)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][13-1] == "":
+            suggestionslist.append(sug)
     if (A == B == C and D == E) or (A == B and C == D == E):
         sug = "%s: %s" % (Kies+forr2(12)+ResetAll,Goed+forr2(25)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][12-1] == "":
+            suggestionslist.append(sug)
     if (A == B == C == D) or (B == C == D == E):
         sug = "%s: %s" % (Kies+forr2(11)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][11-1] == "":
+            suggestionslist.append(sug)
     if (A == B == C) or (B == C == D) or (C == D == E):
         sug = "%s: %s" % (Kies+forr2(10)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][10-1] == "":
+            suggestionslist.append(sug)
     if A == B and B != C:
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,forr2(A+B))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if A != B and B == C and C != D:
         sug = "%s: %s" % (Kies+forr2(B)+ResetAll,forr2(B+C))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
+            suggestionslist.append(sug)
     if B != C and C == D and D != E:
         sug = "%s: %s" % (Kies+forr2(C)+ResetAll,forr2(C+D))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(C))] == "":
+            suggestionslist.append(sug)
     if C != D and D == E:
         sug = "%s: %s" % (Kies+forr2(D)+ResetAll,forr2(D+E))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(D))] == "":
+            suggestionslist.append(sug)
     sug = "%s: %s" % (Kies+forr2(16)+ResetAll,forr2(A+B+C+D+E))
-    suggestionslist.append(sug)
+    if scoretabel[spelerslijst.index(speler)-1][16-1] == "":
+        suggestionslist.append(sug)
     print(suggesties)
     for i in suggestionslist:
+        
         print(i)
     return suggestionslist
 
@@ -984,6 +1003,7 @@ while spel <= len(veldlijst):
         speler = spelerslijst[i]
         bouwtabel(maxscorelijst,speler)
         spelertabel(speler)
+        allijst = []
         if virtu == "1":
             rolls = roll()
             A = rolls[0]
@@ -993,7 +1013,6 @@ while spel <= len(veldlijst):
             E = rolls[4]
             suggestionslist = suggestions()
         print()
-        allijst = []
         if 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*1:
             maxbreed = 1
         elif 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*2:
