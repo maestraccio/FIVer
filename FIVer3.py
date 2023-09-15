@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.19"
+versie = "2.20"
 datum = "20230915"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -69,7 +69,8 @@ Bevestiging            = LightCyan
 Gefeliciteerd          = LightMagenta
 Goed                   = LightGreen
 Tabel                  = Yellow
-Resultaat              = LightYellow
+Resultaat              = LightCyan
+#Resultaat              = LightYellow
 Slecht                 = LightRed
 Tekst                  = Reverse
 Terug                  = DarkGray
@@ -333,15 +334,17 @@ maxscorelijst = []
 for i in spelerslijst:
     maxscorelijst.append(0)
 
-def bouwtabel(maxscorelijst,speler):
+def bouwtabel(maxscorelijst,speler,spel,winnaar):
     maxscore = max(maxscorelijst)
     print(Tabel, end = "")
     pluslijn = "+"+"-"*maxlinkol+("+"+"-"*maxspeler)*len(spelerslijst)+"+"
     print(pluslijn)
     print("|"+forlinkol(allespelers),end = "")
     for i in spelerslijst:
-        if i == speler:
+        if i == speler and spel <= 13:
             col = Ronde
+        elif spel > 13 and i == winnaar:
+            col = Resultaat
         else:
             col = Tabel
         print("|"+col+forspeler(i)+Tabel, end = "")
@@ -1008,10 +1011,10 @@ def suggestions():
     sug = "%s: %s" % (Kies+forr2(16)+ResetAll,forr2(A+B+C+D+E))
     if scoretabel[spelerslijst.index(speler)-1][16-1] == "":
         suggestionslist.append(sug)
-    print(suggesties)
-    for i in suggestionslist:
-        
-        print(i)
+    if len(suggestionslist) > 0:
+        print(suggesties)
+        for i in suggestionslist:
+            print(i)
     return suggestionslist
 
 virtu = input(virtuelestenen)
@@ -1026,13 +1029,14 @@ if virtu.upper() in afsluitlijst:
 
 spel = 1
 while spel <= len(veldlijst):
+    winnaar = ""
     rondelijn = "+"+"-"*maxlinkol+("-"+("-"*maxspeler))*len(spelerslijst)+"+"
     forrondelijn = ("{:^%s}" % (len(rondelijn)-2)).format
     for i in range(len(spelerslijst)):
         print(Tabel+rondelijn+ResetAll)
         print(Tabel+"|"+ResetAll+Ronde+forrondelijn(ronde+str(spel))+ResetAll+Tabel+"|"+ResetAll)
         speler = spelerslijst[i]
-        bouwtabel(maxscorelijst,speler)
+        bouwtabel(maxscorelijst,speler,spel,winnaar)
         spelertabel(speler)
         allijst = []
         if virtu == "1":
@@ -1437,7 +1441,7 @@ while spel <= len(veldlijst):
             scoretabel[i-1][18] = scoretabel[i-1][16]+scoretabel[i-1][17]
         maxscorelijst[spelerslijst.index(speler)] = scoretabel[i-1][18]
     spel += 1 
-bouwtabel(maxscorelijst,speler)
 winnaar = spelerslijst[maxscorelijst.index(max(maxscorelijst))]
+bouwtabel(maxscorelijst,speler,spel,winnaar)
 print(wint % (Goed+winnaar+ResetAll,Resultaat+str(max(maxscorelijst))+ResetAll))
 print()
