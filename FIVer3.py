@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.17"
-datum = "20230911"
+versie = "2.19"
+datum = "20230915"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -88,6 +88,8 @@ elif langsel == "2":
     lang = "IT"
     print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = In dietro o Uscita\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House","Piccola Scala","Grande Scala","F I V er","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
+    jalijst = ["S","SI","SÌ"]
+    zeker = "Sei sicuro?\n%s" % inputindent
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
     speelt = "È l'opportunità di "
@@ -114,6 +116,8 @@ elif langsel == "3":
     lang = "NL"
     print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House","Kleine Straat","Grote Straat","F I V er","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
+    jalijst = ["J","JA"]
+    zeker = "Weet je het zeker?\n%s" % inputindent
     allespelers = "Alle Spelers"
     nog = "Voortgang"
     speelt = "De beurt is aan "
@@ -140,6 +144,8 @@ else:
     lang = "EN"
     print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House","Small Straight","Large Straight","F I V er","Free Choice","Total Upper","Total Lower","TOTAL"]
+    jalijst = ["Y","YES"]
+    zeker = "Are you sure?\n%s" % inputindent
     allespelers = "All Players"
     nog = "Progress"
     speelt = "It's the turn of "
@@ -168,6 +174,11 @@ forlinkol = ("{:^%s}" % maxlinkol).format
 forllinkol = ("{:<%s}" % maxlinkol).format
 forrlinkol = ("{:>%s}" % maxlinkol).format
 
+
+def afsluitroutine():
+    zekerweten = input(zeker)
+    if zekerweten.upper() in jalijst:
+        exit()
 
 def nicklijst(init):
     if init == "A":
@@ -295,6 +306,17 @@ def hellup():
     for i in help5:
         print(i)
     for i in help6:
+        print(i)
+
+def leeshellup():
+    if lang == "IT":
+        leeshellup = textwrap.wrap("Il testo di aiuto è già visualizzato sopra. Non c'è altro, continua a giocare.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    elif lang == "NL":
+        leeshellup = textwrap.wrap("De Helptekst wordt hierboven al weergegeven. Meer is er niet, speel verder.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    else:
+        leeshellup = textwrap.wrap("The Help text has already been displayed above. That's all there is, continue the game.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+    print(ResetAll, end = "")
+    for i in leeshellup:
         print(i)
 
 def maakscoretabel():
@@ -788,8 +810,11 @@ def roll():
         if choice.upper() == "H":
             hellup()
             choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.upper() == "H":
+            leeshellup()
+            choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
-            exit()
+            afsluitroutine()
         if choice == "*":
             choice = "ABCDE"
         Secondroll = Firstroll
@@ -850,8 +875,11 @@ def roll():
         if choice.upper() == "H":
             hellup()
             choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.upper() == "H":
+            leeshellup()
+            choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
         if choice.upper() in afsluitlijst:
-            exit()
+            afsluitroutine()
         if choice == "*":
             choice = "ABCDE"
         Thirdroll = Secondroll
@@ -912,58 +940,77 @@ def roll():
 
 def suggestions():
     suggestionslist = []
+    alnietsug = []
     if A == B == C and C != D: 
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if B == C == D and A != B and D != E:
         sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
+            suggestionslist.append(sug)
     if C == D == E and B != C:
         sug = "%s: %s" % (Kies+forr2(C)+ResetAll,Goed+forr2(C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(C))] == "":
+            suggestionslist.append(sug)
     if A == B == C == D and D != E:
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if B == C == D == E and A != B:
         sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
+            suggestionslist.append(sug)
     if (A == B == C == D == E):
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if (A == B == C == D == E):
         sug = "%s: %s" % (Kies+forr2(15)+ResetAll,Goed+forr2(50)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][15-1] == "":
+            suggestionslist.append(sug)
     if (A == B-1 and B == C-1 and C == D-1 and D == E-1):
         sug = "%s: %s" % (Kies+forr2(14)+ResetAll,Goed+forr2(40)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][14-1] == "":
+            suggestionslist.append(sug)
     if (B == C-1 and C == D-1 and D == E-1) or (A == C-1 and C == D-1 and D == E-1) or (A == B-1 and B == D-1 and D == E-1) or (A == B-1 and B == C-1 and C == E-1) or (A == B-1 and B == C-1 and C == D-1):
         sug = "%s: %s" % (Kies+forr2(13)+ResetAll,Goed+forr2(30)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][13-1] == "":
+            suggestionslist.append(sug)
     if (A == B == C and D == E) or (A == B and C == D == E):
         sug = "%s: %s" % (Kies+forr2(12)+ResetAll,Goed+forr2(25)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][12-1] == "":
+            suggestionslist.append(sug)
     if (A == B == C == D) or (B == C == D == E):
         sug = "%s: %s" % (Kies+forr2(11)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][11-1] == "":
+            suggestionslist.append(sug)
     if (A == B == C) or (B == C == D) or (C == D == E):
         sug = "%s: %s" % (Kies+forr2(10)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][10-1] == "":
+            suggestionslist.append(sug)
     if A == B and B != C:
         sug = "%s: %s" % (Kies+forr2(A)+ResetAll,forr2(A+B))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
+            suggestionslist.append(sug)
     if A != B and B == C and C != D:
         sug = "%s: %s" % (Kies+forr2(B)+ResetAll,forr2(B+C))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
+            suggestionslist.append(sug)
     if B != C and C == D and D != E:
         sug = "%s: %s" % (Kies+forr2(C)+ResetAll,forr2(C+D))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(C))] == "":
+            suggestionslist.append(sug)
     if C != D and D == E:
         sug = "%s: %s" % (Kies+forr2(D)+ResetAll,forr2(D+E))
-        suggestionslist.append(sug)
+        if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(D))] == "":
+            suggestionslist.append(sug)
     sug = "%s: %s" % (Kies+forr2(16)+ResetAll,forr2(A+B+C+D+E))
-    suggestionslist.append(sug)
+    if scoretabel[spelerslijst.index(speler)-1][16-1] == "":
+        suggestionslist.append(sug)
     print(suggesties)
     for i in suggestionslist:
+        
         print(i)
     return suggestionslist
 
@@ -971,8 +1018,11 @@ virtu = input(virtuelestenen)
 if virtu.upper() == "H":
     hellup()
     virtu = input(virtuelestenen)
+if virtu.upper() == "H":
+    leeshellup()
+    virtu = input(virtuelestenen)
 if virtu.upper() in afsluitlijst:
-    exit()
+    afsluitroutine()
 
 spel = 1
 while spel <= len(veldlijst):
@@ -984,6 +1034,7 @@ while spel <= len(veldlijst):
         speler = spelerslijst[i]
         bouwtabel(maxscorelijst,speler)
         spelertabel(speler)
+        allijst = []
         if virtu == "1":
             rolls = roll()
             A = rolls[0]
@@ -993,7 +1044,6 @@ while spel <= len(veldlijst):
             E = rolls[4]
             suggestionslist = suggestions()
         print()
-        allijst = []
         if 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*1:
             maxbreed = 1
         elif 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*2:
@@ -1021,6 +1071,9 @@ while spel <= len(veldlijst):
             if veld.upper() == "H":
                 hellup()
                 veld = input(welkveld+Kies)
+            if veld.upper() == "H":
+                leeshellup()
+                veld = input(welkveld+Kies)
             if veld == "25":
                 veld = "12"
             elif veld == "30":
@@ -1039,11 +1092,14 @@ while spel <= len(veldlijst):
                 veld = "/15"
             print(ResetAll,end = "")
             if veld.upper() in afsluitlijst:
-                exit()
+                afsluitroutine()
             if veld == "/":
                 veld = input(welkschrap)
                 if veld.upper() == "H":
                     hellup()
+                    veld = input(welkschrap)
+                if veld.upper() == "H":
+                    leeshellup()
                     veld = input(welkschrap)
                 if veld in veldlijst:
                     waarde = "0"
@@ -1072,9 +1128,12 @@ while spel <= len(veldlijst):
                             if waarde.upper() == "H":
                                 hellup()
                                 waarde = input(welkewaarde+Resultaat).replace(" ","")
+                            if waarde.upper() == "H":
+                                leeshellup()
+                                waarde = input(welkewaarde+Resultaat).replace(" ","")
                             print(ResetAll, end = "")
                         if waarde.upper() in afsluitlijst:
-                            exit()
+                            afsluitroutine()
                         elif veld == "1":
                             if scoretabel[i-1][int(veld)-1] == "":
                                 try:
