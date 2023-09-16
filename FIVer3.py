@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.20"
-datum = "20230915"
+versie = "2.21"
+datum = "20230916"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -282,22 +282,28 @@ def hellup():
         help2 = "Nei campi da 1 a 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help3 = "Nei campi 10, 11 e 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "Nei campi da 12 a 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
-        help5 = textwrap.wrap("Scegli \"H\" per questo aiuto o \"Q\" per uscire", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("TIP: Inizia il nome del giocatore su schermi stretti con un numero: 1Io, 2Tu, e così via.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help5 = textwrap.wrap("Quando giochi con i dadi virtuali, indichi quali dadi vuoi rilanciare, quindi non quelli che desideri tenere. Indica la/le lettera/-e corrispondente, non il valore. Tieni presente che i dadi vengono sempre ordinati per valore, quindi la lettera può cambiare ad ogni turno. Se non fai alcuna scelta (tra A, B, C, D o E), nessun dado viene rilanciato, \"*\" rilancia tutti i dadi.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("Per comodità, vengono visualizzate delle suggerimenti validi, ma possono essere ignorati.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help7 = textwrap.wrap("TIP: Su schermi stretti, inizia il nome del giocatore con un numero: 1Io, 2Tu, e così via, per evitare l'aggiunta di un \"nickname\".", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help8 = textwrap.wrap("Scegli \"H\" per questo aiuto o \"Q\" per uscire", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     elif lang == "NL":
         help1 = textwrap.wrap("\"FIVer\" is een variant op het bekende Yahtzee-dobbelspel. Je kunt het spelen met echte, fysieke dobbelstenen, of met de ingebouwde virtuele dobbelfuctie. De score en de voortgang worden per speler bijgehouden in overzichtelijke tabellen. Je kunt die score op verschillende manieren invoeren:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help2 = "In de velden 1 t/m 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help3 = "In de velden 10, 11 en 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In de velden 12 t/m 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
-        help5 = textwrap.wrap("Kies \"H\" voor deze help of \"Q\" om te verlaten", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("TIP: begin de spelersnaam op smalle schermen met een cijfer: 1Ik, 2Jij, enzovoorts", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help5 = textwrap.wrap("Bij het spelen met virtuele dobbelstenen geef je aan welke stenen je opnieuw wilt rollen, en dus niet die je wilt vasthouden. Geef daarvoor de corresponderende letter(-s) op, niet de waarde. Let op dat de dobbelstenen steeds gesorteerd worden op waarde, en dat de letter dus per beurt kan veranderen. Geen keuze (uit A, B, C, D of E) rolt geen stenen opnieuw, \"*\" selecteert ze allemaal.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("Voor het gemak worden geldige suggesties weergegeven, maar die kunnen worden genegeerd.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help7 = textwrap.wrap("TIP: begin de spelersnaam op smalle schermen met een cijfer: 1Ik, 2Jij, enzovoorts, om te voorkomen dat een \"nickname\" wordt toegevoegd.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help8 = textwrap.wrap("Kies \"H\" voor deze help of \"Q\" om te verlaten", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     else:
         help1 = textwrap.wrap("\"FIVer\" is a variant of the well-known Yahtzee dice game. You can play it with real, physical dice or with the built-in virtual dice function. The score and progress are kept for each player in clear tables. You can enter that score in different ways:", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help2 = "In the fields 1 through 6:\n 1: %s5%s: \"15\"  (=15)\n 2: %s5%s: \"*3\"  (=15)\n 3: %s5%s: \"3*5\" (=15)\n 4: %s5%s: \"555\" (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help3 = "In the fields 10, 11 and 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In the fields 12 through 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
-        help5 = textwrap.wrap("Choose \"H\" for this help or \"Q\" to Quit", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("TIP: On small screens, start the player name with a number: 1Me, 2You, and so on.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help5 = textwrap.wrap("When playing with virtual dice, you indicate which dice you want to roll again, and not the ones you want to hold. Specify the corresponding letter(s) for that, not the value. Note that the dice are always sorted by value, so the letter can change per turn. No choice (from A, B, C, D, or E) means no dice will be rolled, \"*\" rolls all of them.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("For convenience, valid suggestions are displayed, but they can be ignored.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help7 = textwrap.wrap("TIP: On narrow screens, start the player name with a number: 1Me, 2You, and so on, to prevent the addition of a nickname.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help8 = textwrap.wrap("Choose \"H\" for this help or \"Q\" to Quit", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     print(ResetAll, end = "")
     for i in help1:
         print(i)
@@ -307,6 +313,10 @@ def hellup():
     for i in help5:
         print(i)
     for i in help6:
+        print(i)
+    for i in help7:
+        print(i)
+    for i in help8:
         print(i)
 
 def leeshellup():
