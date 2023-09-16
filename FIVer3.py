@@ -11,7 +11,7 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.21"
+versie = "2.22"
 datum = "20230916"
 plaats = "Pedara"
 print(versie,datum,plaats)
@@ -112,7 +112,6 @@ elif langsel == "2":
     kieswelke3 = "#3 Quali dadi vuoi rilanciare?\n%s" % inputindent
     suggesties = "Suggerimenti:"
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
-    wint = "Vince %s con un punteggio di %s"
 elif langsel == "3":
     lang = "NL"
     print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\n")
@@ -140,7 +139,6 @@ elif langsel == "3":
     kieswelke3 = "#3 Welke wil je opnieuw rollen?\n%s" % inputindent
     suggesties = "Suggesties:"
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
-    wint = "%s wint met een score van %s"
 else:
     lang = "EN"
     print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\n")
@@ -168,7 +166,6 @@ else:
     kieswelke3 = "#3 Choose which to roll again:\n%s" % inputindent
     suggesties = "Suggestions:"
     welkschrap = "Which field do you want to cancel?\n%s" % inputindent
-    wint = "%s wins with a score of %s"
 
 maxlinkol = len(max(scorelijst, key = len))
 forlinkol = ("{:^%s}" % maxlinkol).format
@@ -1458,5 +1455,12 @@ while spel <= len(veldlijst):
     spel += 1 
 winnaar = spelerslijst[maxscorelijst.index(max(maxscorelijst))]
 bouwtabel(maxscorelijst,speler,spel,winnaar)
-print(wint % (Goed+winnaar+ResetAll,Resultaat+str(max(maxscorelijst))+ResetAll))
+if lang == "IT":
+    wint = "%s\nvince con un punteggio di %s"
+elif lang == "NL":
+    wint = "%s\nwint met een score van %s"
+else:
+    wint = "%s\nwins with a score of %s"
+pluslijn = "+"+"-"*maxlinkol+("+"+"-"*maxspeler)*len(spelerslijst)+"+"
+print(wint % (Goed+("{:+^%s}" % (1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)).format(winnaar)+ResetAll,Resultaat+str(max(maxscorelijst))+ResetAll))
 print()
