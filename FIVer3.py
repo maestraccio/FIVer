@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.24"
-datum = "20231225"
+versie = "2.25"
+datum = "20240110"
 plaats = "Nuenen"
 print(versie,datum,plaats)
 
@@ -181,167 +181,167 @@ def afsluitroutine():
 def nicklijst(spelersnaam,init):
     if lang == "IT":
         if init == "A":
-            nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator",", semplicemente %s" % spelersnaam]
         elif init == "B":
-            nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer",", semplicemente %s" % spelersnaam]
         elif init == "C":
-            nicks = [" the Cool", " the Competent", " the Capable", " the Crusher",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Cool", " the Competent", " the Capable", " the Crusher",", semplicemente %s" % spelersnaam]
         elif init == "D":
-            nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom",", semplicemente %s" % spelersnaam]
         elif init == "E":
-            nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil",", semplicemente %s" % spelersnaam]
         elif init == "F":
-            nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared",", semplicemente %s" % spelersnaam]
         elif init == "G":
-            nicks = [" the Good", " the Gifted", " the Great", " the Grinder",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Good", " the Gifted", " the Great", " the Grinder",", semplicemente %s" % spelersnaam]
         elif init == "H":
-            nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard",", semplicemente %s" % spelersnaam]
         elif init == "I":
-            nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible",", semplicemente %s" % spelersnaam]
         elif init == "J":
-            nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed",", semplicemente %s" % spelersnaam]
         elif init == "K":
-            nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker",", semplicemente %s" % spelersnaam]
         elif init == "L":
-            nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser",", semplicemente %s" % spelersnaam]
         elif init == "M":
-            nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster",", semplicemente %s" % spelersnaam]
         elif init == "N":
-            nicks = [" the Noble", " the Neat", " the Natural", " the Notorious",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Noble", " the Neat", " the Natural", " the Notorious",", semplicemente %s" % spelersnaam]
         elif init == "O":
-            nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate",", semplicemente %s" % spelersnaam]
         elif init == "P":
-            nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha",", semplicemente %s" % spelersnaam]
         elif init == "Q":
-            nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint",", semplicemente %s" % spelersnaam]
         elif init == "R":
-            nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing",", semplicemente %s" % spelersnaam]
         elif init == "S":
-            nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking",", semplicemente %s" % spelersnaam]
         elif init == "T":
-            nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer",", semplicemente %s" % spelersnaam]
         elif init == "U":
-            nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable",", semplicemente %s" % spelersnaam]
         elif init == "V":
-            nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious",", semplicemente %s" % spelersnaam]
         elif init == "W":
-            nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker",", semplicemente %s" % spelersnaam]
         elif init == "X":
-            nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder",", semplicemente %s" % spelersnaam]
         elif init == "Y":
-            nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee",", semplicemente %s" % spelersnaam]
         elif init == "Z":
-            nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper",", semplicemente %s" % spelersnaam,""]
+            nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper",", semplicemente %s" % spelersnaam]
         else:
             nicks = [""]
     elif lang == "NL":
         if init == "A":
-            nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator",", gewoon %s" % spelersnaam]
         elif init == "B":
-            nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer",", gewoon %s" % spelersnaam]
         elif init == "C":
-            nicks = [" the Cool", " the Competent", " the Capable", " the Crusher",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Cool", " the Competent", " the Capable", " the Crusher",", gewoon %s" % spelersnaam]
         elif init == "D":
-            nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom",", gewoon %s" % spelersnaam]
         elif init == "E":
-            nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil",", gewoon %s" % spelersnaam]
         elif init == "F":
-            nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared",", gewoon %s" % spelersnaam]
         elif init == "G":
-            nicks = [" the Good", " the Gifted", " the Great", " the Grinder",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Good", " the Gifted", " the Great", " the Grinder",", gewoon %s" % spelersnaam]
         elif init == "H":
-            nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard",", gewoon %s" % spelersnaam]
         elif init == "I":
-            nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible",", gewoon %s" % spelersnaam]
         elif init == "J":
-            nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed",", gewoon %s" % spelersnaam]
         elif init == "K":
-            nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker",", gewoon %s" % spelersnaam]
         elif init == "L":
-            nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser",", gewoon %s" % spelersnaam]
         elif init == "M":
-            nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster",", gewoon %s" % spelersnaam]
         elif init == "N":
-            nicks = [" the Noble", " the Neat", " the Natural", " the Notorious",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Noble", " the Neat", " the Natural", " the Notorious",", gewoon %s" % spelersnaam]
         elif init == "O":
-            nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate",", gewoon %s" % spelersnaam]
         elif init == "P":
-            nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha",", gewoon %s" % spelersnaam]
         elif init == "Q":
-            nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint",", gewoon %s" % spelersnaam]
         elif init == "R":
-            nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing",", gewoon %s" % spelersnaam]
         elif init == "S":
-            nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking",", gewoon %s" % spelersnaam]
         elif init == "T":
-            nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer",", gewoon %s" % spelersnaam]
         elif init == "U":
-            nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable",", gewoon %s" % spelersnaam]
         elif init == "V":
-            nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious",", gewoon %s" % spelersnaam]
         elif init == "W":
-            nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker",", gewoon %s" % spelersnaam]
         elif init == "X":
-            nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder",", gewoon %s" % spelersnaam]
         elif init == "Y":
-            nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee",", gewoon %s" % spelersnaam]
         elif init == "Z":
-            nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper",", gewoon %s" % spelersnaam,""]
+            nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper",", gewoon %s" % spelersnaam]
         else:
             nicks = [""]
     else:
         if init == "A":
-            nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator",", just %s" % spelersnaam,""]
+            nicks = [" the Awesome"," the Admirable", " the Amazing", " the Annihilator",", just %s" % spelersnaam]
         elif init == "B":
-            nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer",", just %s" % spelersnaam,""]
+            nicks = [" the Bright"," the Brave", " the Bold", " the Bulldozer",", just %s" % spelersnaam]
         elif init == "C":
-            nicks = [" the Cool", " the Competent", " the Capable", " the Crusher",", just %s" % spelersnaam,""]
+            nicks = [" the Cool", " the Competent", " the Capable", " the Crusher",", just %s" % spelersnaam]
         elif init == "D":
-            nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom",", just %s" % spelersnaam,""]
+            nicks = [" the Daring", " the Decisive", " the Dutiful", " the Doom",", just %s" % spelersnaam]
         elif init == "E":
-            nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil",", just %s" % spelersnaam,""]
+            nicks = [" the Earnest", " the Eager", " the Efficient", " the Evil",", just %s" % spelersnaam]
         elif init == "F":
-            nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared",", just %s" % spelersnaam,""]
+            nicks = [" the Fabulous", " the Fair", " the Ferocious", " the Feared",", just %s" % spelersnaam]
         elif init == "G":
-            nicks = [" the Good", " the Gifted", " the Great", " the Grinder",", just %s" % spelersnaam,""]
+            nicks = [" the Good", " the Gifted", " the Great", " the Grinder",", just %s" % spelersnaam]
         elif init == "H":
-            nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard",", just %s" % spelersnaam,""]
+            nicks = [" the Honorable", " the Hearty", " the Heroic", " the Hard",", just %s" % spelersnaam]
         elif init == "I":
-            nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible",", just %s" % spelersnaam,""]
+            nicks = [" the Incredible", " the Impressive", " the Impredictible", " the Invincible",", just %s" % spelersnaam]
         elif init == "J":
-            nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed",", just %s" % spelersnaam,""]
+            nicks = [" the Jovial", " the Joker", " the Just", " the Jinxed",", just %s" % spelersnaam]
         elif init == "K":
-            nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker",", just %s" % spelersnaam,""]
+            nicks = [" the Knowledgeable", " the Kind", " the Keen", " the Knocker",", just %s" % spelersnaam]
         elif init == "L":
-            nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser",", just %s" % spelersnaam,""]
+            nicks = [" the Lucky", " the Lean", " the Loveable", " the Leavealoser",", just %s" % spelersnaam]
         elif init == "M":
-            nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster",", just %s" % spelersnaam,""]
+            nicks = [" the Mighty", " the Majestic", " the Mean", " the Monster",", just %s" % spelersnaam]
         elif init == "N":
-            nicks = [" the Noble", " the Neat", " the Natural", " the Notorious",", just %s" % spelersnaam,""]
+            nicks = [" the Noble", " the Neat", " the Natural", " the Notorious",", just %s" % spelersnaam]
         elif init == "O":
-            nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate",", just %s" % spelersnaam,""]
+            nicks = [" the Ominous", " the Outrageous", " the Overwhelming", " the Obstinate",", just %s" % spelersnaam]
         elif init == "P":
-            nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha",", just %s" % spelersnaam,""]
+            nicks = [" the Powerful", " the Polite", " the Peaceful", " the Piranha",", just %s" % spelersnaam]
         elif init == "Q":
-            nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint",", just %s" % spelersnaam,""]
+            nicks = [" the Quick", " the Quizzical", " the Qualified", " the Quaint",", just %s" % spelersnaam]
         elif init == "R":
-            nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing",", just %s" % spelersnaam,""]
+            nicks = [" the Righteous", " the Rebellious", " the Radiant", " the Ravishing",", just %s" % spelersnaam]
         elif init == "S":
-            nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking",", just %s" % spelersnaam,""]
+            nicks = [" the Strong", " the Supreme", " the Skilful", " the Shocking",", just %s" % spelersnaam]
         elif init == "T":
-            nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer",", just %s" % spelersnaam,""]
+            nicks = [" the Talented", " the Tactful", " the Thoughtful", " the Torturer",", just %s" % spelersnaam]
         elif init == "U":
-            nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable",", just %s" % spelersnaam,""]
+            nicks = [" the Unbeatable", " the Unexpected", " the Unequalled", " the Unbendable",", just %s" % spelersnaam]
         elif init == "V":
-            nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious",", just %s" % spelersnaam,""]
+            nicks = [" the Victorious", " the Versatile", " the Virtuoso", " the Vicious",", just %s" % spelersnaam]
         elif init == "W":
-            nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker",", just %s" % spelersnaam,""]
+            nicks = [" the Wise", " the Warm", " the Wonderful", " the Wrecker",", just %s" % spelersnaam]
         elif init == "X":
-            nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder",", just %s" % spelersnaam,""]
+            nicks = [" the Xpert", " the Xtraordinary", " the Xcellent", " the Xtruder",", just %s" % spelersnaam]
         elif init == "Y":
-            nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee",", just %s" % spelersnaam,""]
+            nicks = [" the Yedi", " the Yoda", " the Younghearted", " the Yahtzee",", just %s" % spelersnaam]
         elif init == "Z":
-            nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper",", just %s" % spelersnaam,""]
+            nicks = [" the Zealous", " the Zodiac", " the Zoroaster", " the Zapper",", just %s" % spelersnaam]
         else:
             nicks = [""]
     nick = random.choice(nicks)
