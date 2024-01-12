@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.25"
-datum = "20240110"
+versie = "2.50"
+datum = "20240112"
 plaats = "Nuenen"
 print(versie,datum,plaats)
 
@@ -106,6 +106,7 @@ elif langsel == "2":
     albonus = "Bonus raggiunto"
     nobonus = "Bonus non raggiunto"
     virtuelestenen = "Vuoi giocare con dadi virtuali?\n  1 : Sì\n >2 : No\n%s" % inputindent
+    moetofnietmoet = "Vuoi accettare solo valori suggeriti?\n  1 : Sì\n >2 : No\n%s" % inputindent
     sorteren = "Ordinare"
     rolalledobbelstenen1 = "#1 Lancia tutti i dadi"
     kieswelke2 = "#2 Quali dadi vuoi rilanciare?\n%s" % inputindent
@@ -133,6 +134,7 @@ elif langsel == "3":
     albonus = "Bonus behaald"
     nobonus = "Bonus niet behaald"
     virtuelestenen = "Wil je met virtuele dobbelstenen spelen?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
+    moetofnietmoet = "Wil je alleen voorgestelde waardes accepteren?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
     sorteren = "Sorteren"
     rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
     kieswelke2 = "#2 Welke wil je opnieuw rollen?\n%s" % inputindent
@@ -160,6 +162,7 @@ else:
     albonus = "Bonus achieved"
     nobonus = "Bonus not achieved"
     virtuelestenen = "Do you want to play with virtual dice?\n  1 : Yes\n >2 : No\n%s" % inputindent
+    moetofnietmoet = "Do you only want to accept suggested values?\n  1 : Yes\n >2 : No\n%s" % inputindent
     sorteren = "Sorting"
     rolalledobbelstenen1 = "#1 Roll all dice"
     kieswelke2 = "#2 Choose which to roll again:\n%s" % inputindent
@@ -1065,80 +1068,80 @@ def roll():
         return A,B,C,D,E
 
 def suggestions():
-    suggestionslist = []
+    goodsuggestionslist = {}
+    badsuggestionslist = {}
     alnietsug = []
     if A == B == C and C != D: 
-        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(A)] = str(A+B+C)
     if B == C == D and A != B and D != E:
-        sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(B)] = str(B+C+D)
     if C == D == E and B != C:
-        sug = "%s: %s" % (Kies+forr2(C)+ResetAll,Goed+forr2(C+D+E)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(C))] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(C)] = str(C+D+E)
     if A == B == C == D and D != E:
-        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(A)] = str(A+B+C+D)
     if B == C == D == E and A != B:
-        sug = "%s: %s" % (Kies+forr2(B)+ResetAll,Goed+forr2(B+C+D+E)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(B)] = str(B+C+D+E)
     if (A == B == C == D == E):
-        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(A)] = str(A+B+C+D+E)
     if (A == B == C == D == E):
-        sug = "%s: %s" % (Kies+forr2(15)+ResetAll,Goed+forr2(50)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][15-1] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(15)] = str(50)
     if (A == B-1 and B == C-1 and C == D-1 and D == E-1):
-        sug = "%s: %s" % (Kies+forr2(14)+ResetAll,Goed+forr2(40)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][14-1] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(14)] = str(40)
     if (B == C-1 and C == D-1 and D == E-1) or (A == C-1 and C == D-1 and D == E-1) or (A == B-1 and B == D-1 and D == E-1) or (A == B-1 and B == C-1 and C == E-1) or (A == B-1 and B == C-1 and C == D-1):
-        sug = "%s: %s" % (Kies+forr2(13)+ResetAll,Goed+forr2(30)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][13-1] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(13)] = str(30)
     if (A == B == C and D == E) or (A == B and C == D == E):
-        sug = "%s: %s" % (Kies+forr2(12)+ResetAll,Goed+forr2(25)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][12-1] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(12)] = str(25)
     if (A == B == C == D) or (B == C == D == E):
-        sug = "%s: %s" % (Kies+forr2(11)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][11-1] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(11)] = str(A+B+C+D+E)
     if (A == B == C) or (B == C == D) or (C == D == E):
-        sug = "%s: %s" % (Kies+forr2(10)+ResetAll,Goed+forr2(A+B+C+D+E)+ResetAll)
         if scoretabel[spelerslijst.index(speler)-1][10-1] == "":
-            suggestionslist.append(sug)
+            goodsuggestionslist[str(10)] = str(A+B+C+D+E)
     if A == B and B != C:
-        sug = "%s: %s" % (Kies+forr2(A)+ResetAll,forr2(A+B))
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(A))] == "":
-            suggestionslist.append(sug)
+            badsuggestionslist[str(A)] = str(A+B)
     if A != B and B == C and C != D:
-        sug = "%s: %s" % (Kies+forr2(B)+ResetAll,forr2(B+C))
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(B))] == "":
-            suggestionslist.append(sug)
+            badsuggestionslist[str(B)] = str(B+C)
     if B != C and C == D and D != E:
-        sug = "%s: %s" % (Kies+forr2(C)+ResetAll,forr2(C+D))
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(C))] == "":
-            suggestionslist.append(sug)
+            badsuggestionslist[str(C)] = str(C+D)
     if C != D and D == E:
-        sug = "%s: %s" % (Kies+forr2(D)+ResetAll,forr2(D+E))
         if scoretabel[spelerslijst.index(speler)-1][scorelijst.index(str(D))] == "":
-            suggestionslist.append(sug)
-    sug = "%s: %s" % (Kies+forr2(16)+ResetAll,forr2(A+B+C+D+E))
+            badsuggestionslist[str(D)] = str(D+E)
     if scoretabel[spelerslijst.index(speler)-1][16-1] == "":
-        suggestionslist.append(sug)
-    if len(suggestionslist) > 0:
+        badsuggestionslist[str(16)] = str(A+B+C+D+E)
+    if len(goodsuggestionslist) > 0 or len(badsuggestionslist) > 0:
         print(suggesties)
-        for i in suggestionslist:
-            print(i)
-    return suggestionslist
+        for i,j in goodsuggestionslist.items():
+            print(Kies+forr2(i)+ResetAll+":",forr2(j))
+        for i,j in badsuggestionslist.items():
+            print(forr2(i)+":",forr2(j))
+    return goodsuggestionslist,badsuggestionslist
+
+def must(veld):
+    try:
+        if veld not in goodsuggestionslist and veld not in badsuggestionslist:
+            veld = "veldongeldig"
+        else:
+            try:
+                waarde = goodsuggestionslist[veld]
+            except:
+                waarde = badsuggestionslist[veld]
+            return waarde
+    except(Exception) as f:
+        print(f)
+        pass
 
 virtu = input(virtuelestenen)
 if virtu.upper() == "H":
@@ -1149,6 +1152,11 @@ if virtu.upper() == "H":
     virtu = input(virtuelestenen)
 if virtu.upper() in afsluitlijst:
     afsluitroutine()
+
+Must = False
+mustornotmust = input(moetofnietmoet)
+if mustornotmust == "1":
+    Must = True
 
 spel = 1
 while spel <= len(veldlijst):
@@ -1169,7 +1177,9 @@ while spel <= len(veldlijst):
             C = rolls[2]
             D = rolls[3]
             E = rolls[4]
-            suggestionslist = suggestions()
+            suggestionslists = suggestions()
+            goodsuggestionslist = suggestionslists[0]
+            badsuggestionslist = suggestionslists[1]
         print()
         if 1+maxlinkol + (1+maxspeler)*len(spelerslijst) + 1 <= 31*1:
             maxbreed = 1
@@ -1249,15 +1259,23 @@ while spel <= len(veldlijst):
                     print(veldongeldig)
                     veld = "veldongeldig"
                 if veld != "veldongeldig":
-                    if waarde != "0":
+                    if waarde == "":
                         if veld not in ["12","13","14","15"] and int(veld)-1 not in allijst:
-                            waarde = input(welkewaarde+Resultaat).replace(" ","")
-                            if waarde.upper() == "H":
-                                hellup()
+                            if Must == True:
+                                mustwaarde = must(veld)
+                                if veld in goodsuggestionslist or veld in badsuggestionslist:
+                                    waarde = mustwaarde
+                                else:
+                                    print(veldongeldig)
+                                    veld = "veldongeldig"
+                            else:
                                 waarde = input(welkewaarde+Resultaat).replace(" ","")
-                            if waarde.upper() == "H":
-                                leeshellup()
-                                waarde = input(welkewaarde+Resultaat).replace(" ","")
+                                if waarde.upper() == "H":
+                                    hellup()
+                                    waarde = input(welkewaarde+Resultaat).replace(" ","")
+                                if waarde.upper() == "H":
+                                    leeshellup()
+                                    waarde = input(welkewaarde+Resultaat).replace(" ","")
                             print(ResetAll, end = "")
                         if waarde.upper() in afsluitlijst:
                             afsluitroutine()
