@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.50"
-datum = "20240112"
+versie = "2.51"
+datum = "20240113"
 plaats = "Nuenen"
 print(versie,datum,plaats)
 
@@ -394,7 +394,7 @@ def hellup():
         help3 = "Nei campi 10, 11 e 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "Nei campi da 12 a 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("Quando giochi con i dadi virtuali, indichi quali dadi vuoi rilanciare, quindi non quelli che desideri tenere. Indica la/le lettera/-e corrispondente, non il valore. Tieni presente che i dadi vengono sempre ordinati per valore, quindi la lettera può cambiare ad ogni turno. Se non fai alcuna scelta (tra A, B, C, D o E), nessun dado viene rilanciato, \"*\" rilancia tutti i dadi.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("Per comodità, vengono visualizzate delle suggerimenti validi, ma possono essere ignorati.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("Se \"giocare con dadi virtuali\" è attivo e anche \"accettare solo valori suggeriti\", allora non verranno accettate altre opzioni oltre a quelle proposte, o eliminazioni.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help7 = textwrap.wrap("Per eliminare un campo (= immettendo un punteggio di \"0\"), puoi precedere il nome del campo con un \"/\" (\"/13\" = \"Piccola scala: 0\").", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help8 = textwrap.wrap("TIP: Su schermi stretti, inizia il nome del giocatore con un numero: 1Io, 2Tu, e così via, per evitare l'aggiunta di un \"nickname\".", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help9 = textwrap.wrap("Scegli \"H\" per questo aiuto o \"Q\" per uscire", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
@@ -404,7 +404,7 @@ def hellup():
         help3 = "In de velden 10, 11 en 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In de velden 12 t/m 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("Bij het spelen met virtuele dobbelstenen geef je aan welke stenen je opnieuw wilt rollen, en dus niet die je wilt vasthouden. Geef daarvoor de corresponderende letter(-s) op, niet de waarde. Let op dat de dobbelstenen steeds gesorteerd worden op waarde, en dat de letter dus per beurt kan veranderen. Geen keuze (uit A, B, C, D of E) rolt geen stenen opnieuw, \"*\" selecteert ze allemaal.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("Voor het gemak worden geldige suggesties weergegeven, maar die kunnen worden genegeerd.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("Als \"spelen met virtuele dobbelstenen\" aan staat en \"alleen suggesties accepteren\" ook, dan worden er geen andere keuzes geaccepteerd dan de getoonde suggesties of schrap.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help7 = textwrap.wrap("Om een veld te schrappen (= een score van \"0\" in te voeren) kun je de veldnaam laten voorafgaan door een \"/\" (\"/13\" = \"Kleine straat: 0\").", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help8 = textwrap.wrap("TIP: begin de spelersnaam op smalle schermen met een cijfer: 1Ik, 2Jij, enzovoorts, om te voorkomen dat een \"nickname\" wordt toegevoegd.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help9 = textwrap.wrap("Kies \"H\" voor deze help of \"Q\" om te verlaten", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
@@ -414,7 +414,8 @@ def hellup():
         help3 = "In the fields 10, 11 and 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In the fields 12 through 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("When playing with virtual dice, you indicate which dice you want to roll again, and not the ones you want to hold. Specify the corresponding letter(s) for that, not the value. Note that the dice are always sorted by value, so the letter can change per turn. No choice (from A, B, C, D, or E) means no dice will be rolled, \"*\" rolls all of them.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("For convenience, valid suggestions are displayed, but they can be ignored.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("Als \"spelen met virtuele dobbelstenen\" aan staat en \"alleen suggesties accepteren\" ook, dan worden er geen andere keuzes geaccepteerd dan de getoonde suggesties of schrap.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        help6 = textwrap.wrap("If \"play with virtual dice\" is active and \"accept only suggestions\" also, only suggested choices are accepted, or deletions.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help7 = textwrap.wrap("To delete a field (= entering a score of \"0\"), you can prefix the field name with a \"/\" (\"/13\" = \"Small straight: 0\").", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help8 = textwrap.wrap("TIP: On narrow screens, start the player name with a number: 1Me, 2You, and so on, to prevent the addition of a nickname.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help9 = textwrap.wrap("Choose \"H\" for this help or \"Q\" to Quit", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
@@ -1152,11 +1153,19 @@ if virtu.upper() == "H":
     virtu = input(virtuelestenen)
 if virtu.upper() in afsluitlijst:
     afsluitroutine()
+if virtu == "1":
+    virtu = True
 
-Must = False
-mustornotmust = input(moetofnietmoet)
-if mustornotmust == "1":
-    Must = True
+if virtu == True:
+    mustu = input(moetofnietmoet)
+    if mustu.upper() == "H":
+        hellup()
+        mustu = input(virtuelestenen)
+    if mustu.upper() == "H":
+        leeshellup()
+        mustu = input(virtuelestenen)
+    if mustu == "1":
+        mustu = True
 
 spel = 1
 while spel <= len(veldlijst):
@@ -1164,13 +1173,15 @@ while spel <= len(veldlijst):
     rondelijn = "+"+"-"*maxlinkol+("-"+("-"*maxspeler))*len(spelerslijst)+"+"
     forrondelijn = ("{:^%s}" % (len(rondelijn)-2)).format
     for i in range(len(spelerslijst)):
+        goodsuggestionslist = []
+        badsuggestionslist = []
         print(Tabel+rondelijn+ResetAll)
         print(Tabel+"|"+ResetAll+Ronde+forrondelijn(ronde+str(spel))+ResetAll+Tabel+"|"+ResetAll)
         speler = spelerslijst[i]
         bouwtabel(maxscorelijst,speler,spel,winnaar)
         spelertabel(speler)
         allijst = []
-        if virtu == "1":
+        if virtu == True:
             rolls = roll()
             A = rolls[0]
             B = rolls[1]
@@ -1261,7 +1272,7 @@ while spel <= len(veldlijst):
                 if veld != "veldongeldig":
                     if waarde == "":
                         if veld not in ["12","13","14","15"] and int(veld)-1 not in allijst:
-                            if Must == True:
+                            if mustu == True:
                                 mustwaarde = must(veld)
                                 if veld in goodsuggestionslist or veld in badsuggestionslist:
                                     waarde = mustwaarde
