@@ -11,9 +11,9 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.51"
-datum = "20240113"
-plaats = "Nuenen"
+versie = "2.52"
+datum = "20240816"
+plaats = "Pedara"
 print(versie,datum,plaats)
 
 ResetAll               = "\033[0m"
@@ -88,7 +88,7 @@ if langsel.upper() in afsluitlijst:
 elif langsel == "2":
     lang = "IT"
     print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = In dietro o Uscita\n")
-    scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House","Piccola Scala","Grande Scala","F I V er","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
+    scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House    (25)","Piccola Scala (30)","Grande Scala  (40)","     F I V er (50)","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
     jalijst = ["S","SI","SÌ"]
     zeker = "Sei sicuro?\n%s" % inputindent
     allespelers = "Tutti i Giocatori"
@@ -116,7 +116,7 @@ elif langsel == "2":
 elif langsel == "3":
     lang = "NL"
     print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\n")
-    scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House","Kleine Straat","Grote Straat","F I V er","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
+    scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House    (25)","Kleine Straat (30)","Grote Straat  (40)","     F I V er (50)","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
     jalijst = ["J","JA"]
     zeker = "Weet je het zeker?\n%s" % inputindent
     allespelers = "Alle Spelers"
@@ -144,7 +144,7 @@ elif langsel == "3":
 else:
     lang = "EN"
     print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\n")
-    scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House","Small Straight","Large Straight","F I V er","Free Choice","Total Upper","Total Lower","TOTAL"]
+    scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House     (25)","Small Straight (30)","Large Straight (40)","      F I V er (50)","Free Choice","Total Upper","Total Lower","TOTAL"]
     jalijst = ["Y","YES"]
     zeker = "Are you sure?\n%s" % inputindent
     allespelers = "All Players"
@@ -1166,6 +1166,8 @@ if virtu == True:
         mustu = input(virtuelestenen)
     if mustu == "1":
         mustu = True
+else:
+    mustu = False
 
 spel = 1
 while spel <= len(veldlijst):
