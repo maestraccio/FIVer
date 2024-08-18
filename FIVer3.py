@@ -11,8 +11,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.52"
-datum = "20240816"
+versie = "2.53"
+datum = "20240818"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -479,78 +479,120 @@ def bouwtabel(maxscorelijst,speler,spel,winnaar):
     print(pluslijn)
     print("|"+forlinkol(scorelijst[0]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][0]),end = "")
+        if scoretabel[i-1][0] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][0]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][0])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[1]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][1]),end = "")
+        if scoretabel[i-1][1] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][1]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][1])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[2]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][2]),end = "")
+        if scoretabel[i-1][2] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][2]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][2])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[3]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][3]),end = "")
+        if scoretabel[i-1][3] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][3]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][3])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[4]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][4]),end = "")
+        if scoretabel[i-1][4] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][4]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][4])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[5]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][5]),end = "")
+        if scoretabel[i-1][5] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][5]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][5])),end = "")
     print("|")
     print(pluslijn)
     print("|"+forllinkol(scorelijst[6]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][6]),end = "")
+        print("|"+forspeler(str(scoretabel[i-1][6])),end = "")
     print("|")
     print("|"+forllinkol(scorelijst[7]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][7]),end = "")
+        print("|"+forspeler(str(scoretabel[i-1][7])),end = "")
     print("|")
     print("|"+forllinkol(scorelijst[8]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][8]),end = "")
+        print("|"+forspeler(str(scoretabel[i-1][8])),end = "")
     print("|")
     print(pluslijn)
     print("|"+forlinkol(scorelijst[9]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][9]),end = "")
+        if scoretabel[i-1][9] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][9]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][9])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[10]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][10]),end = "")
+        if scoretabel[i-1][10] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][10]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][10])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[11]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][11]),end = "")
+        if scoretabel[i-1][11] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][11]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][11])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[12]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][12]),end = "")
+        if scoretabel[i-1][12] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][12]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][12])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[13]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][13]),end = "")
+        if scoretabel[i-1][13] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][13]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][13])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[14]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][14]),end = "")
+        if scoretabel[i-1][14] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][14]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][14])),end = "")
     print("|")
     print("|"+forlinkol(scorelijst[15]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][15]),end = "")
+        if scoretabel[i-1][15] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][15]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][15])),end = "")
     print("|")
     print(pluslijn)
     print("|"+forllinkol(scorelijst[16]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][16]),end = "")
+        print("|"+forspeler(str(scoretabel[i-1][16])),end = "")
     print("|")
     print("|"+forllinkol(scorelijst[17]), end = "")
     for i in range(len(spelerslijst)):
-        print("|"+forspeler(scoretabel[i-1][17]),end = "")
+        if scoretabel[i-1][17] == 0:
+            print("|"+forspeler(str(scoretabel[i-1][17]).replace("0","/")),end = "")
+        else:
+            print("|"+forspeler(str(scoretabel[i-1][17])),end = "")
     print("|")
     print("|"+forrlinkol(scorelijst[18]), end = "")
     for i in range(len(spelerslijst)):
@@ -558,7 +600,7 @@ def bouwtabel(maxscorelijst,speler,spel,winnaar):
             col = Resultaat
         else:
             col = Tabel
-        print("|"+col+forspeler(scoretabel[i-1][18])+Tabel,end = "")
+        print("|"+col+forspeler(str(scoretabel[i-1][18]))+Tabel,end = "")
     print("|")
     print(pluslijn)
     print(ResetAll, end = "")
