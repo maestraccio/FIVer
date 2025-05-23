@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import random,textwrap
 from time import sleep
+from chooseFromNumberedList import chooseFromNumberedList
 
 #   Written by Maestraccio
 #
@@ -11,8 +12,8 @@ from time import sleep
 #    \  L' |
 #     \___/
 
-versie = "2.53"
-datum = "20240818"
+versie = "3.01"
+datum = "20250523"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -82,14 +83,23 @@ afsluitlijst=["X","Q"]
 veldlijst = ["1","2","3","4","5","6","10","11","12","13","14","15","16"]
 
 print()
-langsel = input(" >1 : Play in English\n  2 : Gioca in Italiano\n  3 : Speel in het Nederlands\n%s" % inputindent)
-if langsel.upper() in afsluitlijst:
-    exit()
-elif langsel == "2":
+langselist = [
+    "Play in English",
+    "Gioca in Italiano",
+    "Speel in het Nederlands\n",
+    "Quit/Uscita/Verlaten"
+    ]
+#langsel = input(" >1 : Play in English\n  2 : Gioca in Italiano\n  3 : Speel in het Nederlands\n%s" % inputindent)
+wat,langsel = chooseFromNumberedList(langselist,"A",1,1)
+print(wat)
+if langsel == 1:
     lang = "IT"
-    print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = In dietro o Uscita\n")
+    hellap = "Aiuto\n"
+    verlaten = "Uscita"
+    print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = Indietro o Uscita\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House    (25)","Piccola Scala (30)","Grande Scala  (40)","     F I V er (50)","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
     jalijst = ["S","SI","SÌ"]
+    janeelijst = ["Sì","No",hellap,verlaten]
     zeker = "Sei sicuro?\n%s" % inputindent
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
@@ -105,19 +115,22 @@ elif langsel == "2":
     totbonus = "Fino al Bonus: "
     albonus = "Bonus raggiunto"
     nobonus = "Bonus non raggiunto"
-    virtuelestenen = "Vuoi giocare con dadi virtuali?\n  1 : Sì\n >2 : No\n%s" % inputindent
-    moetofnietmoet = "Vuoi accettare solo valori suggeriti?\n  1 : Sì\n >2 : No\n%s" % inputindent
+    virtuelestenen = "Vuoi giocare con dadi virtuali?"
+    moetofnietmoet = "Vuoi accettare solo valori suggeriti?"
     sorteren = "Ordinare"
     rolalledobbelstenen1 = "#1 Lancia tutti i dadi"
     kieswelke2 = "#2 Quali dadi vuoi rilanciare?\n%s" % inputindent
     kieswelke3 = "#3 Quali dadi vuoi rilanciare?\n%s" % inputindent
     suggesties = "Suggerimenti:"
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
-elif langsel == "3":
+elif langsel == 2:
     lang = "NL"
+    verlaten = "Verlaten"
+    hellap = "Help\n"
     print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House    (25)","Kleine Straat (30)","Grote Straat  (40)","     F I V er (50)","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
     jalijst = ["J","JA"]
+    janeelijst = ["Ja","Nee",hellap,verlaten]
     zeker = "Weet je het zeker?\n%s" % inputindent
     allespelers = "Alle Spelers"
     nog = "Voortgang"
@@ -133,19 +146,24 @@ elif langsel == "3":
     totbonus = "Tot aan de Bonus: "
     albonus = "Bonus behaald"
     nobonus = "Bonus niet behaald"
-    virtuelestenen = "Wil je met virtuele dobbelstenen spelen?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
-    moetofnietmoet = "Wil je alleen voorgestelde waardes accepteren?\n  1 : Ja\n >2 : Nee\n%s" % inputindent
+    virtuelestenen = "Wil je met virtuele dobbelstenen spelen?"
+    moetofnietmoet = "Wil je alleen voorgestelde waardes accepteren?"
     sorteren = "Sorteren"
     rolalledobbelstenen1 = "#1 Rol alle dobbelstenen"
     kieswelke2 = "#2 Welke wil je opnieuw rollen?\n%s" % inputindent
     kieswelke3 = "#3 Welke wil je opnieuw rollen?\n%s" % inputindent
     suggesties = "Suggesties:"
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
+elif langsel == 3:
+    exit()
 else:
     lang = "EN"
+    verlaten = "Quit"
+    hellap = "Help\n"
     print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House     (25)","Small Straight (30)","Large Straight (40)","      F I V er (50)","Free Choice","Total Upper","Total Lower","TOTAL"]
     jalijst = ["Y","YES"]
+    janeelijst = ["Yes","No",hellap,verlaten]
     zeker = "Are you sure?\n%s" % inputindent
     allespelers = "All Players"
     nog = "Progress"
@@ -161,8 +179,8 @@ else:
     totbonus = "Until the Bonus: "
     albonus = "Bonus achieved"
     nobonus = "Bonus not achieved"
-    virtuelestenen = "Do you want to play with virtual dice?\n  1 : Yes\n >2 : No\n%s" % inputindent
-    moetofnietmoet = "Do you only want to accept suggested values?\n  1 : Yes\n >2 : No\n%s" % inputindent
+    virtuelestenen = "Do you want to play with virtual dice?"
+    moetofnietmoet = "Do you only want to accept suggested values?"
     sorteren = "Sorting"
     rolalledobbelstenen1 = "#1 Roll all dice"
     kieswelke2 = "#2 Choose which to roll again:\n%s" % inputindent
@@ -414,7 +432,6 @@ def hellup():
         help3 = "In the fields 10, 11 and 16:\n 1: %s10%s: \"15\"      (=15)\n 2: %s10%s: \"1+3*3+5\" (=15)\n 3: %s10%s: \"13335\"   (=15)" % (Kies,ResetAll,Kies,ResetAll,Kies,ResetAll)
         help4 = "In the fields 12 through 15:\n 1: %s13%s: (=30)\n 2: %s30%s: (=30)" % (Kies,ResetAll,Kies,ResetAll)
         help5 = textwrap.wrap("When playing with virtual dice, you indicate which dice you want to roll again, and not the ones you want to hold. Specify the corresponding letter(s) for that, not the value. Note that the dice are always sorted by value, so the letter can change per turn. No choice (from A, B, C, D, or E) means no dice will be rolled, \"*\" rolls all of them.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
-        help6 = textwrap.wrap("Als \"spelen met virtuele dobbelstenen\" aan staat en \"alleen suggesties accepteren\" ook, dan worden er geen andere keuzes geaccepteerd dan de getoonde suggesties of schrap.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help6 = textwrap.wrap("If \"play with virtual dice\" is active and \"accept only suggestions\" also, only suggested choices are accepted, or deletions.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help7 = textwrap.wrap("To delete a field (= entering a score of \"0\"), you can prefix the field name with a \"/\" (\"/13\" = \"Small straight: 0\").", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
         help8 = textwrap.wrap("TIP: On narrow screens, start the player name with a number: 1Me, 2You, and so on, to prevent the addition of a nickname.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
@@ -438,11 +455,11 @@ def hellup():
 
 def leeshellup():
     if lang == "IT":
-        leeshellup = textwrap.wrap("Il testo di aiuto è già visualizzato sopra. Non c'è altro, continua a giocare.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        leeshellup = textwrap.wrap("Dai! Il testo di aiuto è già visualizzato sopra. Non c'è altro, continua a giocare.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     elif lang == "NL":
-        leeshellup = textwrap.wrap("De Helptekst wordt hierboven al weergegeven. Meer is er niet, speel verder.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        leeshellup = textwrap.wrap("Kom op! De Helptekst wordt hierboven al weergegeven. Meer is er niet, speel verder.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     else:
-        leeshellup = textwrap.wrap("The Help text has already been displayed above. That's all there is, continue the game.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
+        leeshellup = textwrap.wrap("Come on! The Help text has already been displayed above. That's all there is, continue the game.", width = 1+maxlinkol+(1+maxspeler)*len(spelerslijst)+1)
     print(ResetAll, end = "")
     for i in leeshellup:
         print(i)
@@ -804,19 +821,19 @@ def spelertabel(speler):
     
 def roll():
     def visualDice():
-        Dicetop = " "+Reverse+Wit+"     "+ResetAll
-        Dicebottom = Dicetop
+        Dicetop = " "+Wit+"/"+Reverse+"   "+ResetAll+Wit+"\\"+ResetAll
+        Dicebottom = " "+Wit+"\\"+Reverse+"   "+ResetAll+Wit+"/"+ResetAll
         One1 =  " "+Reverse+Wit+"     "+ResetAll
         One2 = " "+Reverse+Wit+"  "+ResetAll+Wit+"_"+Reverse+Wit+"  "+ResetAll
-        One3 = Dicetop
+        One3 = One1
         Two1 = " "+Reverse+Wit+" "+ResetAll+Wit+"_"+Reverse+Wit+"   "+ResetAll
-        Two2 = Dicetop
+        Two2 = One1
         Two3 = " "+Reverse+Wit+"   "+ResetAll+Wit+"_"+Reverse+Wit+" "+ResetAll
         Three1 = Two3
         Three2 = One2
         Three3 = Two1
         Four1 = " "+Reverse+Wit+" "+ResetAll+Wit+"_"+Reverse+Wit+" "+ResetAll+Wit+"_"+Reverse+Wit+" "+ResetAll
-        Four2 = Dicetop
+        Four2 = One1
         Four3 = Four1
         Five1 = Four1
         Five2 = One2
@@ -1186,27 +1203,35 @@ def must(veld):
         print(f)
         pass
 
-virtu = input(virtuelestenen)
-if virtu.upper() == "H":
+print(virtuelestenen)
+wat,virtu = chooseFromNumberedList(janeelijst,"a",1,2)
+if virtu == 2:
     hellup()
-    virtu = input(virtuelestenen)
-if virtu.upper() == "H":
+    print(virtuelestenen)
+    wat,virtu = chooseFromNumberedList(janeelijst,"a",1,2)
+if virtu == 2:
     leeshellup()
-    virtu = input(virtuelestenen)
-if virtu.upper() in afsluitlijst:
+    print(virtuelestenen)
+    wat,virtu = chooseFromNumberedList(janeelijst,"a",1,2)
+if virtu == 3:
     afsluitroutine()
-if virtu == "1":
+if virtu == 0:
     virtu = True
 
 if virtu == True:
-    mustu = input(moetofnietmoet)
-    if mustu.upper() == "H":
+    print(moetofnietmoet)
+    wat,mustu = chooseFromNumberedList(janeelijst,"A",1,2)
+    if mustu == 2:
         hellup()
+        print(moetofnietmoet)
+        wat,mustu = chooseFromNumberedList(janeelijst,"A",1,2)
         mustu = input(virtuelestenen)
-    if mustu.upper() == "H":
+    if mustu == 2:
         leeshellup()
+        print(moetofnietmoet)
+        wat,mustu = chooseFromNumberedList(janeelijst,"A",1,2)
         mustu = input(virtuelestenen)
-    if mustu == "1":
+    if mustu == 0:
         mustu = True
 else:
     mustu = False
