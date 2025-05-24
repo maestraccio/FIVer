@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 import random,textwrap
 from time import sleep
-from chooseFromNumberedList import chooseFromNumberedList
+from chooseFromNumberedList import chooseFromNumberedList as cFNL
+from chooseFromNumberedList import chooseFromKeysList as cFKL
 
 #   Written by Maestraccio
 #
@@ -12,8 +13,8 @@ from chooseFromNumberedList import chooseFromNumberedList
 #    \  L' |
 #     \___/
 
-versie = "3.01"
-datum = "20250523"
+versie = "3.10"
+datum = "20250524"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -89,17 +90,23 @@ langselist = [
     "Speel in het Nederlands\n",
     "Quit/Uscita/Verlaten"
     ]
-#langsel = input(" >1 : Play in English\n  2 : Gioca in Italiano\n  3 : Speel in het Nederlands\n%s" % inputindent)
-wat,langsel = chooseFromNumberedList(langselist,"A",1,1)
+langsekeylist = [
+    "E",
+    "I",
+    "N",
+    "Q"
+    ]
+wat,langsel = cFKL(langselist,langsekeylist,"U","E")
 print(wat)
-if langsel == 1:
+if langsel == "I":
     lang = "IT"
     hellap = "Aiuto\n"
     verlaten = "Uscita"
-    print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = Indietro o Uscita\n")
+    print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = Indietro o Uscita\nIl nome del giocatatore non può essere \"Q\" o \"X\"\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House    (25)","Piccola Scala (30)","Grande Scala  (40)","     F I V er (50)","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
     jalijst = ["S","SI","SÌ"]
     janeelijst = ["Sì","No",hellap,verlaten]
+    janeekeylijst = ["S","N","H","Q"]
     zeker = "Sei sicuro?\n%s" % inputindent
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
@@ -123,14 +130,15 @@ if langsel == 1:
     kieswelke3 = "#3 Quali dadi vuoi rilanciare?\n%s" % inputindent
     suggesties = "Suggerimenti:"
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
-elif langsel == 2:
+elif langsel == "N":
     lang = "NL"
     verlaten = "Verlaten"
     hellap = "Help\n"
-    print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\n")
+    print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\nDe spelersnaam kan niet \"Q\" of \"X\" zijn\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House    (25)","Kleine Straat (30)","Grote Straat  (40)","     F I V er (50)","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
     jalijst = ["J","JA"]
     janeelijst = ["Ja","Nee",hellap,verlaten]
+    janeekeylijst = ["J","N","H","Q"]
     zeker = "Weet je het zeker?\n%s" % inputindent
     allespelers = "Alle Spelers"
     nog = "Voortgang"
@@ -154,16 +162,17 @@ elif langsel == 2:
     kieswelke3 = "#3 Welke wil je opnieuw rollen?\n%s" % inputindent
     suggesties = "Suggesties:"
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
-elif langsel == 3:
+elif langsel == "Q":
     exit()
 else:
     lang = "EN"
     verlaten = "Quit"
     hellap = "Help\n"
-    print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\n")
+    print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\nThe player's name cannot be \"Q\" or \"X\")\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House     (25)","Small Straight (30)","Large Straight (40)","      F I V er (50)","Free Choice","Total Upper","Total Lower","TOTAL"]
     jalijst = ["Y","YES"]
     janeelijst = ["Yes","No",hellap,verlaten]
+    janeekeylijst = ["Y","N","H","Q"]
     zeker = "Are you sure?\n%s" % inputindent
     allespelers = "All Players"
     nog = "Progress"
@@ -1204,34 +1213,36 @@ def must(veld):
         pass
 
 print(virtuelestenen)
-wat,virtu = chooseFromNumberedList(janeelijst,"a",1,2)
-if virtu == 2:
+wat,virtu = cFKL(janeelijst,janeekeylijst,"U","N")
+if virtu == janeekeylijst[2]:
     hellup()
     print(virtuelestenen)
-    wat,virtu = chooseFromNumberedList(janeelijst,"a",1,2)
-if virtu == 2:
+    wat,virtu = cFKL(janeelijst,janeekeylijst,"U","N")
+if virtu == janeekeylijst[2]:
     leeshellup()
     print(virtuelestenen)
-    wat,virtu = chooseFromNumberedList(janeelijst,"a",1,2)
-if virtu == 3:
+    wat,virtu = cFKL(janeelijst,janeekeylijst,"U","N")
+if virtu == janeekeylijst[3]:
     afsluitroutine()
-if virtu == 0:
+if virtu == janeekeylijst[0]:
     virtu = True
 
 if virtu == True:
     print(moetofnietmoet)
-    wat,mustu = chooseFromNumberedList(janeelijst,"A",1,2)
-    if mustu == 2:
+    wat,mustu = cFKL(janeelijst,janeekeylijst,"U","N")
+    if mustu == janeekeylijst[2]:
         hellup()
         print(moetofnietmoet)
-        wat,mustu = chooseFromNumberedList(janeelijst,"A",1,2)
+        wat,mustu = cFNL(janeelijst,"A",1,2)
         mustu = input(virtuelestenen)
-    if mustu == 2:
+    if mustu == janeekeylijst[2]:
         leeshellup()
         print(moetofnietmoet)
-        wat,mustu = chooseFromNumberedList(janeelijst,"A",1,2)
+        wat,mustu = cFNL(janeelijst,"A",1,2)
         mustu = input(virtuelestenen)
-    if mustu == 0:
+    if mustu == janeekeylijst[3]:
+        afsluitroutine()
+    if mustu == janeekeylijst[0]:
         mustu = True
 else:
     mustu = False
