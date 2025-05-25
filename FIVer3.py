@@ -13,8 +13,8 @@ from chooseFromNumberedList import chooseFromKeysList as cFKL
 #    \  L' |
 #     \___/
 
-versie = "3.10"
-datum = "20250524"
+versie = "3.11"
+datum = "20250525"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -96,7 +96,7 @@ langsekeylist = [
     "N",
     "Q"
     ]
-wat,langsel = cFKL(langselist,langsekeylist,"U","E")
+wat,langsel = cFKL([langselist,langsekeylist,"U","E"])
 print(wat)
 if langsel == "I":
     lang = "IT"
@@ -1213,15 +1213,15 @@ def must(veld):
         pass
 
 print(virtuelestenen)
-wat,virtu = cFKL(janeelijst,janeekeylijst,"U","N")
+wat,virtu = cFKL([janeelijst,janeekeylijst,"U","N"])
 if virtu == janeekeylijst[2]:
     hellup()
     print(virtuelestenen)
-    wat,virtu = cFKL(janeelijst,janeekeylijst,"U","N")
+    wat,virtu = cFKL([janeelijst,janeekeylijst,"U","N"])
 if virtu == janeekeylijst[2]:
     leeshellup()
     print(virtuelestenen)
-    wat,virtu = cFKL(janeelijst,janeekeylijst,"U","N")
+    wat,virtu = cFKL([janeelijst,janeekeylijst,"U","N"])
 if virtu == janeekeylijst[3]:
     afsluitroutine()
 if virtu == janeekeylijst[0]:
@@ -1229,16 +1229,16 @@ if virtu == janeekeylijst[0]:
 
 if virtu == True:
     print(moetofnietmoet)
-    wat,mustu = cFKL(janeelijst,janeekeylijst,"U","N")
+    wat,mustu = cFKL([janeelijst,janeekeylijst,"U","N"])
     if mustu == janeekeylijst[2]:
         hellup()
         print(moetofnietmoet)
-        wat,mustu = cFNL(janeelijst,"A",1,2)
+        wat,mustu = cFNL([janeelijst,"A",1,2])
         mustu = input(virtuelestenen)
     if mustu == janeekeylijst[2]:
         leeshellup()
         print(moetofnietmoet)
-        wat,mustu = cFNL(janeelijst,"A",1,2)
+        wat,mustu = cFNL([janeelijst,"A",1,2])
         mustu = input(virtuelestenen)
     if mustu == janeekeylijst[3]:
         afsluitroutine()
