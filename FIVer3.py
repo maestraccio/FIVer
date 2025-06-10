@@ -3,6 +3,7 @@ import random,textwrap
 from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromKeysList as cFKL
+from chooseFromNumberedList import chooseFromList as cFL
 
 #   Written by Maestraccio
 #
@@ -13,8 +14,8 @@ from chooseFromNumberedList import chooseFromKeysList as cFKL
 #    \  L' |
 #     \___/
 
-versie = "3.11"
-datum = "20250525"
+versie = "3.12"
+datum = "20250610"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -72,7 +73,6 @@ Gefeliciteerd          = LightMagenta
 Goed                   = LightGreen
 Tabel                  = Yellow
 Resultaat              = LightCyan
-#Resultaat              = LightYellow
 Slecht                 = LightRed
 Tekst                  = Reverse
 Terug                  = DarkGray
@@ -80,34 +80,34 @@ Wit                    = White
 forr2 = "{:>2}".format
 forc3 = "{:^3}".format
 inputindent = "  : "
-afsluitlijst=["X","Q"]
+afsluitlijst=["x","q",":x",":q"]
+helplijst=["h",":h"]
+verborgenlijst = afsluitlijst + helplijst
 veldlijst = ["1","2","3","4","5","6","10","11","12","13","14","15","16"]
 
 print()
 langselist = [
-    "Play in English",
-    "Gioca in Italiano",
-    "Speel in het Nederlands\n",
-    "Quit/Uscita/Verlaten"
+    "English",
+    "Italiano",
+    "Nederlands",
     ]
-langsekeylist = [
-    "E",
-    "I",
-    "N",
-    "Q"
-    ]
-wat,langsel = cFKL([langselist,langsekeylist,"U","E"])
-print(wat)
-if langsel == "I":
+
+langsekeylist = []
+for i in langselist:
+    langsekeylist.append(i[:2].lower())
+wat,langsel = cFL([langselist,0,"O",langsekeylist+afsluitlijst])
+if wat.lower() in afsluitlijst:
+    exit()
+elif wat in ["Italiano","it"]:
     lang = "IT"
     hellap = "Aiuto\n"
     verlaten = "Uscita"
-    print("\n\"H\" = Aiuto (dopo aver inserito i giocatori)\n\"Q\" = Indietro o Uscita\nIl nome del giocatatore non può essere \"Q\" o \"X\"\n")
+    print("\n\"h\" = Aiuto (dopo aver inserito i giocatori)\n\"q\" = Indietro o Uscita\nIl nome del giocatatore non può essere \"q\", \"x\, \":q\" o \":x\"\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Sopra","Bonus 35 se SS >= 63","Totale Sopra","Tre Uguali","Quattro Uguali","Full House    (25)","Piccola Scala (30)","Grande Scala  (40)","     F I V er (50)","Scelta Libera","Totale Sopra","Totale Sotto","TOTALE"]
-    jalijst = ["S","SI","SÌ"]
-    janeelijst = ["Sì","No",hellap,verlaten]
-    janeekeylijst = ["S","N","H","Q"]
-    zeker = "Sei sicuro?\n%s" % inputindent
+    jalijst = ["s","si","sì"]
+    janeelijst = ["sì","no",hellap,verlaten]
+    janeekeylijst = ["s","n","h","q"]
+    zeker = "Sei sicuro?"
     allespelers = "Tutti i Giocatori"
     nog = "Avanzamento"
     speelt = "È l'opportunità di "
@@ -130,16 +130,16 @@ if langsel == "I":
     kieswelke3 = "#3 Quali dadi vuoi rilanciare?\n%s" % inputindent
     suggesties = "Suggerimenti:"
     welkschrap = "Quale campo vuoi eliminare?\n%s" % inputindent
-elif langsel == "N":
+elif wat in ["Nederlands","ne"]:
     lang = "NL"
     verlaten = "Verlaten"
     hellap = "Help\n"
-    print("\n\"H\" = Help (nadat je de spelers hebt opgegeven)\n\"Q\" = Terug of Verlaten\nDe spelersnaam kan niet \"Q\" of \"X\" zijn\n")
+    print("\n\"h\" = Help (nadat je de spelers hebt opgegeven)\n\"q\" = Terug of Verlaten\nDe spelersnaam kan niet \"q\", \"x\", \":q\" of \":x\" zijn\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Boven","Bonus 35 als SB >= 63","Totaal Boven","Drie Dezelfde","Vier Dezelfde","Full House    (25)","Kleine Straat (30)","Grote Straat  (40)","     F I V er (50)","Vrije Keus","Totaal Boven","Totaal Onder","TOTAAL"]
-    jalijst = ["J","JA"]
-    janeelijst = ["Ja","Nee",hellap,verlaten]
-    janeekeylijst = ["J","N","H","Q"]
-    zeker = "Weet je het zeker?\n%s" % inputindent
+    jalijst = ["j","ja"]
+    janeelijst = ["ja","nee",hellap,verlaten]
+    janeekeylijst = ["j","n","h","q"]
+    zeker = "Weet je het zeker?"
     allespelers = "Alle Spelers"
     nog = "Voortgang"
     speelt = "De beurt is aan "
@@ -162,18 +162,16 @@ elif langsel == "N":
     kieswelke3 = "#3 Welke wil je opnieuw rollen?\n%s" % inputindent
     suggesties = "Suggesties:"
     welkschrap = "Welk veld wil je schrappen?\n%s" % inputindent
-elif langsel == "Q":
-    exit()
 else:
     lang = "EN"
     verlaten = "Quit"
     hellap = "Help\n"
-    print("\n\"H\" = Help (after providing the players' names)\n\"Q\" = Back or Quit\nThe player's name cannot be \"Q\" or \"X\")\n")
+    print("\n\"h\" = Help (after providing the players' names)\n\"q\" = Back or Quit\nThe player's name cannot be \"q\", \"x\, \":q\" or \":x\")\n")
     scorelijst = ["1","2","3","4","5","6","Subtot Upper","Bonus 35 if SU >= 63","Total Upper","Three of a Kind","Four of a Kind","Full House     (25)","Small Straight (30)","Large Straight (40)","      F I V er (50)","Free Choice","Total Upper","Total Lower","TOTAL"]
-    jalijst = ["Y","YES"]
-    janeelijst = ["Yes","No",hellap,verlaten]
-    janeekeylijst = ["Y","N","H","Q"]
-    zeker = "Are you sure?\n%s" % inputindent
+    jalijst = ["y","yes"]
+    janeelijst = ["yes","no",hellap,verlaten]
+    janeekeylijst = ["y","n","h","q"]
+    zeker = "Are you sure?"
     allespelers = "All Players"
     nog = "Progress"
     speelt = "It's the turn of "
@@ -204,9 +202,20 @@ forrlinkol = ("{:>%s}" % maxlinkol).format
 
 
 def afsluitroutine():
-    zekerweten = input(zeker)
-    if zekerweten.upper() in jalijst:
-        exit()
+    print(zeker)
+    key,zekerweten = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+    loop = True
+    while loop == True:
+        if zekerweten in jalijst + afsluitlijst:
+            exit()
+        elif zekerweten in helplijst:
+            hellup()
+            key,zekerweten = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+            if zekerweten in helplijst:
+                leeshellup()
+                key,zekerweten = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+        else:
+            break
 
 def nicklijst(spelersnaam,init):
     if lang == "IT":
@@ -381,7 +390,7 @@ def verzamelspelers():
     spelerslijst = []
     spelertel = 1
     speler = ""
-    while speler.upper() not in afsluitlijst:
+    while speler not in afsluitlijst:
         if lang == "IT":
             speler = "Giocatore_%s" % spelertel
             geefnaam = "Inserisci il nome del %s:\n%s" % (speler,inputindent)
@@ -392,7 +401,7 @@ def verzamelspelers():
             speler = "Player_%s" % spelertel
             geefnaam = "Enter the name of %s:\n%s" % (speler,inputindent)
         spelersnaam = input(geefnaam)
-        if spelersnaam.upper() in afsluitlijst:
+        if spelersnaam in afsluitlijst:
             if len(spelerslijst) == 0:
                 spelersnaam = speler
                 spelerslijst.append(spelersnaam)
@@ -473,15 +482,12 @@ def leeshellup():
     for i in leeshellup:
         print(i)
 
-def maakscoretabel():
-    scoretabel = []
-    for i in spelerslijst:
-        i = []
-        for j in scorelijst:
-            i.append("")
-        scoretabel.append(i)
-    return scoretabel
-scoretabel = maakscoretabel()
+scoretabel = []
+for i in spelerslijst:
+    i = []
+    for j in scorelijst:
+        i.append("")
+    scoretabel.append(i)
 
 maxscorelijst = []
 for i in spelerslijst:
@@ -1005,13 +1011,13 @@ def roll():
                 print()
         print(DarkGray+"  A=%s   B=%s   C=%s   D=%s   E=%s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
-        if choice.upper() == "H":
+        if choice.lower() == "h":
             hellup()
             choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
-        if choice.upper() == "H":
-            leeshellup()
-            choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
-        if choice.upper() in afsluitlijst:
+            if choice.lower() == "h":
+                leeshellup()
+                choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.lower() in afsluitlijst:
             afsluitroutine()
         if choice == "*":
             choice = "ABCDE"
@@ -1070,13 +1076,13 @@ def roll():
                 print()
         print(DarkGray+"  A=%s   B=%s   C=%s   D=%s   E=%s" % (A,B,C,D,E)+ResetAll)
         choice = input(kieswelke3).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
-        if choice.upper() == "H":
+        if choice.lower() == "h":
             hellup()
             choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
-        if choice.upper() == "H":
-            leeshellup()
-            choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
-        if choice.upper() in afsluitlijst:
+            if choice.lower() == "h":
+                leeshellup()
+                choice = input(kieswelke2).replace(" ","").replace(",","").replace(".","").replace("-","").replace("/","").replace("\\","").upper()
+        if choice.lower() in afsluitlijst:
             afsluitroutine()
         if choice == "*":
             choice = "ABCDE"
@@ -1211,38 +1217,37 @@ def must(veld):
     except(Exception) as f:
         print(f)
         pass
-
 print(virtuelestenen)
-wat,virtu = cFKL([janeelijst,janeekeylijst,"U","N"])
-if virtu == janeekeylijst[2]:
+wat,virtu = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+if virtu in helplijst:
     hellup()
     print(virtuelestenen)
-    wat,virtu = cFKL([janeelijst,janeekeylijst,"U","N"])
-if virtu == janeekeylijst[2]:
-    leeshellup()
-    print(virtuelestenen)
-    wat,virtu = cFKL([janeelijst,janeekeylijst,"U","N"])
-if virtu == janeekeylijst[3]:
+    wat,virtu = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+    if virtu in helplijst:
+        leeshellup()
+        print(virtuelestenen)
+        wat,virtu = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+if virtu in afsluitlijst:
     afsluitroutine()
-if virtu == janeekeylijst[0]:
+if virtu in jalijst:
     virtu = True
 
 if virtu == True:
     print(moetofnietmoet)
-    wat,mustu = cFKL([janeelijst,janeekeylijst,"U","N"])
-    if mustu == janeekeylijst[2]:
+    wat,mustu = cFKL([janeelijst,janeekeylijst,"l",janeekeylijst[1],verborgenlijst])
+    if mustu in helplijst:
         hellup()
         print(moetofnietmoet)
         wat,mustu = cFNL([janeelijst,"A",1,2])
         mustu = input(virtuelestenen)
-    if mustu == janeekeylijst[2]:
-        leeshellup()
-        print(moetofnietmoet)
-        wat,mustu = cFNL([janeelijst,"A",1,2])
-        mustu = input(virtuelestenen)
-    if mustu == janeekeylijst[3]:
+        if mustu in helplijst:
+            leeshellup()
+            print(moetofnietmoet)
+            wat,mustu = cFNL([janeelijst,"A",1,2])
+            mustu = input(virtuelestenen)
+    if mustu in afsluitlijst:
         afsluitroutine()
-    if mustu == janeekeylijst[0]:
+    if mustu in jalijst:
         mustu = True
 else:
     mustu = False
@@ -1296,12 +1301,12 @@ while spel <= len(veldlijst):
         while score == False:
             waarde = ""
             veld = input(welkveld+Kies)
-            if veld.upper() == "H":
+            if veld.lower() == "h":
                 hellup()
                 veld = input(welkveld+Kies)
-            if veld.upper() == "H":
-                leeshellup()
-                veld = input(welkveld+Kies)
+                if veld.lower() == "h":
+                    leeshellup()
+                    veld = input(welkveld+Kies)
             if veld == "25":
                 veld = "12"
             elif veld == "30":
@@ -1319,7 +1324,7 @@ while spel <= len(veldlijst):
             elif veld == "/50":
                 veld = "/15"
             print(ResetAll,end = "")
-            if veld.upper() in afsluitlijst:
+            if veld.lower() in afsluitlijst:
                 afsluitroutine()
             if veld == "/":
                 veld = input(welkschrap)
@@ -1361,14 +1366,14 @@ while spel <= len(veldlijst):
                                     veld = "veldongeldig"
                             else:
                                 waarde = input(welkewaarde+Resultaat).replace(" ","")
-                                if waarde.upper() == "H":
+                                if waarde.lower() == "h":
                                     hellup()
                                     waarde = input(welkewaarde+Resultaat).replace(" ","")
-                                if waarde.upper() == "H":
-                                    leeshellup()
-                                    waarde = input(welkewaarde+Resultaat).replace(" ","")
+                                    if waarde.upper() == "H":
+                                        leeshellup()
+                                        waarde = input(welkewaarde+Resultaat).replace(" ","")
                             print(ResetAll, end = "")
-                        if waarde.upper() in afsluitlijst:
+                        if waarde.lower() in afsluitlijst:
                             afsluitroutine()
                         elif veld == "1":
                             if scoretabel[i-1][int(veld)-1] == "":
