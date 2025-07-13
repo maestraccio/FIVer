@@ -14,8 +14,8 @@ from chooseFromNumberedList import chooseFromList as cFL
 #    \  L' |
 #     \___/
 
-versie = "3.12"
-datum = "20250610"
+versie = "3.13"
+datum = "20250713"
 plaats = "Pedara"
 print(versie,datum,plaats)
 
@@ -89,13 +89,13 @@ print()
 langselist = [
     "English",
     "Italiano",
-    "Nederlands",
+    "Nederlands"
     ]
 
 langsekeylist = []
 for i in langselist:
     langsekeylist.append(i[:2].lower())
-wat,langsel = cFL([langselist,0,"O",langsekeylist+afsluitlijst])
+wat,langsel = cFKL([langselist,langsekeylist,"",langsekeylist[0],langsekeylist+afsluitlijst])
 if wat.lower() in afsluitlijst:
     exit()
 elif wat in ["Italiano","it"]:
